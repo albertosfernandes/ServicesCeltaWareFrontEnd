@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ModelCustomersProducts } from '../models/model-customersproducts';
 
 @Component({
   selector: 'app-cloud',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CloudComponent implements OnInit {
 
+  customerProduct: ModelCustomersProducts;
   constructor() { }
 
   ngOnInit() {

@@ -15,18 +15,17 @@ export class CloudService {
 
   constructor(private http: HttpClient) { }
 
-  getProductsAll(){
+  getProductsAll() {
     return this.http
-    .get<ModelProduct[]>(API+'/api/product/getall');
+    .get<ModelProduct[]>(API + '/api/product/getall');
   }
-  
-  getCustomersAll(){
+  getCustomersAll() {
     return this.http
-    .get<ModelCustomer[]>(API+'/api/customer/getall');
-  }  
+    .get<ModelCustomer[]>(API + '/api/customer/getall');
+  }
 
-  getCustomersProducts(id){
+  getCustomersProducts(id) {
     return this.http
-    .get<ModelCustomersProducts[]>(API+'/api/CustomersProducts/get?id='+id);
+    .get<ModelCustomersProducts[]>(API + '/api/CustomersProducts/get?id=' + id);
   }
 }

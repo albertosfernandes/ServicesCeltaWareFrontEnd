@@ -1,0 +1,5 @@
+{
+    "tslint.alwaysShowRuleFailuresAsWarnings": true,
+    "tslint.jsEnable": false,
+    "javascript.validate.enable": false
+}

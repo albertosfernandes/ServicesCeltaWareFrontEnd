@@ -4,21 +4,21 @@
         <div style="margin-top: 2%">
         <select class="custom-select" id="inputGroupSelect01" (change)="onChange($event.target.value)">
           <option selected>Selecione um Cliente</option>
-          <option *ngFor="let customer of customers" [value]="customer.customerId" >{{customer.fantasyName}}</option>               
-        </select>        
-        </div>        
+          <option *ngFor="let customer of customers" [value]="customer.customerId" >{{customer.fantasyName}}</option>
+        </select>
+        </div>
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>Cliente: {{customerSelected}} </span>              
+          <span>Cliente: {{customerSelected}} </span>
         </h6>
         <div class="card" >
           <div class="card-body">
             <h5 class="card-title">Produtos:</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Total: <strong style="color:red">4</strong></h6>
+            <h6 class="card-subtitle mb-2 text-muted">Total: <strong style="color:red">{{productsCount}}</strong></h6>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item"><a href="#">Database</a></li>
-              <li class="list-group-item">Aplicação BSF</li>
-              <li class="list-group-item">Sincronismo CSS</li>
-              <li class="list-group-item">Concentrador</li>
+              <li class="list-group-item" *ngFor="let item of customerProducts" (click)='selectionProduct(item.product.name)'>
+                  <!-- <div class="alert alert-success" role="alert">{{item.product.name}}</div> -->
+                <span class="label default">{{item.product.name}}</span>
+              </li>
             </ul>
           </div>
         </div>

@@ -9,6 +9,13 @@ export class MenuCloudVerticalComponent implements OnInit {
 
   constructor() { }
 
+  menu: string;
+  isOpen = true;
+
+  bntMenu(value) {
+    this.menu = value;
+  }
+
   ngOnInit() {
   }
 

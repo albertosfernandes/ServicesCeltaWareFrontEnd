@@ -1,4 +1,4 @@
 export class ModelProduct {
-    ProductId: number;
-    Name: string;   
+    productId: number;
+    name: string;
 }

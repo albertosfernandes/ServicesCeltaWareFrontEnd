@@ -1,13 +1,16 @@
+import { ModelCustomer } from './model-customer';
+import { ModelProduct } from './model-product';
+
 export class ModelCustomersProducts {
-    customersProductsId: number
+    customersProductsId: number;
     customerId: number;
-    // modelCustomer Customer
+    customer: ModelCustomer;
     productId: number;
-    // modelProduct Product
+    product: ModelProduct;
     addressName: string;
     ipAddress: string;
-    port: string
-    loginUser: string
+    port: string;
+    loginUser: string;
     loginPassword: string;
     installDirectory: string;
 }
