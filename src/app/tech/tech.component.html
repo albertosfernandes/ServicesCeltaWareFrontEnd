@@ -1,0 +1,12 @@
+<app-menu-vertical [isOpen]="tog" (onMenuSend)="getMenu($event)"></app-menu-vertical> 
+<div class="container" style="margin-top: 10px">
+    <div class="row" *ngIf="menuActive == 'dash'">        
+        <app-dashboard></app-dashboard>
+    </div>
+    <div class="row" *ngIf="menuActive == 'celtaVpn'">        
+        <app-celta-vpn></app-celta-vpn>
+    </div>
+    <div class="row" *ngIf="menuActive == 'servidores'">         
+        <app-servers></app-servers>       
+    </div>
+</div>

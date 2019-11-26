@@ -1,0 +1,33 @@
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseUpload" aria-expanded="false" aria-controls="collapseUpload">
+  Upload
+</button>
+
+<div class="collapse" id="collapseUpload">
+  <div class="card card-body">
+      <div class="input-group mb-3">
+          
+         <div class="custom-file">
+            <input type="file" class="custom-file-input" 
+                              id="inputGroupFile03" 
+                              aria-describedby="inputGroupFileAddon03"
+                              (change)="inputFile($event)"
+                              >
+            <label class="custom-file-label" for="inputGroupFile03">{{ fileName }}</label>
+         </div>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Categoria</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01" (change)="filterCategory($event.target.value)">             
+              <option [selected]="isSelect" [value]="category.Id" 
+              *ngFor="let category of categories"
+              
+              >{{ category.Name }}</option>             
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <button class="btn btn-outline-success" type="button" (click)="sendFile()">Enviar</button>
+        </div>
+  </div>
+</div>

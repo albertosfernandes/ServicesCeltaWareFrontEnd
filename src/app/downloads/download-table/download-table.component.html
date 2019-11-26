@@ -1,0 +1,22 @@
+
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <td scope="col">Id</td>
+            <td>Nome</td>
+            <td>Data</td>
+            <td>Tamanho</td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>          
+          <tr *ngFor="let file of _filesDownload">
+            <td>{{ file.Id }}</td>
+            <td>{{ file.Name }}</td>
+            <td>{{ file.Date }}</td>
+            <td>{{ file.Size }}</td>
+            <td><button class="btn btn btn-primary">Download</button></td>
+          </tr>         
+        </tbody>
+      </table>
+      <h1>{{ filterCategory }}</h1>

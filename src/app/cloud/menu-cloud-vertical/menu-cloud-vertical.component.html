@@ -1,0 +1,30 @@
+ <!-- Side Navbar -->
+ <nav class="side-navbar" [class.shrink]="isOpen" [class.show-sm]="isOpen">
+  <div class="side-navbar-wrapper">
+   
+    <!-- Sidebar Header    -->
+    <div class="sidenav-header d-flex align-items-center justify-content-center">
+      <!-- User Info-->
+      <div class="sidenav-header-inner text-center">
+        <h2 class="h5">Cliente Y</h2>
+      </div>     
+    </div>
+    
+    <!-- Sidebar Navigation Menus-->
+    <div class="main-menu">
+      <h5 class="sidenav-heading">Main</h5>
+      <ul id="side-main-menu" class="side-menu list-unstyled">                  
+        <li [class.active]="menu == 'dash'"> <a name="dash" (click)="bntMenu('dash')">
+          <i class="fa fa-home"></i> Dashboard </a>
+        </li>
+        <li [class.active]="menu == 'celtaVpn'"><a (click)="bntMenu('celtaVpn')">
+          <i class="fa fa-at"></i> CeltaVpn</a>
+        </li>
+        <li [class.active]="menu == 'servidores'"><a (click)="bntMenu('servidores')">
+          <i class="fa fa-database"></i> Servidores</a>
+        </li>       
+      </ul>
+    </div>
+   
+  </div>
+</nav>

@@ -1,0 +1,21 @@
+
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <td scope="col">Id</td>
+            <td>Vpn</td>
+            <td>Conectado Desde</td>
+            <td>Servidor</td>             
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>          
+          <tr *ngFor="let vpn of vpns">
+            <td>{{ vpn.Id }}</td>
+            <td>{{ vpn.User }}</td>
+            <td>{{ vpn.DateConect }}</td> 
+            <td>{{ vpn.Server }}</td>           
+            <td><button class="btn btn-danger">Forçar desconexão</button></td>
+          </tr>         
+        </tbody>
+      </table>

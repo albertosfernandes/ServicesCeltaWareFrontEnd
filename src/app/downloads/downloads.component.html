@@ -1,0 +1,14 @@
+<main role="main">
+<div class="album py-5">
+<div class="container">   
+    <app-download-menu (onClickFilter)="receberEvento($event)"></app-download-menu>
+    <app-download-table [filterCategory]="name"></app-download-table>
+</div>
+<div class="container">
+  <div class="row">
+   <app-download-newcategory></app-download-newcategory>  
+   <app-download-upload></app-download-upload>
+  </div>
+</div>
+</div>
+</main>
