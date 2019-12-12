@@ -1,7 +1,8 @@
 import { ModelCustomersProducts } from './../../models/model-customersproducts';
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { ModelCustomer } from 'src/app/models/model-customer';
 import { CloudService } from '../cloud.service';
+
 
 @Component({
   selector: 'app-menu-cloud',
@@ -15,6 +16,7 @@ export class MenuCloudComponent implements OnInit, OnChanges {
   customerSelected: string;
   customerProducts: ModelCustomersProducts[] = [];
   productsCount: number;
+  @Output() changeCustomerProduct = new EventEmitter();
 
   constructor(private cloudService: CloudService) { }
 
@@ -26,7 +28,7 @@ export class MenuCloudComponent implements OnInit, OnChanges {
   }
   selectionProduct(value) {
     console.log(value);
-    // aqui eu exporto valor de customerProducts
+    this.changeCustomerProduct.emit(value);
   }
 
   onChange(deviceValue) {

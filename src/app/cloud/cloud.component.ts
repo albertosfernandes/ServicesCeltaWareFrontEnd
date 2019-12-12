@@ -9,8 +9,14 @@ import { ModelCustomersProducts } from '../models/model-customersproducts';
 export class CloudComponent implements OnInit {
 
   customerProduct: ModelCustomersProducts;
+  teste: string;
+  // myTeste='Aqui deve ir nome do produto!';
+
   constructor() { }
 
+  receberEvent(valueCustomerProduct) {
+    this.customerProduct = valueCustomerProduct;
+  }
   ngOnInit() {
   }
 

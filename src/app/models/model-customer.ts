@@ -5,4 +5,5 @@ export class ModelCustomer {
     cnpj: string;
     codeCeltaBs: number;
     customersProducts: string;
+    rootDirectory: string;
 }

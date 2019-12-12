@@ -13,4 +13,5 @@ export class ModelCustomersProducts {
     loginUser: string;
     loginPassword: string;
     installDirectory: string;
+    synchronizerServiceName: string;
 }

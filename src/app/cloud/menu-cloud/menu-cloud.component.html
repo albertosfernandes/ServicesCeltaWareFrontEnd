@@ -15,7 +15,7 @@
             <h5 class="card-title">Produtos:</h5>
             <h6 class="card-subtitle mb-2 text-muted">Total: <strong style="color:red">{{productsCount}}</strong></h6>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item" *ngFor="let item of customerProducts" (click)='selectionProduct(item.product.name)'>
+              <li class="list-group-item" *ngFor="let item of customerProducts" (click)='selectionProduct(item)'>
                   <!-- <div class="alert alert-success" role="alert">{{item.product.name}}</div> -->
                 <span class="label default">{{item.product.name}}</span>
               </li>

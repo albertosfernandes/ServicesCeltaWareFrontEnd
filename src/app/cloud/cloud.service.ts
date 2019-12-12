@@ -4,6 +4,7 @@ import { ModelProduct } from '../models/model-product';
 import { ModelCustomer } from '../models/model-customer';
 import { ModelCustomersProducts } from './../models/model-customersproducts';
 
+// const API = 'http://update.celtaware.com.br:9994';
 const API = 'http://localhost:20854';
 
 @Injectable({
@@ -27,5 +28,21 @@ export class CloudService {
   getCustomersProducts(id) {
     return this.http
     .get<ModelCustomersProducts[]>(API + '/api/CustomersProducts/get?id=' + id);
+  }
+
+  getDateTimeDeploy(id) {
+    return this.http
+    .get(API + '/api/SystemUpdate/GetDateTimeFileDeploy?customersettingsId=' + id);
+  }
+
+  getDownloadDeploy(id) {
+    return this.http
+    .get(API + '/api/SystemUpdate/DownloadDeploy?id=' + id);
+  }
+
+  getUpdateSystem(customerProduct: ModelCustomersProducts) {
+    console.log('Chamando Post atualizar ' + customerProduct);
+    return this.http
+    .post(API + '/api/SystemUpdate/UpdateCeltaBS',  customerProduct);
   }
 }
