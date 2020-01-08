@@ -17,9 +17,10 @@ export class MenuCloudComponent implements OnInit, OnChanges {
   customerProducts: ModelCustomersProducts[] = [];
   productsCount: number;
   classspinner: 'spinner-border';
-  isLoading = true;
-  isActive = '';
+  isLoading = false;
+  isActive: any = '';
   @Output() changeCustomerProduct = new EventEmitter();
+  @Input() customersMenu: ModelCustomer[] = [];
 
   constructor(private cloudService: CloudService) {  }
 
@@ -34,9 +35,10 @@ export class MenuCloudComponent implements OnInit, OnChanges {
       alert('error ');
     } );
   }
+
   selectionProduct(value) {
     this.changeCustomerProduct.emit(value);
-    this.isActive = value.productId;
+    this.isActive = value.customersProductsId;
   }
 
   onChange(deviceValue) {
@@ -49,13 +51,12 @@ export class MenuCloudComponent implements OnInit, OnChanges {
 }
 
   ngOnInit() {
-    console.log('carregando loadCustomers ' + this.isLoading);
-    this.loadCustomers();
-    console.log('fim do loadCustomers ' + this.isLoading);
+    // console.log('carregando loadCustomers ' + this.isLoading);
+    // this.loadCustomers();
+    // console.log('fim do loadCustomers ' + this.isLoading);
   }
 
   ngOnChanges() {
-    console.log('change no menu!');
   }
 
 }

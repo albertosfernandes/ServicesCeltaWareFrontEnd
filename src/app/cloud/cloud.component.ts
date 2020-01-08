@@ -21,7 +21,6 @@ export class CloudComponent implements OnInit {
     .subscribe(customerArray => {
       this.customers = customerArray;
       this.valorLoading = false;
-      console.log('valor de valorLoading depois de loadCustomers: ' + this.valorLoading);
     },
     error => {
       alert('error ');
@@ -35,10 +34,7 @@ export class CloudComponent implements OnInit {
     }
   }
   ngOnInit() {
-    console.log('valor de valorLoading: ' + this.valorLoading);
-    console.log('valor de customer products: ' + this.customerProduct);
     this.loadCustomers();
-    console.log('valor de customers : ' + this.customers[0]);
   }
 
 }
