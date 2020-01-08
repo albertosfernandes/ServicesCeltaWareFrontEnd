@@ -5,7 +5,8 @@ import { ModelCustomer } from '../models/model-customer';
 import { ModelCustomersProducts } from './../models/model-customersproducts';
 
 // const API = 'http://update.celtaware.com.br:9994';
-const API = 'http://localhost:20854';
+// const API = 'http://localhost:20854';
+const API = 'http://localhost:9991';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,11 @@ export class CloudService {
   getDateTimeDeploy(id) {
     return this.http
     .get(API + '/api/SystemUpdate/GetDateTimeFileDeploy?customersettingsId=' + id);
+  }
+
+  getVersionFile(id) {
+    return this.http
+    .get(API + '/api/SystemUpdate/GetVersionFile?customersettingsId=' + id);
   }
 
   getDownloadDeploy(id) {

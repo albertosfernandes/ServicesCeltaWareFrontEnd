@@ -1,5 +1,5 @@
 import { ModelCustomersProducts } from './../../models/model-customersproducts';
-import { Component, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Output, Input, EventEmitter } from '@angular/core';
 import { ModelCustomer } from 'src/app/models/model-customer';
 import { CloudService } from '../cloud.service';
 
@@ -16,25 +16,32 @@ export class MenuCloudComponent implements OnInit, OnChanges {
   customerSelected: string;
   customerProducts: ModelCustomersProducts[] = [];
   productsCount: number;
+  classspinner: 'spinner-border';
+  isLoading = true;
+  isActive = '';
   @Output() changeCustomerProduct = new EventEmitter();
 
-  constructor(private cloudService: CloudService) { }
+  constructor(private cloudService: CloudService) {  }
 
   loadCustomers() {
     this.cloudService.getCustomersAll()
     .subscribe(customerArray => {
       this.customers = customerArray;
-    });
+      this.isLoading = false;
+      console.log('apos execucao do load' + this.isLoading);
+    },
+    error => {
+      alert('error ');
+    } );
   }
   selectionProduct(value) {
-    console.log(value);
     this.changeCustomerProduct.emit(value);
+    this.isActive = value.productId;
   }
 
   onChange(deviceValue) {
     this.cloudService.getCustomersProducts(deviceValue)
     .subscribe(arrayCustomerProduct => {
-      console.log(this.customerProducts.length);
       this.customerProducts = arrayCustomerProduct;
       this.customerSelected = this.customerProducts[0].customer.fantasyName;
       this.productsCount = this.customerProducts.length;
@@ -42,10 +49,13 @@ export class MenuCloudComponent implements OnInit, OnChanges {
 }
 
   ngOnInit() {
+    console.log('carregando loadCustomers ' + this.isLoading);
     this.loadCustomers();
+    console.log('fim do loadCustomers ' + this.isLoading);
   }
 
   ngOnChanges() {
+    console.log('change no menu!');
   }
 
 }

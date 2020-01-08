@@ -6,20 +6,28 @@
   <div class="card-body">
     <div class="card-deck">
       <div class="card-body">
-        <p>ProductId: {{customerProducts.product.productId}}, {{customerProducts.product.name}}</p>
-        <button class="btn btn-success" *ngIf="customerProducts.product.productId" (click)="update(customerProducts)" >Atualizar</button>
-        <div class="spinner-border" role="status" *ngIf="isUpdating" >
+        <p>Produto: {{customerProducts.product.name}}</p>
+        <p>Diretório de instalação: {{customerProducts.installDirectory}}</p>
+        <p><strong>Versão: </strong> {{versionProduct | date:'medium'}} </p>
+        <button class="btn btn-success" *ngIf="customerProducts.product.productId" (click)="update(customerProducts)" [disabled]="isUpdating">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+          {{ updateBtnText }}
+        </button>
+        <!-- <div class="spinner-border" role="status" *ngIf="isUpdating">
           <span class="sr-only">baixando...</span>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
   <div class="card-footer text-muted">
     <p><strong>Versão: </strong> {{dateObj | date:'medium'}} </p>
-    <button type="button" class="btn btn-primary" *ngIf="dateObj" (click)="downloadDeploy(customerProducts.customer.customerId)" >Baixar (Deploy)</button>
-    <div class="spinner-border" role="status" *ngIf="isDownloading" >
+    <button type="button" class="btn btn-primary" *ngIf="dateObj" (click)="downloadDeploy(customerProducts.customer.customerId)" [disabled]="isDownloading">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isDownloading"></span>
+      {{ downloadBtnText }}
+    </button>
+    <!-- <div class="spinner-border" role="status" *ngIf="isDownloading">
       <span class="sr-only">baixando...</span>
-    </div>
+    </div> -->
   </div>
 </div>
 
@@ -30,9 +38,9 @@
         <h6>Armazenamento</h6>
       </div>
       <div class="card-body">
-        <p><strong>Tamanho Banco de dados:</strong> 460 MB. </p>
-        <p><strong>Espaço contratado: </strong> 2.0GB</p>
-        <p><strong>Espaço livre: </strong><span style="color:blue">23% em uso.</span></p>
+        <p><strong>Tamanho Banco de dados:</strong> XXX MB. </p>
+        <p><strong>Espaço contratado: </strong> XXXGB</p>
+        <p><strong>Espaço livre: </strong><span style="color:blue">%.</span></p>
       </div>
       <div class="card-footer">
         <small class="text-muted">Última atualização 3 minutos.</small>
@@ -45,9 +53,9 @@
         <h6>Internet</h6>
       </div>
       <div class="card-body">
-        <p><strong>Total utilizado:</strong> 630 mbps. </p>
-        <p><strong>Internet contratada: </strong> 700 mbps.</p>
-        <p><strong>Banda livre: </strong><span style="color:red">90% em uso.</span></p>
+        <p><strong>Total utilizado:</strong> XXX mbps. </p>
+        <p><strong>Internet contratada: </strong> XXX mbps.</p>
+        <p><strong>Banda livre: </strong><span style="color:red">%</span></p>
       </div>
       <div class="card-footer">
         <small class="text-muted">Última atualização 3 minutos.</small>
@@ -60,9 +68,9 @@
         <h6>Memória RAM</h6>
       </div>
       <div class="card-body">
-        <p><strong>Total utilizado:</strong> 460 MB. </p>
-        <p><strong>Quantidade contratado: </strong> 2.0GB</p>
-        <p><strong>Espaço livre: </strong><span style="color:blue">23% em uso.</span></p>
+        <p><strong>Total utilizado:</strong> XXX MB. </p>
+        <p><strong>Quantidade contratado: </strong> XXXGB</p>
+        <p><strong>Espaço livre: </strong><span style="color:blue">%</span></p>
       </div>
       <div class="card-footer">
         <small class="text-muted">Última atualização 3 minutos.</small>

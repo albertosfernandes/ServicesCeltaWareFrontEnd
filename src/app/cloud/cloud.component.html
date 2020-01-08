@@ -1,7 +1,12 @@
-  <app-menu-cloud (changeCustomerProduct)='receberEvent($event)'></app-menu-cloud>
+   <div class="spinner-border" role="status" *ngIf="valorLoading">
+         <!-- <div class="spinner-border" role="status" *ngIf="isLoading"> -->
+          <!-- <div [class.spinner-border]="isLoading"> -->
+          <span class="sr-only">Carregando...</span>
+    </div>
+  <app-menu-cloud (changeCustomerProduct)='receberEvent($event)' *ngIf="!valorLoading"></app-menu-cloud>
   <div class="container">
     <div class="row" style="margin-left: 15%; margin-top: 3% ">
-        <app-dashboard-cloud [customerProducts]='customerProduct'></app-dashboard-cloud>
+        <app-dashboard-cloud [customerProducts]='customerProduct' *ngIf="isActiveDash" ></app-dashboard-cloud>
     </div>
     <!-- Adcionado linha em branco como teste -->
   </div>
