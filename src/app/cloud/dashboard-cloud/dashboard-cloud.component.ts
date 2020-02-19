@@ -21,10 +21,11 @@ export class DashboardCloudComponent implements OnInit, OnChanges {
   isUpdating = false;
   updateBtnText = 'Atualizar';
   downloadBtnText = 'Baixar (Deploy)';
+  statusMessage: any;
   constructor(private cloudService: CloudService) { }
 
-  loadDateDeploy(idvalue) {
-    this.cloudService.getDateTimeDeploy(idvalue)
+  loadDateDeploy(idvalue, productId) {
+    this.cloudService.getDateTimeDeploy(idvalue, productId)
     .subscribe(dateDeploy => {
       this.dateObj = dateDeploy;
     });
@@ -49,12 +50,12 @@ export class DashboardCloudComponent implements OnInit, OnChanges {
     this.updateBtnText = 'Atualizando ...';
   }
 
-  downloadDeploy(valueCustomerId) {
+  downloadDeploy(valueCustomerId, productId) {
     this.isDownloading = true;
-    this.cloudService.getDownloadDeploy(valueCustomerId)
+    this.cloudService.getDownloadDeploy(valueCustomerId, productId)
     .subscribe(response => {
       this._response = response;
-      this.loadDateDeploy(this.customerProducts.customersProductsId);
+      this.loadDateDeploy(this.customerProducts.customersProductsId, this.customerProducts.productId);
       this.downloadBtnText = 'Baixar (Deploy)';
     },
     error => {alert('error'); this.isDownloading = false; this.downloadBtnText = 'Baixar (Deploy)'; },
@@ -62,12 +63,12 @@ export class DashboardCloudComponent implements OnInit, OnChanges {
     this.downloadBtnText = 'Baixando ...';
   }
 
+
   ngOnInit() {
-    // this.loadDateDeploy('1');
   }
 
   ngOnChanges() {
-     this.loadDateDeploy(this.customerProducts.customersProductsId);
+     this.loadDateDeploy(this.customerProducts.customersProductsId, this.customerProducts.productId);
      this.loadVersionProduct(this.customerProducts.customersProductsId);
   }
 

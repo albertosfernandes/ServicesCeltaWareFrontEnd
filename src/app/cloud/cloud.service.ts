@@ -31,9 +31,9 @@ export class CloudService {
     .get<ModelCustomersProducts[]>(API + '/api/CustomersProducts/get?id=' + id);
   }
 
-  getDateTimeDeploy(id) {
+  getDateTimeDeploy(id, productid) {
     return this.http
-    .get(API + '/api/SystemUpdate/GetDateTimeFileDeploy?customersettingsId=' + id);
+    .get(API + '/api/SystemUpdate/GetDateTimeFileDeploy?customersettingsId=' + id + '&productId=' + productid);
   }
 
   getVersionFile(id) {
@@ -41,13 +41,23 @@ export class CloudService {
     .get(API + '/api/SystemUpdate/GetVersionFile?customersettingsId=' + id);
   }
 
-  getDownloadDeploy(id) {
+  getStatusService(_serviceName) {
     return this.http
-    .get(API + '/api/SystemUpdate/DownloadDeploy?id=' + id);
+    .get(API + '/api/SystemUpdate/StatusService?servicename=' + _serviceName, { responseType: 'text' });
+  }
+
+  getStartStopService(isStart, _serviceName) {
+    return this.http
+    .get(API + '/api/SystemUpdate/StarStopService?isStart=' + isStart + '&servicename=' + _serviceName);
+  }
+
+  getDownloadDeploy(id, productid) {
+    return this.http
+    .get(API + '/api/SystemUpdate/DownloadDeploy?id=' + id + '&productId=' + productid);
   }
 
   getUpdateSystem(customerProduct: ModelCustomersProducts) {
-    console.log('Chamando Post atualizar ' + customerProduct);
+    console.log('Chamando Post atualizar ' + customerProduct.product.name);
     return this.http
     .post(API + '/api/SystemUpdate/UpdateCeltaBS',  customerProduct);
   }

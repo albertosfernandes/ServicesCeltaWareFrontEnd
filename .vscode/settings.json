@@ -1,5 +1,6 @@
 {
     "tslint.alwaysShowRuleFailuresAsWarnings": true,
     "tslint.jsEnable": false,
-    "javascript.validate.enable": false
+    "javascript.validate.enable": false,
+    "explorer.compactFolders": false
 }

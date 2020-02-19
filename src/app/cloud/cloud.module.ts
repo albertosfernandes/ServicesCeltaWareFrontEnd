@@ -5,6 +5,7 @@ import { CloudComponent } from './cloud.component';
 import { DashboardCloudComponent } from './dashboard-cloud/dashboard-cloud.component';
 import { MenuCloudComponent } from './menu-cloud/menu-cloud.component';
 import { MenuCloudVerticalComponent } from './menu-cloud-vertical/menu-cloud-vertical.component';
+import { SynchServiceComponent } from './dashboard-cloud/synch-service/synch-service.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { MenuCloudVerticalComponent } from './menu-cloud-vertical/menu-cloud-ver
   declarations: [
     CloudComponent, 
     DashboardCloudComponent, 
-    MenuCloudComponent, MenuCloudVerticalComponent
+    MenuCloudComponent, MenuCloudVerticalComponent, SynchServiceComponent
   ]
 })
 export class CloudModule { }

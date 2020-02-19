@@ -1,33 +1,39 @@
 
 <div class="card " style="margin-bottom: 3% ">
+
   <div class="card-header">
     Informações detalhadas
   </div>
-  <div class="card-body">
-    <div class="card-deck">
-      <div class="card-body">
-        <p>Produto: {{customerProducts.product.name}}</p>
-        <p>Diretório de instalação: {{customerProducts.installDirectory}}</p>
-        <p><strong>Versão: </strong> {{versionProduct | date:'medium'}} </p>
-        <button class="btn btn-success" *ngIf="customerProducts.product.productId" (click)="update(customerProducts)" [disabled]="isUpdating">
-          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
-          {{ updateBtnText }}
-        </button>
-        <!-- <div class="spinner-border" role="status" *ngIf="isUpdating">
-          <span class="sr-only">baixando...</span>
-        </div> -->
+<div class="container">
+  <div class="row">
+  <div class="col-sm-6">
+    <div class="card-body">
+      <div class="card-deck">
+        <div class="card-body">
+          <p>Produto: {{customerProducts.product.name}}</p>
+          <p>Diretório de instalação: {{customerProducts.installDirectory}}</p>
+          <p><strong>Versão: </strong> {{versionProduct | date:'medium'}} </p>
+          <button class="btn btn-success" *ngIf="customerProducts.product.productId" (click)="update(customerProducts)" [disabled]="isUpdating">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+            {{ updateBtnText }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
+  <div class="col-sm-4">
+    <app-synch-service *ngIf="customerProducts.productId === 5" [customerProducts]='customerProducts'></app-synch-service>
+  </div>
+</div>
+</div>
+
+
   <div class="card-footer text-muted">
     <p><strong>Versão: </strong> {{dateObj | date:'medium'}} </p>
-    <button type="button" class="btn btn-primary" *ngIf="dateObj" (click)="downloadDeploy(customerProducts.customer.customerId)" [disabled]="isDownloading">
+    <button type="button" class="btn btn-primary" *ngIf="dateObj" (click)="downloadDeploy(customerProducts.customer.customerId, customerProducts.productId)" [disabled]="isDownloading">
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isDownloading"></span>
       {{ downloadBtnText }}
     </button>
-    <!-- <div class="spinner-border" role="status" *ngIf="isDownloading">
-      <span class="sr-only">baixando...</span>
-    </div> -->
   </div>
 </div>
 

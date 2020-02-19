@@ -1,0 +1,25 @@
+<div class="card-body">
+  <div class="card-deck">
+    <div class="card-body">
+      <p [ngClass]="(isUP)?'alert alert-success':'alert alert-danger'"> Status: {{ statusMessage }}</p>
+      <button class="btn btn-danger" *ngIf="isUP" (click)="changeStatus(false)" [disabled]="isUpdating">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+        {{ serviceBtnText }}
+      </button>
+
+      <button class="btn btn-success" *ngIf="isUP == false" (click)="changeStatus(true)" [disabled]="isUpdating">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+        {{ serviceBtnText }}
+      </button>
+      <!-- [ngClass]="(step=='step1')?'my-class1':'my-class2'" -->
+      <!-- <button class="btn btn-success" *ngIf="isUP" (click)="changeStatus()"> -->
+
+        <!-- <button [ngClass]="(isUP)?'btn btn-danger':'btn btn-success'" (click)="changeStatus()">
+
+         {{ serviceBtnText }}
+      </button>  -->
+
+    </div>
+    {{ customerProducts.synchronizerServiceName }}
+  </div>
+</div>
