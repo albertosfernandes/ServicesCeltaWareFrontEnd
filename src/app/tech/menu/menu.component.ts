@@ -1,14 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, OnDestroy, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-menu-vertical',
-  templateUrl: './menu-vertical.component.html',
-  styleUrls: ['./menu-vertical.component.css']
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.css']
 })
-export class MenuVerticalComponent implements OnInit, OnDestroy {
+export class MenuComponent implements OnInit, OnDestroy {
 
   constructor() { }
-
   @Input() isOpen: boolean;
   @Input() menu = 'dash';
   @Output() onMenuSend = new EventEmitter<string>();
@@ -16,10 +15,11 @@ export class MenuVerticalComponent implements OnInit, OnDestroy {
   toggle() {
     this.isOpen = !this.isOpen;
   }
+
   bntMenu(_value) {
     this.menu = _value;
     this.onMenuSend.emit(_value);
-    console.log(_value);
+    console.log('menuComponent ' + _value);
   }
 
   ngOnInit() {

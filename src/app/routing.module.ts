@@ -19,7 +19,7 @@ const asfRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [    
+  imports: [
     CommonModule,
     RouterModule.forRoot(asfRoutes)
   ],

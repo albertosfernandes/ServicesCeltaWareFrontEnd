@@ -1,0 +1,12 @@
+<form [formGroup]='productForm' (submit)='onSubmitProduct()'>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-lg-12">
+       <input type="text" formControlName='productId'class="form-control invisible" id="productId" placeholder="id" visible='false'>
+      <label for="productname">Nome</label>
+      <input type="text" formControlName='name'class="form-control" id="productname" placeholder="Nome do produto CeltaWare">
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Gravar</button>
+</form>

@@ -1,12 +1,19 @@
-<app-menu-vertical [isOpen]="tog" (onMenuSend)="getMenu($event)"></app-menu-vertical> 
+<!-- <app-menu-vertical [isOpen]="tog" (onMenuSend)="getMenu($event)"></app-menu-vertical>  -->
+<app-menu [isOpen]="tog" (onMenuSend)="getMenu($event)"></app-menu>
 <div class="container" style="margin-top: 10px">
-    <div class="row" *ngIf="menuActive == 'dash'">        
+    <div class="row" *ngIf="menuActive == 'dash'" style="margin-left: 15%">
         <app-dashboard></app-dashboard>
     </div>
-    <div class="row" *ngIf="menuActive == 'celtaVpn'">        
+    <div class="row" *ngIf="menuActive == 'celtaVpn'" style="margin-left: 15%">
         <app-celta-vpn></app-celta-vpn>
     </div>
-    <div class="row" *ngIf="menuActive == 'servidores'">         
-        <app-servers></app-servers>       
+    <div class="row" *ngIf="menuActive == 'servidores'" style="margin-left: 15%">
+        <app-servers></app-servers>
     </div>
+    <div class="row" *ngIf="menuActive == 'formCliente'" style="margin-left: 15%">
+      <app-form-cliente></app-form-cliente>
+  </div>
+  <div class="row" *ngIf="menuActive == 'formProduto'" style="margin-left: 15%">
+    <app-form-produto></app-form-produto>
+  </div>
 </div>

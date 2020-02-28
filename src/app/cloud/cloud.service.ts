@@ -4,9 +4,9 @@ import { ModelProduct } from '../models/model-product';
 import { ModelCustomer } from '../models/model-customer';
 import { ModelCustomersProducts } from './../models/model-customersproducts';
 
-const API = 'http://update.celtaware.com.br:9994';
+// const API = 'http://update.celtaware.com.br:9994';
 // const API = 'http://localhost:20854';
-// const API = 'http://localhost:9991';
+const API = 'http://localhost:9991';
 
 @Injectable({
   providedIn: 'root'

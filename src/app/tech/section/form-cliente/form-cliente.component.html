@@ -1,0 +1,84 @@
+<div class="row" *ngIf="!isNew" >
+  <div class="col-2">
+    <button class="btn btn-primary" (click)="btnNew()"> Novo </button>
+  </div>
+  <div class="col-2">
+    <button class="btn btn-warning" (click)="getAllCustomers()"> Listar </button>
+  </div>
+  <div class="col-6" style="margin-left: 5%;">
+    <form class="form-inline">
+    <div class="form-group row">
+      <input type="text" class="form-control" [(ngModel)]="valueSearch" placeholder="Pesquisar">
+      <button class="btn btn-info" (click)="btnSearchCustomer(valueSearch)"> Pesquisar </button>
+    </div>
+    </form>
+  </div>
+</div>
+
+<!-- <div *ngIf="isLoading"> -->
+  <div style="padding-left: 50%;" *ngIf="isLoading" >
+  <div class="spinner-border" role="status" style="margin-left:50%;">
+    <span class="sr-only">Carregando...</span>
+   </div>
+  <p>Aguarde carregando clientes ...</p>
+  </div>
+
+<!-- <option *ngFor="let customer of customersMenu" [value]="customer.customerId" >{{customer.fantasyName}}</option> -->
+<table class="table" *ngIf="isList">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Razão Social</th>
+      <th scope="col">Nome Fantasia</th>
+      <th scope="col">CNPJ</th>
+      <th scope="col">Código CeltaBS</th>
+      <th scope="col">Diretório Instalação</th>
+      <th scope="col"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let customer of customers">
+      <th scope="row">{{ customer.customerId }}</th>
+      <td>{{ customer.companyName }}</td>
+      <td>{{ customer.fantasyName }}</td>
+      <td>{{ customer.cnpj }}</td>
+      <td>{{ customer.codeCeltaBs }}</td>
+      <td>{{ customer.rootDirectory }}</td>
+      <td><button class="btn btn-secondary" (click)="btnEdit(customer.customerId)"><i class="fa fa-plus"></i></button> {{ customer.customerId }}</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<form [formGroup]='customerFormGroup' (submit)='onSubmitCustomer()' *ngIf="isNew" >
+  <div class="form-group">
+    <div class="row">
+      <input type="text" formControlName='customerId' class="form-control invisible" id="customerId" placeholder="id" visible='false'>
+      <div class="col-12">
+      <label for="companyName">Razão Social</label>
+      <input type="text" formControlName='companyName' class="form-control" id="companyName" placeholder="Nome da Empresa">
+      </div>
+      <div class="col-sm-12">
+        <label for="fantasyName">Nome Fantasia</label>
+        <input type="text" formControlName='fantasyName' class="form-control" id="fantasyName" placeholder="Nome">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <label for="cnpj">CNPJ</label>
+        <input type="text" formControlName='cnpj' class="form-control" id="cnpj" placeholder="00.000.000\0000-00">
+      </div>
+      <div class="col-6">
+        <label for="codeCeltaBs">Código Personalizado CeltaWare</label>
+        <input type="text" formControlName='codeCeltaBs' class="form-control" id="codeCeltaBs" aria-describedby="emailHelp" placeholder="Código CeltaBS">
+      </div>
+
+      <div class="col-6">
+        <label for="rootDirectory">Diretório de instalação</label>
+        <input type="text" formControlName='rootDirectory' class="form-control" id="rootDirectory" aria-describedby="emailHelp" placeholder="Nome">
+      </div>
+    </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Gravar</button>
+    <button class="btn btn-danger" (click)="btnNew()">Cancelar</button>
+</form>

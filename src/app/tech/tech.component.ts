@@ -8,15 +8,15 @@ import { Component, OnInit } from '@angular/core';
 export class TechComponent implements OnInit {
 
   constructor() { }
-  tog: boolean = true;
-  menuActive: string = "dash";
-  
-  getToggle(cliquei){
-    console.log("receber evento: " + this.tog);
+  tog = true;
+  menuActive = 'dash';
+
+  getToggle(cliquei) {
+    console.log('recebeu evento: ' + this.tog);
     this.tog = !this.tog;
   }
 
-  getMenu(_value){
+  getMenu(_value) {
     this.menuActive = _value;
   }
 

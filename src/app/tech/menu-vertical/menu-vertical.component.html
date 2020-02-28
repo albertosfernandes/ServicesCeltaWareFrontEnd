@@ -5,27 +5,42 @@
       <div class="sidenav-header d-flex align-items-center justify-content-center">
         <!-- User Info-->
         <div class="sidenav-header-inner text-center">
-          <h2 class="h5">Nathan Andrews</h2><span>Web Developer</span>
+          <h2 class="h5">User Login</h2><span>Function</span>
         </div>
         <!-- Small Brand information, appears on minimized sidebar-->
-        <div class="sidenav-header-logo" *ngIf="isOpen"><span style="font-size: 14px; color:white;"><i class="fa fa-bars" (click)="toggle()" ></i></span></div>              
+        <div class="sidenav-header-logo" *ngIf="isOpen"><span style="font-size: 14px; color:white;"><i class="fa fa-bars" (click)="toggle()" ></i></span></div>
         <div class="sidenav-header-inner"*ngIf="!isOpen"><span style="font-size: 14px; color:white;"> <i class="fa fa-close" (click)="toggle()"></i> </span></div>
       </div>
       <!-- Sidebar Navigation Menus-->
       <div class="main-menu">
         <h5 class="sidenav-heading">Main</h5>
-        <ul id="side-main-menu" class="side-menu list-unstyled">                  
+        <ul id="side-main-menu" class="side-menu list-unstyled">
+
           <li [class.active]="menu == 'dash'"> <a name="dash" (click)="bntMenu('dash')">
             <i class="fa fa-home"></i> Dashboard </a>
+          </li>
+
+
+         <li class="treeview">
+            <a href="#">
+              <i class="fa fa-link"></i> <span>Cadastros</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="index.html"><i class="fa fa-circle-o"></i> Clientes</a></li>
+              <li class="active"><a href="index2.html"><i class="fa fa-circle-o"></i> Produtos</a></li>
+            </ul>
           </li>
           <li [class.active]="menu == 'celtaVpn'"><a (click)="bntMenu('celtaVpn')">
             <i class="fa fa-at"></i> CeltaVpn</a>
           </li>
           <li [class.active]="menu == 'servidores'"><a (click)="bntMenu('servidores')">
             <i class="fa fa-database"></i> Servidores</a>
-          </li>       
+          </li>
         </ul>
       </div>
-     
+
     </div>
   </nav>
