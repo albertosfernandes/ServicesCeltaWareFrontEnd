@@ -16,27 +16,18 @@ export class FormProdutoComponent implements OnInit {
 
   constructor(private techService: TechService, private formBuilder: FormBuilder) { }
 
-
-  // addProduct(_product: ModelProduct) {
-  //   this.techService.addProduct(_product)
-  //   .subscribe(data => {
-  //   },
-  //   error => {
-  //     alert('error ');
-  //   });
-  // }
-
   onSubmitProduct() {
     this.product = this.productForm.getRawValue();
     // const settingData = new FormData();
     // settingData.append('enterprise', values.EnterpriseId);
     // settingData.append('pdv', values.PdvId);
     // settingData.append('serialPos', values.PosSerial);
-    console.log('chamando o service addProduto com valor: ' + this.product);
      this.techService.addProduct(this.product)
     .subscribe(
       () => console.log('sucess...'),
-      err => console.log('error: ' + err)
+      err => {
+        console.log('error: ' + err);
+      }
     );
   }
 

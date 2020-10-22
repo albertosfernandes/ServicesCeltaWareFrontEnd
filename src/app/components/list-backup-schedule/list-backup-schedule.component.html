@@ -1,0 +1,45 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Hostname</th>
+      <th scope="col">Database</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Horario</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let schedule of backupsSchedules">
+      <th scope="row">{{schedule.backupScheduleId}}</th>
+      <td>{{ schedule.customerProduct.server.hostname }}</td>
+      <td>{{ schedule.customerProduct.synchronizerServiceName }}</td>
+      <td>{{ schedule.type }}</td>
+      <td>{{ schedule.dateHourExecution }}</td>
+      <td>{{ schedule.backupStatus }}</td>
+    </tr>
+  </tbody>
+</table>
+<button class="btn btn-info" (click)='ShowNew()'>Novo</button>
+
+<form [formGroup]='backupScheduleFormGroup' (submit)='onSubmitBackupSchedule()' *ngIf="isShowNew" >
+  <div class="form-group">
+    <div class="row">
+      <div class="col-12">
+      <label for="inputGroupSelectType">Tipo</label>
+      <select class="custom-select" id="inputGroupSelectType" name="inputGroupSelect01" (change)="onChangeSelect($event.target.value)">
+        <option selected [value]="0">Full</option>
+        <option [value]="1">Diferencial</option>
+      </select>
+      </div>
+      <div class="col-sm-12">
+        <label for="dateHourExecution">Horario</label>
+        <input type="time" formControlName='dateHourExecution' class="form-control" id="dateHourExecution" name="dateHourExecution">
+      </div>
+    </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Gravar</button>
+    <a class="btn btn-danger" >Cancelar</a>
+</form>

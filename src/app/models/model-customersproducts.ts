@@ -1,3 +1,4 @@
+import { ModelServer } from './model-server';
 import { ModelCustomer } from './model-customer';
 import { ModelProduct } from './model-product';
 
@@ -12,6 +13,9 @@ export class ModelCustomersProducts {
     port: string;
     loginUser: string;
     loginPassword: string;
+    isCreated: boolean;
     installDirectory: string;
     synchronizerServiceName: string;
+    serversId: number;
+    server: ModelServer;
 }

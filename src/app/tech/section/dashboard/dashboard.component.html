@@ -1,29 +1,51 @@
+<div class="card">
+  <div class="card-body">
+    <h6 class="card-subtitle mb-2 text-muted">Usuários:</h6>
+    <p class="card-text">Total de usuários: <strong> {{ usersTotal }}</strong></p>
+    <p class="card-text">Usuários disponíveis: <strong> {{ connectedUsers }}</strong></p>
+  </div>
+  <div class="card-body">
+    <h6 class="card-subtitle mb-2 text-muted">Disponível</h6>
+    <div *ngFor="let myuser of users" >
+      <div  class="circulo textocirculo" *ngIf="myuser.isConnected === true" style="background-color: greenyellow;" (click)="onClickchangeStatus(myuser.userId)">
+        <p style="text-align: center;vertical-align: baseline; "> {{ myuser.name }}</p></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <h6 class="card-subtitle mb-2 text-muted">Em atendimento</h6>
+    <div *ngFor="let myuser of users" >
+      <div  class="circulo textocirculo" *ngIf="myuser.isConnected === false" style="background-color:indianred;" (click)="onClickchangeStatus(myuser.userId)">
+        <p style="text-align: center;vertical-align: baseline; "> {{ myuser.name }}</p></div>
+    </div>
+  </div>
+</div>
+
 <div class="card" style="width: 18rem;">
-    <div class="card-body">        
-      <h6 class="card-subtitle mb-2 text-muted">Informações VPN CeltaWare </h6>   
+    <div class="card-body">
+      <h6 class="card-subtitle mb-2 text-muted">Informações VPN CeltaWare </h6>
       <p class="card-text">Total de usuários: <strong> {{ usersTotal }}</strong></p>
       <p class="card-text">Usuários conectados: <strong> {{ connectedUsers }}</strong></p>
-      <!--<a href="#" class="card-link">Card link</a>-->         
+      <!--<a href="#" class="card-link">Card link</a>-->
     </div>
   </div>
 
   <div class="card-columns">
       <div class="card" style="width: 18rem;">
-          <div class="card-body">        
-            <h6 class="card-subtitle mb-2 text-muted">Informações Servidores CeltaWare </h6>   
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">Informações Servidores CeltaWare </h6>
             <p class="card-text">Total de servidores <strong> {{ serversTotal }}</strong></p>
             <p class="card-text">Alertas <strong> {{ alerts }}</strong></p>
-            <a href="#" class="card-link">Mais Informações</a>       
+            <a href="#" class="card-link">Mais Informações</a>
           </div>
         </div>
-      
+
         <div class="card" style="width: 18rem;">
-            <div class="card-body">      
-              <a href="#" class="card-link">  
-              <h6 class="card-subtitle mb-2 text-muted">Informações de rede </h6>   
+            <div class="card-body">
+              <a href="#" class="card-link">
+              <h6 class="card-subtitle mb-2 text-muted">Informações de rede </h6>
               <p class="card-text">Total de portas <strong> {{ portsTotal }}</strong></p>
               <p class="card-text">Alertas <strong> {{ alerts }}</strong></p>
-              </a>         
+              </a>
             </div>
           </div>
-        </div>  
+        </div>

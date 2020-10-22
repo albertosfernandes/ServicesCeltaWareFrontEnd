@@ -1,0 +1,5 @@
+  <label for="inputGroupSelectServer">Cliente</label>
+      <select class="custom-select" id="inputGroupSelectCustomer" (change)="onChange($event.target.value)" [disabled]='isLoading'>
+        <option selected>Selecione um Cliente</option>
+        <option *ngFor="let customerProduct of customersProductsInput" [value]="customerProduct.customersProductsId" >{{customerProduct.customer.fantasyName}}</option>
+      </select>

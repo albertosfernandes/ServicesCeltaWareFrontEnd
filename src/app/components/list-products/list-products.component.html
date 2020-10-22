@@ -1,0 +1,30 @@
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Produto</th>
+      <th scope="col">Endereço</th>
+      <th scope='col'>ServerId</th>
+      <th scope="col">IP</th>
+      <th scope="col">Porta</th>
+      <th scope="col">Usuário</th>
+      <th scope="col">Senha</th>
+      <th scope="col">Diretório</th>
+      <th scope="col">Nome</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let customerProduct of customersProducts">
+      <th scope="row">{{ customerProduct.product.name }}</th>
+      <td>{{ customerProduct.addressName }}</td>
+      <td>{{ customerProduct.serversId }}</td>
+      <td>{{ customerProduct.ipAddress }}</td>
+      <td>{{ customerProduct.port }}</td>
+      <td>{{ customerProduct.loginUser }}</td>
+      <td>{{ customerProduct.loginPassword }}</td>
+      <td>{{ customerProduct.installDirectory }}</td>
+      <td>{{ customerProduct.synchronizerServiceName }}</td>
+      <!-- <td><button class="btn btn-secondary" (click)="btnEdit(customer.customerId)"><i class="fa fa-plus"></i></button> {{ customer.customerId }}</td> -->
+    </tr>
+  </tbody>
+</table>

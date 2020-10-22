@@ -1,4 +1,4 @@
-<div class="row" *ngIf="!isNew" >
+<div class="row" *ngIf="!isList" >
   <div class="col-2">
     <button class="btn btn-primary" (click)="btnNew()"> Novo </button>
   </div>
@@ -7,10 +7,10 @@
   </div>
   <div class="col-6" style="margin-left: 5%;">
     <form class="form-inline">
-    <div class="form-group row">
-      <input type="text" class="form-control" [(ngModel)]="valueSearch" placeholder="Pesquisar">
-      <button class="btn btn-info" (click)="btnSearchCustomer(valueSearch)"> Pesquisar </button>
-    </div>
+      <div class="form-group row">
+        <input type="text" class="form-control" name="searchCustomer" [(ngModel)]="valueSearch" placeholder="Pesquisar" *ngIf="isBtnSearch">
+        <button class="btn btn-info" (click)="btnSearchCustomer(valueSearch)" *ngIf="isBtnSearch" > Pesquisar </button>
+      </div>
     </form>
   </div>
 </div>
@@ -47,9 +47,15 @@
       <td><button class="btn btn-secondary" (click)="btnEdit(customer.customerId)"><i class="fa fa-plus"></i></button> {{ customer.customerId }}</td>
     </tr>
   </tbody>
+  <button class="btn btn-danger" (click)="btnCancelList()">Cancelar</button>
 </table>
 
-
+    <div *ngIf="isExecutingScript">
+        <div class="spinner-border" role="status" style="margin-left: 50%;">
+         <span class="sr-only">Carregando...</span>
+        </div>
+       <p>Aguarde Montando ambiente em nuvem.</p>
+    </div>      
 <form [formGroup]='customerFormGroup' (submit)='onSubmitCustomer()' *ngIf="isNew" >
   <div class="form-group">
     <div class="row">
@@ -81,4 +87,14 @@
     </div>
     <button type="submit" class="btn btn-primary">Gravar</button>
     <button class="btn btn-danger" (click)="btnNew()">Cancelar</button>
+    <a class="btn btn-warning" (click)="btnListProducts(customer.customerId)"> Listar Produtos</a>
+    <a class="btn btn-success" (click)="btnAddProduct(customer.customerId)"> Novo Produto</a>
+    <div class="row">
+      <div class="col-8">
+        <app-list-products [customerId]='customer.customerId' *ngIf="isListCustomerProduct" ></app-list-products>
+      </div>
+      <div class="col-8">
+        <app-add-customer-products [customerId]='customer.customerId' *ngIf="isNewCustomerProduct" ></app-add-customer-products>
+      </div>
+    </div>
 </form>

@@ -1,9 +1,9 @@
-   <div *ngIf="valorLoading">
-   <div class="spinner-border" role="status" >
+  <div *ngIf="valorLoading">
+    <div class="spinner-border" role="status" >
      <span class="sr-only">Carregando...</span>
     </div>
    <p>Aguarde carregando clientes ...</p>
-   </div>
+  </div>
   <app-menu-cloud (changeCustomerProduct)='receberEvent($event)' *ngIf="!valorLoading" [customersMenu]='customers'></app-menu-cloud>
   <div class="container">
     <div class="row" style="margin-left: 15%; margin-top: 3% ">

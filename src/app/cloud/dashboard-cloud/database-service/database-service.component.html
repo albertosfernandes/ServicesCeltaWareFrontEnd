@@ -1,0 +1,67 @@
+<div class="card-body">
+  <div class="card-deck">
+    <div class="card-body">
+
+      <!-- <button class="btn btn-danger" *ngIf="isUP" (click)="changeStatus(false)" [disabled]="isUpdating">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+
+      </button> -->
+
+      <!-- <button class="btn btn-success btn-sm" [disabled]="isUpdating" (click)="teste()">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+        Atualizar
+      </button> -->
+
+      <!-- <p [ngClass]="(isUP)?'alert alert-success':'alert alert-danger'"> Status: {{ statusMessage }}</p> -->
+
+      <div *ngIf="isExecutingScript">
+        <div class="spinner-border" role="status" style="margin-left: 50%;">
+         <span class="sr-only">Carregando...</span>
+        </div>
+       <p>Aguarde... {{ message }}</p>
+      </div>
+
+      <ul class="list-group">
+        <li class="list-group-item" [ngClass]="(isError)?'list-group-item-danger':'list-group-item-success'" *ngFor="let item of tasksUpdateDatabaseInRunning" >{{item}}</li>
+      </ul>
+
+      <div class="row">
+
+        <!-- <button class="btn btn-success btn-sm" [disabled]="isUpdating" (click)='click_updateDatabase(customerProducts.customersProductsId)'>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+          Atualizar
+        </button> -->
+
+        <button class="btn btn-success btn-sm" [disabled]="isUpdating" (click)='click_repairDatabase(customerProducts.customersProductsId)'>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+          Executar Repair
+        </button>
+
+        <button class="btn btn-success btn-sm" [disabled]="isUpdating" (click)='click_createDatabase(customerProducts.customersProductsId)'>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+          Executar Create
+        </button>
+
+        <!-- <button class="btn btn-success btn-sm" [disabled]="isUpdating" (click)='click_createBsMessages(customerProducts.customersProductsId)'>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+          Executar BsMessages
+        </button> -->
+
+        <!-- <button class="btn btn-success btn-sm" [disabled]="isUpdating" (click)='click_teste(1)'>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+          TESTAR ok
+        </button>
+        <p>{{ messageError }}</p>
+        <button class="btn btn-success btn-sm" [disabled]="isUpdating" (click)='click_teste(6)'>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+          TESTAR error
+        </button> -->
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="overflow-auto" style="height: 220px; margin-bottom: 5%;">
+  {{ resultScript }}
+</div>

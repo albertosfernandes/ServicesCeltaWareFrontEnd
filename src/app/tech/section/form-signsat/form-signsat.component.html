@@ -1,0 +1,19 @@
+<!-- <form [formGroup]='productForm' (submit)='onSubmitProduct()'> -->
+<form class="form-inline">
+  <div class="form-group mb-2 mr-2" >
+        <!-- <input type="text" formControlName='customerCnpj'class="form-control invisible" id="customerCnpj" placeholder="id" visible='false'> -->
+        <label for="customerCnpj" class="mr-2">CNPJ do contribuinte</label>
+        <input type="text" formControlName='cnpj'class="form-control" id="customerCnpj" placeholder="cnpj sem pontos e sem barras">
+  </div>
+  <div class="form-group mb-2">
+    <button type="submit" class="btn btn-info">Consultar</button>
+  </div>
+  <div class="form-group mx-sm-3 mb-2">
+    <button class="btn btn-primary" (click)="generate()">
+      Gerar
+    </button>
+  </div>
+</form>
+<div>
+  <p> {{key}}</p>
+</div>

@@ -1,0 +1,36 @@
+<div class="form-group">
+  <div class="row">
+    <div class="col-sm-12">
+      <app-list-servers (eventServerId)='receiveServerId($event)'></app-list-servers>
+      <app-list-customers [customersProductsInput]='customersProducts' (eventCustomerId)='receivedCustomerId($event)' *ngIf="serverid" ></app-list-customers>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <form [formGroup]='databaseForm' (submit)='onSubmitDatabase()'>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-lg-4">
+        <label for="conteinerName">Conteiner</label>
+        <input type="text" formControlName='conteinerName'class="form-control" id="conteinerName" placeholder="Nome do conteiner">
+        </div>
+         <div class="col-lg-4">
+          <label for="databaseName">Hostname</label>
+          <input type="text" formControlName='databaseName'class="form-control" id="databaseName" placeholder="Nome do banco de dados">
+          </div>
+          <div class="col-lg-4">
+            <label for="memoryRam">Memória Ram</label>
+            <input type="number" formControlName='memoryRam'class="form-control" id="memoryRam">
+          </div>
+          <div class="col-lg-4">
+            <label for="directory">Diretório</label>
+            <input type="text" formControlName='directory'class="form-control" id="directory" placeholder="/volumes-iscsi ...">
+          </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Gravar</button>
+    <input type="text" formControlName='databasesId'class="form-control invisible" id="databasesId" placeholder="id" visible='false'>
+  </form>
+  </div>

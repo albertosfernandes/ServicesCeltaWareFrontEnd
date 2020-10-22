@@ -1,0 +1,70 @@
+<div class="card-body">
+
+  <table class="table"ng serve>
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Diretório</th>
+        <th scope="col">Arquivo</th>
+        <th scope="col">Nome amigável</th>
+        <th scope="col">Senha</th>
+        <th scope="col">Expira em</th>
+        <th scope="col">Instalado?</th>
+        <th scope="col"> </th>
+        <th scope="col"> </th>
+        <th scope="col"> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let certificate of certificates">
+        <th scope="row">{{ certificate.certificateId }}</th>
+        <td>{{ certificate.fileRepositorie }}</td>
+        <td>{{ certificate.fileName }}</td>
+        <td>{{ certificate.friendlyName }}</td>
+        <td>{{ certificate.password }}</td>
+        <td>{{ certificate.dateHourExpiration }}</td>
+        <td>{{ certificate.isInstalled }}</td>
+        <td *ngIf="!certificate.isInstalled" ><button class="btn btn-secondary" (click)="btnInstall(certificate.certificateId)"><i class="fa fa-plus"></i></button> Instalar </td>
+        <td *ngIf="certificate.isInstalled" ><button class="btn btn-secondary" (click)="btnDownload(certificate.certificateId)"><i class="fa fa-download"></i></button> Baixar </td>
+        <td *ngIf="certificate.isInstalled" ><button class="btn btn-secondary" (click)="btnRemove(certificate.certificateId)"><i class="fa fa-close"></i></button> Remover </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card-body">
+    <button class="btn btn-success" (click)="newCertificate(customerProducts.customerId)">
+      Novo
+    </button>
+  <div class="card-body" *ngIf="isNewCertiticate" >
+    <form [formGroup]='certificateForm' (submit)='onSubmitCertificate()'>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-lg-12">
+          <input type="text" formControlName='certificateId'class="form-control invisible" id="certificateId" placeholder="id" visible='false'>
+          <input type="text" formControlName='customerId'class="form-control invisible" id="customerId" placeholder="id" visible='false'>
+          <label for="fileRepositorie">Nome do diretório</label>
+          <input type="text" formControlName='fileRepositorie' class="form-control" id="fileRepositorie" placeholder="Diretório">
+          <!-- <label for="fileName">Nome do arquivo</label>
+          <input type="text" formControlName='fileName' class="form-control" id="fileName" placeholder="arquivo.pfx"> -->
+          <label for="friendlyName">Nome amigável do certificado</label>
+          <input type="text" formControlName='friendlyName' class="form-control" id="friendlyName" placeholder="arquivo loja">
+          <label for="password">Senha do certificado</label>
+          <input type="text" formControlName='password' class="form-control" id="password" placeholder="Password">
+          <!-- <label for="dateHourExpiration">Data de expiração do certificado</label>
+          <input type="text" formControlName='dateHourExpiration' class="form-control" id="dateHourExpiration" placeholder="arquivo loja"> -->
+          <!-- <label for="isInstalled">Instalado: </label>
+          <input type="checkbox" formControlName='isInstalled' class="form-control" id="isInstalled"> -->
+          <label for="customFile">Upload de arquivo</label>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFile" (change)='onUploadFile($event)'>
+            <label class="custom-file-label" for="customFile" id="customFileLabel">Selecione o arquivo</label>
+            <!-- <button type='button' class="btn btn-default" (click)='btnUploadClick()' [disabled]='!file'>Upload</button> -->
+          </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Gravar</button>
+    </form>
+  </div>
+</div>
+

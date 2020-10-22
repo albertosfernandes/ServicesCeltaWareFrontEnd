@@ -1,0 +1,12 @@
+<div class="col-sm-12 form-group">
+  <!-- <select class="custom-select" id="inputGroupSelect01" (change)="onChange($event.target.value)" [disabled]='isLoading'></select> -->
+  <label for="inputGroupSelect01">Selecione um banco de dados</label>
+  <select class="form-control" id="inputGroupSelect01" (change)='onChange($event.target.value)' [disabled]='isLoading'>
+    <option selected>Selecione um Banco</option>
+    <option *ngFor="let backupSchedule of databasesSchedules" [value]="backupSchedule.customerProduct.customersProductsId">{{backupSchedule.customerProduct.synchronizerServiceName}}</option>
+  </select>
+</div>
+
+<div *ngIf="isShowSchedules" >
+<app-list-backup-schedule [customerProduct]='customerProduct'></app-list-backup-schedule>
+</div>

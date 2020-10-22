@@ -1,0 +1,43 @@
+<div class="row">
+<form [formGroup]='serverForm' (submit)='onSubmitServer()'>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-lg-4">
+      <label for="ipAddress">Endereço IP</label>
+      <input type="text" formControlName='ipAddress'class="form-control" id="ipAddress" placeholder="xxx.xxx.xxx.xxx">
+      </div>
+      <div class="col-lg-4">
+       <label for="port">Porta Api</label>
+       <input type="text" formControlName='port'class="form-control" id="port" placeholder="">
+       </div>
+       <div class="col-lg-4">
+        <label for="hostname">Hostaname</label>
+        <input type="text" formControlName='hostname'class="form-control" id="hostname" placeholder="xxx.xxx.xxx.xxx">
+        </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Gravar</button>
+  <input type="text" formControlName='serversId'class="form-control invisible" id="serversId" placeholder="id" visible='false'>
+</form>
+</div>
+
+<div class="row mt-2">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Endereço IP</th>
+        <th scope="col">Porta</th>
+        <th scope="col">Nome do Host</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let server of servers">
+        <th scope="row">{{ server.serversId }}</th>
+        <td>{{ server.ipAddress }}</td>
+        <td>{{ server.port }}</td>
+        <td>{{ server.hostname }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

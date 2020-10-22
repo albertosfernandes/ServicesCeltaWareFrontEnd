@@ -1,0 +1,5 @@
+  <label for="inputGroupSelectServer">Servidor</label>
+      <select class="custom-select" id="inputGroupSelect01" (change)="onChange($event.target.value)" [disabled]='isLoading'>
+        <option selected>Selecione um Servidor</option>
+        <option *ngFor="let server of servers" [value]="server.serversId" >{{server.hostname}}</option>
+      </select>

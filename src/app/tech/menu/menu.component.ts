@@ -10,6 +10,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   constructor() { }
   @Input() isOpen: boolean;
   @Input() menu = 'dash';
+  // tslint:disable-next-line: no-output-on-prefix
   @Output() onMenuSend = new EventEmitter<string>();
 
   toggle() {

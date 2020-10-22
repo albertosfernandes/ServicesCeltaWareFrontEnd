@@ -4,6 +4,6 @@ export class ModelCustomer {
     fantasyName: string;
     cnpj: string;
     codeCeltaBs: number;
-    customersProducts: string;
+    // customersProducts: string;
     rootDirectory: string;
 }

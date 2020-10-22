@@ -29,7 +29,6 @@ export class MenuCloudComponent implements OnInit, OnChanges {
     .subscribe(customerArray => {
       this.customers = customerArray;
       this.isLoading = false;
-      console.log('apos execucao do load' + this.isLoading);
     },
     error => {
       alert('error ');
@@ -51,9 +50,6 @@ export class MenuCloudComponent implements OnInit, OnChanges {
 }
 
   ngOnInit() {
-    // console.log('carregando loadCustomers ' + this.isLoading);
-    // this.loadCustomers();
-    // console.log('fim do loadCustomers ' + this.isLoading);
   }
 
   ngOnChanges() {
