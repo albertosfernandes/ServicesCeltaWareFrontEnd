@@ -3,6 +3,7 @@ import { ModelBackupSchedule } from './../../../models/model-backupschedule';
 import { ServersService } from './../../../tech/section/servers/servers.service';
 import { Component, Input, OnInit, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { ModelServer } from 'src/app/models/model-server';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cards-database',
@@ -17,10 +18,11 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
   memoryRamValueTotal: number;
   storageValueTotal: number;
   urlServerApi;
+  sub: Subscription[] = [];
   constructor(private serversServices: ServersService) { }
 
   loadBackupSchedules(_urlServerId, _customerProductId) {
-    this.serversServices.getSchedulesBackupFromApiByCustomerProducts(_urlServerId, _customerProductId)
+    this.sub.push(this.serversServices.getSchedulesBackupFromApiByCustomerProducts(_urlServerId, _customerProductId)
     .subscribe(backupSchedulesList => {
       this.databasebackupSchedules = backupSchedulesList;
     },
@@ -32,7 +34,8 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
       // console.log(this.backupSchedules[0]);
       this.memoryRamValueTotal = this.databasebackupSchedules[0].databases.memoryRam;
       this.storageValueTotal = this.databasebackupSchedules[0].databases.storage;
-    });
+    })
+    );
   }
 
   ngOnInit() {
@@ -41,7 +44,7 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
     this.loadBackupSchedules(this.urlServerApi, this.customerProductIdInput);
   }
   ngOnDestroy() {
-
+    this.sub.forEach(s => s.unsubscribe);
   }
   ngOnChanges() {
     this.urlServerApi = this.serverInput.ipAddress + ':' + this.serverInput.port;

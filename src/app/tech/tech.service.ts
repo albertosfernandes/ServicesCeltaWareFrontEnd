@@ -7,8 +7,8 @@ import { Observable, of, throwError } from 'rxjs';
 import { map, catchError, tap  } from 'rxjs/operators';
 import { ModelUser } from '../models/model-user';
 
-// const API = 'http://update.celtaware.com.br:9994';
-const API = 'http://localhost:20854';
+const API = 'http://update.celtaware.com.br:9994';
+// const API = 'http://localhost:20854';
 // const API = 'http://localhost:9991';
 
 @Injectable({

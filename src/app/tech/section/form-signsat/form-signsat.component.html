@@ -1,19 +1,33 @@
 <!-- <form [formGroup]='productForm' (submit)='onSubmitProduct()'> -->
-<form class="form-inline">
-  <div class="form-group mb-2 mr-2" >
-        <!-- <input type="text" formControlName='customerCnpj'class="form-control invisible" id="customerCnpj" placeholder="id" visible='false'> -->
-        <label for="customerCnpj" class="mr-2">CNPJ do contribuinte</label>
-        <input type="text" formControlName='cnpj'class="form-control" id="customerCnpj" placeholder="cnpj sem pontos e sem barras">
+  <div class="row">
+    <div class="col-lg-12">
+      <form [formGroup]='signSatForm' (submit)='onsubmitSignSat()'>
+        <input type="text" formControlName='signSatId'class="form-control invisible" id="signSatId" placeholder="id" visible='false'>
+        <label for="basic-url">Cnpj do contribuinte</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3" style="text-decoration: underline;">Consultar</span>
+          </div>
+          <input type="text" formControlName='cnpjCustomer' class="form-control" id="basic-url" aria-describedby="basic-addon3">
+        </div>
+        <!-- <button class="btn btn-primary" (click)="generate()">
+          Gerar chave
+        </button>
+      -->
+        <button type="submit" class="btn btn-primary">Gerar chave</button>
+      </form>
+        <!-- <div class="form-group mb-2 mr-2" >
+               <input type="text" formControlName='customerCnpj'class="form-control invisible" id="customerCnpj" placeholder="id" visible='false'>
+              <label for="customerCnpj" class="mr-2">CNPJ do contribuinte</label>
+              <input type="text" formControlName='cnpj'class="form-control" id="customerCnpj" placeholder="cnpj sem pontos e sem barras">
+        </div>
+        <div class="form-group mb-2">
+          <button type="submit" class="btn btn-info">Consultar</button>
+        </div> -->
+
+      <div>
+        <p> {{key}}</p>
+      </div>
+    </div>
   </div>
-  <div class="form-group mb-2">
-    <button type="submit" class="btn btn-info">Consultar</button>
-  </div>
-  <div class="form-group mx-sm-3 mb-2">
-    <button class="btn btn-primary" (click)="generate()">
-      Gerar
-    </button>
-  </div>
-</form>
-<div>
-  <p> {{key}}</p>
-</div>
+

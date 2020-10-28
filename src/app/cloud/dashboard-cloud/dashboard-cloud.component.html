@@ -1,64 +1,109 @@
-
-<div class="card " style="margin-bottom: 3% ">
-
-  <div class="card-header">
-    Informações detalhadas
-  </div>
-<div class="container">
-  <div class="row">
-  <div class="col-sm-6">
-    <div class="card-body">
-      <div class="card-deck">
+<div class="card" style="margin-bottom: 3%">
+  <div class="card-header">Informações detalhadas</div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
         <div class="card-body">
-          <p>Produto: {{customerProducts.product.name}}</p>
-          <div class="row" style="margin-bottom: 5%; margin-left: 1%;">
+          <div class="card-deck">
+            <div class="card-body">
+              <p>Produto: {{ customerProducts.product.name }}</p>
+              <div class="row" style="margin-bottom: 5%; margin-left: 1%">
+                <button
+                  class="btn btn-primary"
+                  *ngIf="customerProducts.product.productId === 6"
+                  (click)="getKeyFile(customerProducts)"
+                >
+                  Baixar o par de chaves.
+                </button>
 
-            <button class="btn btn-primary" *ngIf="customerProducts.product.productId === 6" (click)="getKeyFile(customerProducts)">
-              Baixar o par de chaves.
-            </button>
-
-            <div style="margin-top: 3%;">
-            <button class="btn btn-primary" *ngIf="customerProducts.product.productId === 6" (click)="updateConnectionString(customerProducts)">
-              Atualizar string de conexão.
-            </button>
-            <div class="input-group mb-3" *ngIf="customerProducts.product.productId === 6">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon3">Senha CeltaBSUSer</span>
+                <div style="margin-top: 3%">
+                  <button
+                    class="btn btn-primary"
+                    *ngIf="customerProducts.product.productId === 6"
+                    (click)="updateConnectionString(customerProducts)"
+                  >
+                    Atualizar string de conexão.
+                  </button>
+                  <div
+                    class="input-group mb-3"
+                    *ngIf="customerProducts.product.productId === 6"
+                  >
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon3"
+                        >Senha CeltaBSUSer</span
+                      >
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="basic-url"
+                      aria-describedby="basic-addon3"
+                      autofocus
+                      (keyup)="debounce.next($event.target.value)"
+                    />
+                  </div>
+                  <p *ngIf="customerProducts.product.productId === 6">
+                    {{ _celtabsuserPassword }}
+                  </p>
+                </div>
               </div>
-              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" autofocus (keyup)="debounce.next($event.target.value)">
+              <p *ngIf="customerProducts.product.productId != 6">
+                Diretório de instalação: {{ customerProducts.installDirectory }}
+              </p>
+              <p
+                *ngIf="
+                  customerProducts.product.productId != 6 &&
+                  customerProducts.product.productId != 7
+                "
+              >
+                <strong>Versão: </strong> {{ versionProduct | date: "medium" }}
+              </p>
+              <p
+                *ngIf="
+                  customerProducts.product.productId != 6 &&
+                  customerProducts.product.productId != 7
+                "
+              >
+                <strong>Data da última execução: </strong>
+                {{ lastExecution | date: "medium" }}
+              </p>
+              <button
+                class="btn btn-success"
+                *ngIf="
+                  customerProducts.product.productId &&
+                  customerProducts.product.productId != 7
+                "
+                (click)="update(customerProducts)"
+                [disabled]="isUpdating"
+              >
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                  *ngIf="isUpdating"
+                ></span>
+                {{ updateBtnText }}
+              </button>
             </div>
-            <p *ngIf="customerProducts.product.productId === 6">{{_celtabsuserPassword}}</p>
-            </div>
-
           </div>
-          <p *ngIf="customerProducts.product.productId != 6">Diretório de instalação: {{customerProducts.installDirectory}}</p>
-          <p *ngIf="customerProducts.product.productId != 6 && customerProducts.product.productId != 7" ><strong>Versão: </strong> {{versionProduct | date:'medium'}} </p>
-          <p *ngIf="customerProducts.product.productId != 6 && customerProducts.product.productId != 7" ><strong>Data da última execução: </strong> {{lastExecution | date:'medium'}} </p>
-          <button class="btn btn-success" *ngIf="customerProducts.product.productId && customerProducts.product.productId != 7" (click)="update(customerProducts)" [disabled]="isUpdating">
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
-            {{ updateBtnText }}
-          </button>
         </div>
+      </div>
+      <div class="col-sm-4" *ngIf="customerProducts.productId === 5">
+        <app-synch-service [customerProducts]="customerProducts"></app-synch-service>
+      </div>
+      <div class="col-sm-5" *ngIf="customerProducts.productId === 6 && isUpdateDatabase">
+        <app-database-service [customerProducts]="customerProducts"></app-database-service>
+      </div>
+      <div class="col-sm-8" *ngIf="customerProducts.productId === 7">
+        <app-certificate-a1 [customerProducts]="customerProducts"></app-certificate-a1>
       </div>
     </div>
   </div>
-  <div class="col-sm-4" *ngIf="customerProducts.productId === 5">
-    <app-synch-service  [customerProducts]='customerProducts'></app-synch-service>
-  </div>
-  <div class="col-sm-5" *ngIf="customerProducts.productId === 6 && isUpdateDatabase">
-    <app-database-service  [customerProducts]='customerProducts'></app-database-service>
-  </div>
-  <div class="col-sm-8" *ngIf="customerProducts.productId === 7">
-    <!-- <button type='button' class="btn btn-warning" (click)='btnTesteClick()'>Teste</button> -->
-    <app-certificate-a1  [customerProducts]='customerProducts'></app-certificate-a1>
-  </div>
-</div>
-</div>
-
 
   <div class="card-footer text-muted">
-    <p><strong>Versão: </strong> {{dateObj | date:'medium'}} </p>
-    <button type="button" class="btn btn-primary" *ngIf="dateObj" (click)="downloadDeploy(customerProducts.customer.customerId, customerProducts.productId)" [disabled]="isDownloading">
+    <p><strong>Versão: </strong> {{ dateObj | date: "medium" }}</p>
+    <button type="button" class="btn btn-primary" *ngIf="dateObj"
+      (click)="downloadDeploy(customerProducts.customer.customerId,customerProducts.productId)" [disabled]="isDownloading" >
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isDownloading"></span>
       {{ downloadBtnText }}
     </button>
@@ -67,7 +112,8 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <app-cards-database *ngIf="customerProducts.productId === 6" [customerProductIdInput]='customerProducts.customersProductsId'
-    [serverInput]='customerProducts.server' ></app-cards-database>
+    <app-cards-database *ngIf="customerProducts.productId === 6"
+      [customerProductIdInput]="customerProducts.customersProductsId"
+      [serverInput]="customerProducts.server"></app-cards-database>
   </div>
 </div>

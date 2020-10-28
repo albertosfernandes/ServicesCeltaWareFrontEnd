@@ -8,8 +8,8 @@ import { tap, catchError } from 'rxjs/operators';
 import { error } from 'util';
 import { ModelCertificate } from '../models/model-certificate';
 
-// const API = 'http://update.celtaware.com.br:9994';
-const API = 'http://localhost:20854';
+const API = 'http://update.celtaware.com.br:9994';
+// const API = 'http://localhost:20854';
 // const API = 'http://localhost:9991';
 
 @Injectable({

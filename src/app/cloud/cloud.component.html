@@ -6,9 +6,10 @@
   </div>
   <app-menu-cloud (changeCustomerProduct)='receberEvent($event)' *ngIf="!valorLoading" [customersMenu]='customers'></app-menu-cloud>
   <div class="container">
-    <div class="row" style="margin-left: 15%; margin-top: 3% ">
+    <div class="row" style="margin-left: 12%; margin-top: 3% ">
+      <div class="col-lg-12">
         <app-dashboard-cloud [customerProducts]='customerProduct' *ngIf="isActiveDash" ></app-dashboard-cloud>
+      </div>
     </div>
-    <!-- Adcionado linha em branco como teste -->
   </div>
 
