@@ -66,49 +66,8 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-header">
-        <h6>Armazenamento</h6>
-      </div>
-      <div class="card-body">
-        <p><strong>Tamanho Banco de dados:</strong> XXX MB. </p>
-        <p><strong>Espaço contratado: </strong> XXXGB</p>
-        <p><strong>Espaço livre: </strong><span style="color:blue">%.</span></p>
-      </div>
-      <div class="card-footer">
-        <small class="text-muted">Última atualização 3 minutos.</small>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-header">
-        <h6>Internet</h6>
-      </div>
-      <div class="card-body">
-        <p><strong>Total utilizado:</strong> XXX mbps. </p>
-        <p><strong>Internet contratada: </strong> XXX mbps.</p>
-        <p><strong>Banda livre: </strong><span style="color:red">%</span></p>
-      </div>
-      <div class="card-footer">
-        <small class="text-muted">Última atualização 3 minutos.</small>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-header">
-        <h6>Memória RAM</h6>
-      </div>
-      <div class="card-body">
-        <p><strong>Total utilizado:</strong> XXX MB. </p>
-        <p><strong>Quantidade contratado: </strong> XXXGB</p>
-        <p><strong>Espaço livre: </strong><span style="color:blue">%</span></p>
-      </div>
-      <div class="card-footer">
-        <small class="text-muted">Última atualização 3 minutos.</small>
-      </div>
-    </div>
+  <div class="col-lg-12">
+    <app-cards-database *ngIf="customerProducts.productId === 6" [customerProductIdInput]='customerProducts.customersProductsId'
+    [serverInput]='customerProducts.server' ></app-cards-database>
   </div>
 </div>

@@ -57,6 +57,16 @@ export class ServersService {
       .get<ModelBackupSchedule[]>('http://' + urlAPI + '/api/DatabaseSchedule/GetAll?id=' + customerProductId);
   }
 
+  getSchedulesBackupFromApiByCustomerProducts(urlAPI, customerProductId) {
+    return this.http
+      .get<ModelBackupSchedule[]>('http://' + urlAPI + '/api/DatabaseSchedule/GetAllByCustomerProduct?customerProductId='
+                                  + customerProductId)
+      .pipe(
+        tap(
+          error => console.log(error)
+        )
+      );
+  }
   addBackupSchedule(urlApi, backupSchedule: ModelBackupSchedule) {
     return this.http
     .post('http://' + urlApi + '/api/DatabaseSchedule/Add', backupSchedule);

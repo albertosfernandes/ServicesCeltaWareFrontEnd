@@ -66,6 +66,7 @@ export class FormDatabaseComponent implements OnInit, OnChanges {
       conteinerName: [],
       databaseName: [],
       memoryRam: [],
+      storage: [],
       directory: []
     });
   }

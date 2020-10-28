@@ -9,6 +9,7 @@ export class ModelDatabase {
   customerProduct: ModelCustomersProducts;
   memoryRam: number;
   directory: string;
+  storage: number;
   backupScheduleId: number;
   backupSchedule: ModelBackupSchedule;
 }

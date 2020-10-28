@@ -1,3 +1,4 @@
+import { ModelDatabase } from './model-database';
 import { ModelCustomersProducts } from 'src/app/models/model-customersproducts';
 
 export class ModelBackupSchedule {
@@ -8,4 +9,5 @@ export class ModelBackupSchedule {
   dateHourExecution: Date;
   backupStatus: number;
   databasesId: number;
+  databases: ModelDatabase;
 }

@@ -9,6 +9,7 @@ import { SynchServiceComponent } from './dashboard-cloud/synch-service/synch-ser
 import { DatabaseServiceComponent } from './dashboard-cloud/database-service/database-service.component';
 import { CertificateA1Component } from './dashboard-cloud/certificate-a1/certificate-a1.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CardsDatabaseComponent } from '../components/cards/cards-database/cards-database.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     CloudComponent,
     DashboardCloudComponent,
-    MenuCloudComponent, MenuCloudVerticalComponent, SynchServiceComponent, DatabaseServiceComponent, CertificateA1Component
+    MenuCloudComponent, MenuCloudVerticalComponent, SynchServiceComponent,
+    DatabaseServiceComponent, CertificateA1Component,
+    CardsDatabaseComponent
   ]
 })
 export class CloudModule { }

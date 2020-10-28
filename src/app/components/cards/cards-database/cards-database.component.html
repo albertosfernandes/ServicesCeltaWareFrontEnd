@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-header">
+        <h6>Armazenamento</h6>
+      </div>
+      <div class="card-body">
+        <p><strong>Banco de dados:</strong> GB. </p>
+        <p><strong>Contratado: </strong> {{storageValueTotal}}GB</p>
+        <p><strong>Espaço livre: </strong><span style="color:blue">%.</span></p>
+      </div>
+      <div class="card-footer">
+        <!-- <small class="text-muted">Última atualização 3 minutos.</small> -->
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card">
+      <div class="card-header">
+        <h6>Backup</h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsible">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Tipo</th>
+                <th scope="col">Horário</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let schedule of databasebackupSchedules">
+                <th scope="row">{{schedule.type}}</th>
+                <td>{{ schedule.dateHourExecution }}</td>
+                <td>{{ schedule.customerProduct.synchronizerServiceName }}</td>
+                <td>{{ schedule.backupStatus }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer">
+        <!-- <small class="text-muted">Última atualização 3 minutos.</small> -->
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="card">
+      <div class="card-header">
+        <h6>Memória RAM</h6>
+      </div>
+      <div class="card-body">
+        <p><strong>Em uso:</strong> GB </p>
+        <p><strong>Contratado: </strong> {{memoryRamValueTotal}}GB</p>
+        <p><strong>Espaço livre: </strong><span style="color:blue">%</span></p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Última atualização 3 minutos.</small>
+      </div>
+    </div>
+  </div>
+
+</div>
