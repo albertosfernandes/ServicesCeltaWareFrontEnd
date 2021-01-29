@@ -43,7 +43,7 @@ export class ListBackupScheduleComponent implements OnInit, OnChanges {
     this.backupSchedule.backupStatus = 4;
     this.serversService.addBackupSchedule(this.urlFull, this.backupSchedule)
     .subscribe(data => {
-
+      const res = data;
     },
     error => {
       console.log('erro ao gravar agendamento de backup');

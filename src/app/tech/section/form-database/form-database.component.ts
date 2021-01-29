@@ -1,3 +1,4 @@
+import { error } from 'protractor';
 import { ModelServer } from './../../../models/model-server';
 import { ServersService } from './../servers/servers.service';
 import { ModelDatabase } from './../../../models/model-database';
@@ -38,7 +39,7 @@ export class FormDatabaseComponent implements OnInit, OnChanges {
     .subscribe(customersProductsData => {
       this.customersProducts = customersProductsData;
     },
-    error => {
+    erro => {
       alert('Erro ao carregar clientes com banco de dados');
     },
     () => {
@@ -52,7 +53,7 @@ export class FormDatabaseComponent implements OnInit, OnChanges {
     .subscribe(serverIdData => {
       this.server = serverIdData;
     },
-    error => {
+    erro => {
       alert('Erro ao carregar servidores');
     },
     () => {
@@ -73,12 +74,13 @@ export class FormDatabaseComponent implements OnInit, OnChanges {
   onSubmitDatabase() {
     this.database = this.databaseForm.getRawValue();
     this.database.customersProductsId = this.customerId;
+    console.log('antes de enviar: ' + this.server.ipAddress + ':' + this.server.port, this.database);
     this.serverService.addDatabase(this.server.ipAddress + ':' + this.server.port, this.database)
     .subscribe(response => {
-
+      console.log(response);
     },
-    error => {
-      alert('Erro ao gravar database');
+    erro => {
+      alert(erro.error);
     },
     () => {
       this.initForm();

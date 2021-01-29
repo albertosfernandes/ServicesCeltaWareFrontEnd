@@ -7,82 +7,20 @@
           <div class="card-deck">
             <div class="card-body">
               <p>Produto: {{ customerProducts.product.name }}</p>
-              <div class="row" style="margin-bottom: 5%; margin-left: 1%">
-                <button
-                  class="btn btn-primary"
-                  *ngIf="customerProducts.product.productId === 6"
-                  (click)="getKeyFile(customerProducts)"
-                >
-                  Baixar o par de chaves.
-                </button>
 
-                <div style="margin-top: 3%">
-                  <button
-                    class="btn btn-primary"
-                    *ngIf="customerProducts.product.productId === 6"
-                    (click)="updateConnectionString(customerProducts)"
-                  >
-                    Atualizar string de conexão.
-                  </button>
-                  <div
-                    class="input-group mb-3"
-                    *ngIf="customerProducts.product.productId === 6"
-                  >
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon3"
-                        >Senha CeltaBSUSer</span
-                      >
-                    </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="basic-url"
-                      aria-describedby="basic-addon3"
-                      autofocus
-                      (keyup)="debounce.next($event.target.value)"
-                    />
-                  </div>
-                  <p *ngIf="customerProducts.product.productId === 6">
-                    {{ _celtabsuserPassword }}
-                  </p>
-                </div>
-              </div>
               <p *ngIf="customerProducts.product.productId != 6">
                 Diretório de instalação: {{ customerProducts.installDirectory }}
               </p>
-              <p
-                *ngIf="
-                  customerProducts.product.productId != 6 &&
-                  customerProducts.product.productId != 7
-                "
-              >
-                <strong>Versão: </strong> {{ versionProduct | date: "medium" }}
+              <p *ngIf="customerProducts.product.productId != 6 && customerProducts.product.productId != 7">
+                <strong>Versão do sistema: </strong> {{ versionProduct | date: "medium" }}
               </p>
-              <p
-                *ngIf="
-                  customerProducts.product.productId != 6 &&
-                  customerProducts.product.productId != 7
-                "
-              >
-                <strong>Data da última execução: </strong>
+              <p *ngIf="customerProducts.product.productId != 6 && customerProducts.product.productId != 7">
+                <strong>Última execução: </strong>
                 {{ lastExecution | date: "medium" }}
               </p>
-              <button
-                class="btn btn-success"
-                *ngIf="
-                  customerProducts.product.productId &&
-                  customerProducts.product.productId != 7
-                "
-                (click)="update(customerProducts)"
-                [disabled]="isUpdating"
-              >
-                <span
-                  class="spinner-border spinner-border-sm"
-                  role="status"
-                  aria-hidden="true"
-                  *ngIf="isUpdating"
-                ></span>
-                {{ updateBtnText }}
+              <button class="btn btn-success" *ngIf="customerProducts.product.productId && customerProducts.product.productId != 7" (click)="update(customerProducts)" [disabled]="isUpdating">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
+                <i class="fa fa-play mr-2"></i>{{ updateBtnText }}
               </button>
             </div>
           </div>
@@ -101,19 +39,118 @@
   </div>
 
   <div class="card-footer text-muted">
-    <p><strong>Versão: </strong> {{ dateObj | date: "medium" }}</p>
-    <button type="button" class="btn btn-primary" *ngIf="dateObj"
+    <!-- <p><strong>Versão: </strong> {{ dateObj | date: "medium" }}</p> -->
+    <div class="row" style="margin-bottom: 5%; margin-left: 1%">
+
+      <div class="row mt-3">
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              <h6>Deployment</h6>
+            </div>
+            <div class="card-body">
+              <p><strong>Data versão:</strong> {{ dateObj | date: "medium" }} </p>
+              <th><span (click)="downloadDeploy(customerProducts.customer.customerId,customerProducts.productId)" [style.color] = "isDownloading ? 'green' : 'black'"> <i class="fa fa-download" style="font-size:24px"></i></span></th>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isDownloading"></span>
+              <span>{{ downloadBtnText }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-header">
+              <h6>Par de chaves CeltaBS/Banco</h6>
+            </div>
+            <div class="card-body">
+              <span (click)="getKeyFile(customerProducts)" style="color: black;" ><i class="fa fa-download" style="font-size:24px"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              <h6>Upload de Arquivo</h6>
+            </div>
+            <div class="card-body">
+              <form>
+                <div class="form-group">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile" (change)='uploadFile($event)'>
+                    <label class="custom-file-label" for="customFile" id="customFileLabel">Selecione o arquivo</label>
+                    <!-- <button type='button' class="btn btn-default" (click)='btnUploadClick()' [disabled]='!file'>Upload</button> -->
+                  </div>
+                </div>
+              </form>
+              <!-- <input type="file" class="custom-file-input" id="customFile" (change)='uploadFile($event)' > -->
+              <!-- <label class="custom-file-label" for="customFile" id="customFileLabel" >Selecione o arquivo</label> -->
+            </div>
+            <div class="card-footer">
+              <div>
+                <span (click)="sendUploadFile()" *ngIf="isUp" style="color: black;"><i class="fa fa-upload" style="font-size:24px"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Tipo</th>
+            <th scope="col">Ação</th>
+          </tr>
+        </thead>
+        <tbody> -->
+          <!-- <tr>
+            <th scope="row">Deployment</th>
+            <th><span (click)="downloadDeploy(customerProducts.customer.customerId,customerProducts.productId)" [style.color] = "isDownloading ? 'green' : 'black'"><i class="fa fa-download" ></i></span></th>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isDownloading"></span>
+            <span><i class="fa fa-play"></i>{{ downloadBtnText }}</span>
+          </tr> -->
+          <!-- <tr>
+            <td>Par de chaves CeltaBS</td>
+            <td>
+              <span (click)="getKeyFile(customerProducts)" ><i class="fa fa-download" ></i></span>
+            </td>
+          </tr> -->
+          <!-- <tr>
+            <td>Upload de Arquivo</td>
+            <td><span (click)="upload($event)" ><i class="fa fa-upload" ></i></span></td>
+            <div *ngIf="isUp" >
+              <input type="file" class="custom-file-input" id="customFile" (change)='uploadFile($event)' >
+              <label class="custom-file-label" for="customFile" id="customFileLabel" >Selecione o arquivo</label>
+            </div>
+
+          </tr> -->
+        <!-- </tbody>
+      </table> -->
+
+      <!-- <button type="button" class="btn btn-primary" *ngIf="dateObj"
       (click)="downloadDeploy(customerProducts.customer.customerId,customerProducts.productId)" [disabled]="isDownloading" >
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isDownloading"></span>
       {{ downloadBtnText }}
-    </button>
+      </button> -->
+
+    <!-- <div class="ml-3">
+      <button class="btn btn-primary" *ngIf="customerProducts.product.productId === 6" (click)="getKeyFile(customerProducts)">
+            Baixar o par de chaves.
+      </button>
+    </div> -->
+
+
+
+
+    </div>
   </div>
 </div>
+
 
 <div class="row">
   <div class="col-lg-12">
     <app-cards-database *ngIf="customerProducts.productId === 6"
       [customerProductIdInput]="customerProducts.customersProductsId"
-      [serverInput]="customerProducts.server"></app-cards-database>
+      [serverInput]="customerProducts.server"
+      [customerProducts]="customerProducts"></app-cards-database>
   </div>
 </div>

@@ -8,10 +8,12 @@ import { TaskComponent } from './task/task.component';
 import { CloudComponent } from './cloud/cloud.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { EnvironmentsComponent } from './downloads/environments/environments.component';
 
 const asfRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'downloads', component: DownloadsComponent },
+  { path: 'environments', component: EnvironmentsComponent },
   { path: 'cloud', component: CloudComponent },
   { path: 'tech', component: TechComponent },
   { path: 'task', component: TaskComponent },

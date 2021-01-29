@@ -118,7 +118,7 @@ sub: Subscription[] = [];
     const teste = resultData;
    },
    erro => {
-    alert('Erro ao instalar certificado.' + erro.error);
+    alert(erro.error);
    },
    () => {
     this.loadCertificates(this.customerProducts.customer.customerId);

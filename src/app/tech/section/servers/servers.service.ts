@@ -1,14 +1,14 @@
+import { error } from 'protractor';
 import { ModelDatabase } from './../../../models/model-database';
 import { ModelCustomersProducts } from 'src/app/models/model-customersproducts';
 import { ModelServer } from './../../../models/model-server';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
+import { tap, timeout, catchError } from 'rxjs/operators';
 import { ModelBackupSchedule } from 'src/app/models/model-backupschedule';
-import { t } from '@angular/core/src/render3';
 
-// const API = 'http://update.celtaware.com.br:9994';
-const API = 'http://localhost:20854';
+const API = 'http://update.celtaware.com.br:9994';
+// const API = 'http://localhost:20854';
 // const API = 'http://localhost:9991';
 
 
@@ -46,8 +46,9 @@ export class ServersService {
       .get<ModelBackupSchedule[]>('http://' + urlApi + '/api/Databaseservice/GetAllByServer?serverId=' + serverid)
       .pipe(
         tap(
-         // data => console.log(data),
-         // error => console.log(error)
+         data => console.log(data),
+         // tslint:disable-next-line: no-shadowed-variable
+         error => console.log(error)
         )
       );
   }
@@ -63,13 +64,14 @@ export class ServersService {
                                   + customerProductId)
       .pipe(
         tap(
+          // tslint:disable-next-line: no-shadowed-variable
           error => console.log(error)
         )
       );
   }
   addBackupSchedule(urlApi, backupSchedule: ModelBackupSchedule) {
     return this.http
-    .post('http://' + urlApi + '/api/DatabaseSchedule/Add', backupSchedule);
+    .post('http://' + urlApi + '/api/DatabaseSchedule/Add', backupSchedule, {responseType: 'text'});
   }
 
   addServer(server: ModelServer) {
@@ -87,7 +89,61 @@ export class ServersService {
     .post('http://' + urlAPI + '/api/DatabaseService/Add', database)
     .pipe(
       tap(
+        data => console.log(data),
+        catchError(err => {
+          console.error(err.error);
+          return err;
+        })
+      )
+    );
+  }
 
+  execBackup(urlAPI, backupSchedule: ModelBackupSchedule) {
+    return this.http
+    .post('http://' + urlAPI + '/api/DatabaseService/BackupExec', backupSchedule, { responseType: 'text' })
+    .pipe(
+      timeout(4000000),
+      tap(
+
+      )
+    );
+  }
+
+  execValidateBackup(urlAPI, backupSchedule: ModelBackupSchedule) {
+    return this.http
+    .put('http://' + urlAPI + '/api/DatabaseService/ValidateBackupExec', backupSchedule, { responseType: 'text' })
+    .pipe(
+      timeout(4000000),
+      tap(
+        data => console.log(data),
+        // tslint:disable-next-line: no-shadowed-variable
+        error => console.log(error.error)
+      )
+    );
+  }
+
+  execUploadBackup(urlAPI, backupSchedule: ModelBackupSchedule) {
+    return this.http
+    .post('http://' + urlAPI + '/api/GoogleDriveService/upload', backupSchedule, {responseType: 'text'} )
+    .pipe(
+      timeout(4000000),
+      tap(
+        data => console.log(data),
+        // tslint:disable-next-line: no-shadowed-variable
+        error => console.log(error.error)
+      )
+    );
+  }
+
+  execUpdateStatusBackup(urlAPI, backupSchedule: ModelBackupSchedule) {
+    return this.http
+    .put('http://' + urlAPI + '/api/DatabaseSchedule/UpdateStatus', backupSchedule, {responseType: 'text'} )
+    .pipe(
+      timeout(400000),
+      tap(
+        data => console.log(data),
+        // tslint:disable-next-line: no-shadowed-variable
+        error => console.log(error.error)
       )
     );
   }

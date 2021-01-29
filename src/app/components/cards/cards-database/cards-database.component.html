@@ -1,20 +1,5 @@
 <div class="row">
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-header">
-        <h6>Armazenamento</h6>
-      </div>
-      <div class="card-body">
-        <p><strong>Banco de dados:</strong> GB. </p>
-        <p><strong>Contratado: </strong> {{storageValueTotal}}GB</p>
-        <p><strong>Espaço livre: </strong><span style="color:blue">%.</span></p>
-      </div>
-      <div class="card-footer">
-        <!-- <small class="text-muted">Última atualização 3 minutos.</small> -->
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-5">
+  <div class="col-lg-12">
     <div class="card">
       <div class="card-header">
         <h6>Backup</h6>
@@ -25,27 +10,44 @@
             <thead>
               <tr>
                 <th scope="col">Tipo</th>
-                <th scope="col">Horário</th>
+                <th scope="col">Execução</th>
                 <th scope="col">Nome</th>
+                <th scope="col">Última Execução</th>
                 <th scope="col">Status</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let schedule of databasebackupSchedules">
                 <th scope="row">{{schedule.type}}</th>
-                <td>{{ schedule.dateHourExecution }}</td>
+                <td>{{ schedule.dateHourExecution | date:'shortTime'}}</td>
                 <td>{{ schedule.customerProduct.synchronizerServiceName }}</td>
+                <td>{{ schedule.dateHourLastExecution }}</td>
                 <td>{{ schedule.backupStatus }}</td>
+                <td><span (click)="executeBackup(schedule)" [style.color] = "isRunning ? 'green' : 'black'"><i class="fa fa-play" ></i></span></td>
+                <td><span (click)="executeUploadBackup(schedule)" [style.color] = "isRunning ? 'green' : 'black'"><i class="fa fa-upload" ></i></span></td>
+                <td *ngIf="isSucces"><span (click)="execUpdateStatusBackup(schedule,responseBackupExec)" [style.color] = "isRunning ? 'green' : 'black'"><i class="fa fa-play-circle" ></i></span></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
       <div class="card-footer">
+        <div *ngIf="isRunning">
+          <div class="spinner-border" role="status" style="margin-left: 50%;">
+           <span class="sr-only">Carregando...</span>
+          </div>
+         <p>Aguarde... {{ message }}</p>
+        </div>
+        {{ responseBackupExec }}
+
         <!-- <small class="text-muted">Última atualização 3 minutos.</small> -->
       </div>
     </div>
   </div>
+</div>
+
+<div class="row mt-3">
   <div class="col-sm-3">
     <div class="card">
       <div class="card-header">
@@ -61,5 +63,36 @@
       </div>
     </div>
   </div>
-
+  <div class="col-sm-3">
+    <div class="card">
+      <div class="card-header">
+        <h6>Armazenamento</h6>
+      </div>
+      <div class="card-body">
+        <p><strong>Banco de dados:</strong> GB. </p>
+        <p><strong>Contratado: </strong> {{storageValueTotal}}GB</p>
+        <p><strong>Espaço livre: </strong><span style="color:blue">%.</span></p>
+      </div>
+      <div class="card-footer">
+        <!-- <small class="text-muted">Última atualização 3 minutos.</small> -->
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="card">
+      <div class="card-header">
+        <h6>Atualizar string de conexão</h6>
+      </div>
+      <div class="card-body">
+        <p><strong>Senha CeltaBSUSer:</strong> {{ _celtabsuserPassword }}</p>
+        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" (keyup)="debounce.next($event.target.value)"/>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-primary" (click)="updateConnectionString(customerProducts)">
+          Gravar
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
+

@@ -1,3 +1,4 @@
+import { BaseService } from './../services/base.service';
 import { ModelCustomersProducts } from 'src/app/models/model-customersproducts';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpErrorResponse, HttpRequest } from '@angular/common/http';
@@ -8,9 +9,9 @@ import { tap, catchError } from 'rxjs/operators';
 import { error } from 'util';
 import { ModelCertificate } from '../models/model-certificate';
 
-const API = 'http://update.celtaware.com.br:9994';
-// const API = 'http://localhost:20854';
-// const API = 'http://localhost:9991';
+// const this.base.urlapi = 'http://update.celtaware.com.br:9994';
+// const this.base.urlapi = 'http://localhost:20854';
+// const this.base.urlapi = 'http://localhost:9992';
 
 @Injectable({
   providedIn: 'root'
@@ -18,71 +19,78 @@ const API = 'http://update.celtaware.com.br:9994';
 
 export class CloudService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private base: BaseService) { }
 
   getProductsAll() {
-    return this.http
-    .get<ModelProduct[]>(API + '/api/product/getall');
+    return this.base.httpBase
+    .get<ModelProduct[]>(this.base.urlapi + '/api/product/getall');
   }
   getCustomersAll() {
-    return this.http
-    .get<ModelCustomer[]>(API + '/api/customer/getall');
+    return this.base.httpBase
+    .get<ModelCustomer[]>(this.base.urlapi + '/api/customer/getall');
   }
 
   getCustomersProductsAllDatabases(serverId) {
-    return this.http
-    .get<ModelCustomersProducts[]>(API + '/api/CustomersProducts/GetAllDatabases?serverId= ' + serverId);
+    return this.base.httpBase
+    .get<ModelCustomersProducts[]>(this.base.urlapi + '/api/CustomersProducts/GetAllDatabases?serverId= ' + serverId);
   }
 
   getCustomersProducts(id) {
-    return this.http
-    .get<ModelCustomersProducts[]>(API + '/api/CustomersProducts/getall?id=' + id);
+    return this.base.httpBase
+    .get<ModelCustomersProducts[]>(this.base.urlapi + '/api/CustomersProducts/getall?id=' + id);
   }
 
   getCustomerProduct(id) {
-    return this.http
-    .get<ModelCustomersProducts>(API + '/api/CustomersProducts/get?id=' + id);
+    return this.base.httpBase
+    .get<ModelCustomersProducts>(this.base.urlapi + '/api/CustomersProducts/get?id=' + id);
   }
 
   getDateTimeDeploy(id, productid) {
-    return this.http
-    .get(API + '/api/SystemUpdate/GetDateTimeFileDeploy?customersettingsId=' + id + '&productId=' + productid);
+    return this.base.httpBase
+    .get(this.base.urlapi + '/api/SystemUpdate/GetDateTimeFileDeploy?customersettingsId=' + id + '&productId=' + productid);
   }
 
   getVersionFile(id) {
-    return this.http
-    .get(API + '/api/SystemUpdate/GetVersionFile?customersettingsId=' + id);
+    return this.base.httpBase
+    .get(this.base.urlapi + '/api/SystemUpdate/GetVersionFile?customersettingsId=' + id);
   }
 
   getLastExecution(id) {
-    return this.http
-    .get(API + '/api/SystemUpdate/GetLastExecution?customersettingsId=' + id);
+    return this.base.httpBase
+    .get(this.base.urlapi + '/api/SystemUpdate/GetLastExecution?customersettingsId=' + id);
   }
 
   getStatusService(_serviceName) {
-    return this.http
-    .get(API + '/api/SystemUpdate/StatusService?servicename=' + _serviceName, { responseType: 'text' });
+    return this.base.httpBase
+    .get(this.base.urlapi + '/api/SystemUpdate/StatusService?servicename=' + _serviceName, { responseType: 'text' });
   }
 
   getStartStopService(isStart, _serviceName) {
-    return this.http
-    .get(API + '/api/SystemUpdate/StarStopService?isStart=' + isStart + '&servicename=' + _serviceName);
+    return this.base.httpBase
+    .get(this.base.urlapi + '/api/SystemUpdate/StarStopService?isStart=' + isStart + '&servicename=' + _serviceName);
   }
 
   getDownloadDeploy(id, productid) {
-    return this.http
-    .get(API + '/api/SystemUpdate/DownloadDeploy?id=' + id + '&productId=' + productid);
+    return this.base.httpBase
+    .get(this.base.urlapi + '/api/SystemUpdate/DownloadDeploy?id=' + id + '&productId=' + productid);
   }
 
   getUpdateSystem(customerProduct: ModelCustomersProducts) {
     console.log('Chamando Post atualizar ' + customerProduct.product.name);
-    return this.http
-    .post(API + '/api/SystemUpdate/UpdateCeltaBS',  customerProduct);
+    return this.base.httpBase
+    .post(this.base.urlapi + '/api/SystemUpdate/UpdateCeltaBS',  customerProduct , {responseType: 'text'})
+    .pipe(
+      tap(
+         data => console.log(data),
+         // tslint:disable-next-line: no-shadowed-variable
+         error => console.log(error)
+      )
+    );
   }
 
   testeBody(value) {
-    return this.http
-    .get(API + '/api/DatabaseUpdate/TesteDatabase?n=' + value, {responseType: 'text'})
+    return this.base.httpBase
+    .get(this.base.urlapi + '/api/DatabaseUpdate/TesteDatabase?n=' + value, {responseType: 'text'})
     .pipe(
       tap( // Log the result or error
          // data => console.log(data),
@@ -98,8 +106,9 @@ export class CloudService {
   }
 
   getRepairDatabase(_customerProductId) {
-    return this.http
-      .get(API + '/api/DatabaseUpdate/RepairDatabase?customerSettingsid=' + _customerProductId, { responseType: 'text' } )
+    return this.base.httpBase
+      .get(this.base.urlapi +
+        '/api/DatabaseUpdate/RepairDatabase?customerSettingsid=' + _customerProductId, { responseType: 'text' } )
       .pipe(
         tap(
           // data => console.log(data),
@@ -109,9 +118,9 @@ export class CloudService {
   }
 
   getCreateDatabase(_customerProductId, _element) {
-    return this.http
+    return this.base.httpBase
       // tslint:disable-next-line: max-line-length
-      .get(API + '/api/DatabaseUpdate/CreateDatabase?customerSettingsid=' + _customerProductId + '&element=' + _element, { responseType: 'text' } )
+      .get(this.base.urlapi + '/api/DatabaseUpdate/CreateDatabase?customerSettingsid=' + _customerProductId + '&element=' + _element, { responseType: 'text' } )
       .pipe(
         tap(
           // data => console.log(data),
@@ -121,18 +130,19 @@ export class CloudService {
   }
 
   getKeyFile(_customerProductId) {
-    return this.http
-    .get(API + '/api/databaseupdate/getkeys?customerSettingsid=' + _customerProductId, {responseType: 'blob'});
+    return this.base.httpBase
+    .get(this.base.urlapi + '/api/databaseupdate/getkeys?customerSettingsid=' + _customerProductId, {responseType: 'blob'});
   }
 
   updateConnectionString(_customerProductId, celtabsuserPassword) {
-    return this.http
-    .get(API + '/api/DatabaseCreate/UpdateConnectionString?id=' + _customerProductId + '&celtaBSUserPassword=' + celtabsuserPassword);
+    return this.base.httpBase
+    .get(this.base.urlapi +
+      '/api/DatabaseCreate/UpdateConnectionString?id=' + _customerProductId + '&celtaBSUserPassword=' + celtabsuserPassword);
   }
 
   addCertificate(certificate: ModelCertificate) {
-    return this.http
-    .post(API + '/api/certificate/add', certificate);
+    return this.base.httpBase
+    .post(this.base.urlapi + '/api/certificate/add', certificate);
   }
 
   teste(valueTeste, filecert: File) {
@@ -140,9 +150,9 @@ export class CloudService {
     formDataTste.append('valueTeste', 'primeiro teste');
     formDataTste.append('valueTeste', filecert, filecert.name);
     console.log('enviando via post o forData ' + formDataTste);
-    const request = new HttpRequest('POST', API + '/api/certificate/teste', formDataTste);
+    const request = new HttpRequest('POST', this.base.urlapi + '/api/certificate/teste', formDataTste);
 
-    return this.http.request(request)
+    return this.base.httpBase.request(request)
      .pipe(
        tap(
           data => console.log(data),
@@ -158,9 +168,9 @@ export class CloudService {
     formData.append('certificateFile', _file, _file.name);
     formData.append('certificateFile', certificateID);
 
-   const request = new HttpRequest('POST', API + '/api/certificate/upload', formData);
+   const request = new HttpRequest('POST', this.base.urlapi + '/api/certificate/upload', formData);
    console.log(formData);
-   return this.http.request(request)
+   return this.base.httpBase.request(request)
    .pipe(
      tap(
        data => console.log(data),
@@ -170,19 +180,35 @@ export class CloudService {
    );
   }
 
+  uploadFileToBSF(customerId, _file: File) {
+    const formData = new FormData();
+    formData.append('certificateFile', _file, _file.name);
+    formData.append('certificateFile', customerId);
+    const request = new HttpRequest('POST', this.base.urlapi + '/api/Customer/Upload', formData, {responseType: 'text'});
+     console.log(formData);
+     return this.base.httpBase.request(request)
+    .pipe(
+     tap(
+       data => console.log(data),
+       // tslint:disable-next-line: no-shadowed-variable
+       error => console.log(error)
+     )
+   );
+  }
+
   getCertificate(_certificateId) {
-    return this.http
-    .get<ModelCertificate>(API + '/api/certificate/Get?id=' + _certificateId);
+    return this.base.httpBase
+    .get<ModelCertificate>(this.base.urlapi + '/api/certificate/Get?id=' + _certificateId);
   }
 
   getCertificates(_customerId) {
-    return this.http
-    .get<ModelCertificate[]>(API + '/api/certificate/GetAll?id=' + _customerId);
+    return this.base.httpBase
+    .get<ModelCertificate[]>(this.base.urlapi + '/api/certificate/GetAll?id=' + _customerId);
   }
 
   installCertificatea1(certificateIdFor: number) {
-    return this.http
-    .post(API + '/api/certificate/installcertificate', certificateIdFor)
+    return this.base.httpBase
+    .post(this.base.urlapi + '/api/certificate/installcertificate', certificateIdFor, {responseType: 'text'})
     .pipe(
       tap(
         data => console.log(data),
@@ -194,12 +220,12 @@ export class CloudService {
   }
 
   getCertificateFile(certId) {
-    return this.http
-    .get(API + '/api/certificate/GetCertificateFile?id=' + certId, {responseType: 'blob'});
+    return this.base.httpBase
+    .get(this.base.urlapi + '/api/certificate/GetCertificateFile?id=' + certId, {responseType: 'blob'});
   }
 
   removeCertificate(_certIdForRemove) {
-    return this.http
-    .get(API + '/api/certificate/Remove?id=' + _certIdForRemove);
+    return this.base.httpBase
+    .get(this.base.urlapi + '/api/certificate/Remove?id=' + _certIdForRemove);
   }
 }

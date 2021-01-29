@@ -1,3 +1,4 @@
+import { error } from 'protractor';
 import { CloudService } from './../cloud.service';
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ModelCustomersProducts } from 'src/app/models/model-customersproducts';
@@ -23,11 +24,13 @@ export class DashboardCloudComponent implements OnInit, OnChanges, OnDestroy {
   isDownloading = false;
   isUpdating = false;
   isUpdateDatabase = false;
-  updateBtnText = 'Atualizar';
-  downloadBtnText = 'Baixar (Deploy)';
+  updateBtnText = 'Iniciar atualização';
+  downloadBtnText = ' ';
   statusMessage: any;
-  _celtabsuserPassword = 'off';
-  debounce: Subject<string> = new Subject<string>();
+  isUp = false;
+  file: File;
+  // _celtabsuserPassword = 'off';
+  // debounce: Subject<string> = new Subject<string>();
   constructor(private cloudService: CloudService) { }
 
   loadDateDeploy(idvalue, productId) {
@@ -60,11 +63,15 @@ export class DashboardCloudComponent implements OnInit, OnChanges, OnDestroy {
       this.cloudService.getUpdateSystem(valueModelCustomerProduct)
       .subscribe(data => {
         this.updateBtnText = 'Atualizar';
+      },
+      err => {
+        alert('Erro na atualização: ' + err.error);
+        this.isUpdating = false;
+        this.updateBtnText = 'Atualizar';
+      },
+      () => {
         this.loadVersionProduct(this.customerProducts.customersProductsId);
         this.loadLastExecution(this.customerProducts.customersProductsId);
-      },
-      error => {alert('error '); this.isUpdating = false; this.updateBtnText = 'Atualizar'; },
-      () => {
         this.isUpdating = false;
         this.updateBtnText = 'Atualizar';
         this.isUpdateDatabase = false;
@@ -105,12 +112,43 @@ export class DashboardCloudComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  updateConnectionString(valueCustomerProduct) {
-    this.cloudService.updateConnectionString(valueCustomerProduct.customersProductsId, this._celtabsuserPassword)
-    .subscribe(response => {
-      alert('Atualizado');
+  upload(_file) {
+    this.isUp = true;
+    this.uploadFile(_file);
+  }
+
+  uploadFile(_file) {
+    const selectedFile = <FileList>_file.srcElement.files;
+
+    document.getElementById('customFileLabel').innerHTML = selectedFile[0].name;
+    console.log('arquivo selecionado: ' + selectedFile[0].name + ' ' + selectedFile[0].size);
+    this.file = selectedFile[0];
+    this.isUp = true;
+  }
+
+  sendUploadFile() {
+    console.log('arquivo: ' + this.file.name + ' ' + this.file.size);
+    console.log('valor de customerId: ' + this.customerProducts.customerId);
+    this.cloudService.uploadFileToBSF(this.customerProducts.customerId, this.file)
+    .subscribe(resp => {
+      console.log('upado com sucesso!');
+    },
+    err => {
+      alert('Erro ao subir arquivo: ' + err.error);
+    },
+    () => {
+      alert('Salvo com sucesso');
+      this.isUp = false;
+      document.getElementById('customFileLabel').innerHTML = '';
     });
   }
+
+  // updateConnectionString(valueCustomerProduct) {
+  //   this.cloudService.updateConnectionString(valueCustomerProduct.customersProductsId, this._celtabsuserPassword)
+  //   .subscribe(response => {
+  //     alert('Atualizado');
+  //   });
+  // }
 
   downloadDeploy(valueCustomerId, productId) {
     this.isDownloading = true;
@@ -118,18 +156,20 @@ export class DashboardCloudComponent implements OnInit, OnChanges, OnDestroy {
     .subscribe(response => {
       this._response = response;
       this.loadDateDeploy(this.customerProducts.customersProductsId, this.customerProducts.productId);
-      this.downloadBtnText = 'Baixar (Deploy)';
+      this.downloadBtnText = 'Concluído com sucesso.';
     },
-    error => {alert('error'); this.isDownloading = false; this.downloadBtnText = 'Baixar (Deploy)'; },
-    () => { this.isDownloading = false ; this.downloadBtnText = 'Baixar (Deploy)'; });
+    err => {
+      alert('Erro ao baixar arquivo: ' + err.error);
+      this.isDownloading = false;
+      this.downloadBtnText = 'Falha ao atualizar arquivo';
+    },
+    () => { this.isDownloading = false ; this.downloadBtnText = 'Concluído com sucesso.'; });
     this.downloadBtnText = 'Baixando ...';
   }
 
 
   ngOnInit() {
-    this.debounce
-            .pipe(debounceTime(300))
-            .subscribe(filter => this._celtabsuserPassword = filter);
+
   }
 
   ngOnChanges() {
@@ -137,10 +177,11 @@ export class DashboardCloudComponent implements OnInit, OnChanges, OnDestroy {
      this.loadVersionProduct(this.customerProducts.customersProductsId);
      this.loadLastExecution(this.customerProducts.customersProductsId);
      this.isUpdateDatabase = false;
+     this.downloadBtnText = ' ';
   }
 
   ngOnDestroy() {
-    this.debounce.unsubscribe();
+    this.downloadBtnText = ' ';
   }
 
 }

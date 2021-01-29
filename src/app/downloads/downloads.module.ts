@@ -7,6 +7,7 @@ import { DownloadTableComponent } from './download-table/download-table.componen
 import { DownloadMenuComponent } from './download-menu/download-menu.component';
 import { DownloadNewcategoryComponent } from './download-newcategory/download-newcategory.component';
 import { DownloadUploadComponent } from './download-upload/download-upload.component';
+import { EnvironmentsComponent } from './environments/environments.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import { DownloadUploadComponent } from './download-upload/download-upload.compo
     DownloadTableComponent, 
     DownloadMenuComponent, 
     DownloadNewcategoryComponent, 
-    DownloadUploadComponent
+    DownloadUploadComponent, EnvironmentsComponent
   ]
 })
 export class DownloadsModule { }
