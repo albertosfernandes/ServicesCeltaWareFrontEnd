@@ -19,10 +19,10 @@
             </thead>
             <tbody>
               <tr *ngFor="let schedule of databasebackupSchedules">
-                <th scope="row">{{schedule.type}}</th>
-                <td>{{ schedule.dateHourExecution | date:'shortTime'}}</td>
+                <th scope="row">{{schedule.type == 0 ? 'FULL' : 'DIFF'}}</th>
+                <td>{{ schedule.dateHourExecution | date:'HH:mm'}}</td>
                 <td>{{ schedule.customerProduct.synchronizerServiceName }}</td>
-                <td>{{ schedule.dateHourLastExecution }}</td>
+                <td>{{ schedule.dateHourLastExecution | date : 'dd/MM/yyyy HH:mm' }}</td>
                 <td>{{ schedule.backupStatus }}</td>
                 <td><span (click)="executeBackup(schedule)" [style.color] = "isRunning ? 'green' : 'black'"><i class="fa fa-play" ></i></span></td>
                 <td><span (click)="executeUploadBackup(schedule)" [style.color] = "isRunning ? 'green' : 'black'"><i class="fa fa-upload" ></i></span></td>

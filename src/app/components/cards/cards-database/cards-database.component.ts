@@ -29,6 +29,7 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
   _celtabsuserPassword = ' ';
   debounce: Subject<string> = new Subject<string>();
   sub: Subscription[] = [];
+
   constructor(private serversServices: ServersService, private cloudService: CloudService) { }
 
   loadBackupSchedules(_urlServerId, _customerProductId) {
@@ -44,6 +45,36 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
       // console.log(this.backupSchedules[0]);
       this.memoryRamValueTotal = this.databasebackupSchedules[0].databases.memoryRam;
       this.storageValueTotal = this.databasebackupSchedules[0].databases.storage;
+      this.databasebackupSchedules.forEach(status => {
+        for (let i = 0; i < this.databasebackupSchedules.length; i++) {
+          switch (this.databasebackupSchedules[i].backupStatus) {
+          case 0: {
+            this.databasebackupSchedules[i].backupStatus = 'SUCCESS';
+            break;
+          }
+          case 1: {
+            this.databasebackupSchedules[i].backupStatus = 'FAILED';
+            break;
+          }
+          case 2: {
+            this.databasebackupSchedules[i].backupStatus = 'RUNNING';
+            break;
+          }
+          case 3: {
+            this.databasebackupSchedules[i].backupStatus = 'CORRUPTED';
+            break;
+          }
+          case 4: {
+            this.databasebackupSchedules[i].backupStatus = 'NONE  ';
+            break;
+          }
+          case 5: {
+            this.databasebackupSchedules[i].backupStatus = 'OUTOFDATE';
+            break;
+          }
+        }
+        }
+      });
     })
     );
   }

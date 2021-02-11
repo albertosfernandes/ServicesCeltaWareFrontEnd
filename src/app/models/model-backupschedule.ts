@@ -9,7 +9,7 @@ export class ModelBackupSchedule {
   type: number;
   dateHourExecution: Date;
   dateHourLastExecution: Date;
-  backupStatus: number;
+  backupStatus: any;
   databasesId: number;
   databases: ModelDatabase;
   server: ModelServer;
