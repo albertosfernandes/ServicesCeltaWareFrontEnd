@@ -20,7 +20,7 @@
               </p>
               <button class="btn btn-success" *ngIf="customerProducts.product.productId && customerProducts.product.productId != 7" (click)="update(customerProducts)" [disabled]="isUpdating">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
-                <i class="fa fa-play mr-2"></i>{{ updateBtnText }}
+                <i class="fa fa-play mr-2" *ngIf="!isUpdating"></i>{{ updateBtnText }}
               </button>
             </div>
           </div>
