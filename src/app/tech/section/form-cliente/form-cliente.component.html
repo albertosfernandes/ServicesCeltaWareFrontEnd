@@ -2,13 +2,13 @@
   <div class="col-2">
     <button class="btn btn-primary" (click)="btnNew()"> Novo </button>
   </div>
-  <div class="col-2">
+  <!-- <div class="col-2">
     <button class="btn btn-warning" (click)="getAllCustomers()"> Listar </button>
-  </div>
+  </div> -->
   <div class="col-6" style="margin-left: 5%;">
     <form class="form-inline">
       <div class="form-group row">
-        <input type="text" class="form-control" name="searchCustomer" [(ngModel)]="valueSearch" placeholder="Pesquisar" *ngIf="isBtnSearch">
+        <input type="text" class="form-control" name="searchCustomer" #searchCustomer [(ngModel)]="valueSearch" placeholder="Pesquisar" *ngIf="isBtnSearch">
         <button class="btn btn-info" (click)="btnSearchCustomer(valueSearch)" *ngIf="isBtnSearch" > Pesquisar </button>
       </div>
     </form>
@@ -44,7 +44,12 @@
       <td>{{ customer.cnpj }}</td>
       <td>{{ customer.codeCeltaBs }}</td>
       <td>{{ customer.rootDirectory }}</td>
-      <td><button class="btn btn-secondary" (click)="btnEdit(customer.customerId)"><i class="fa fa-plus"></i></button> {{ customer.customerId }}</td>
+      <!-- <td>
+        <button class="btn btn-secondary" (click)="btnEdit(customer.customerId)">
+          <i class="fa fa-plus"></i></button></td> -->
+
+      <td (click)='btnEdit(customer.customerId)'>
+          <span><i style="color: blue;" class="fa fa-plus" aria-hidden="true"></i></span></td>
     </tr>
   </tbody>
   <button class="btn btn-danger" (click)="btnCancelList()">Cancelar</button>
@@ -52,17 +57,16 @@
 
     <div *ngIf="isExecutingScript">
         <div class="spinner-border" role="status" style="margin-left: 50%;">
-         <span class="sr-only">Carregando...</span>
+         <span class="sr-only">Gravando...</span>
         </div>
-       <p>Aguarde Montando ambiente em nuvem.</p>
-    </div>      
+    </div>
 <form [formGroup]='customerFormGroup' (submit)='onSubmitCustomer()' *ngIf="isNew" >
   <div class="form-group">
     <div class="row">
       <input type="text" formControlName='customerId' class="form-control invisible" id="customerId" placeholder="id" visible='false'>
       <div class="col-12">
-      <label for="companyName">Razão Social</label>
-      <input type="text" formControlName='companyName' class="form-control" id="companyName" placeholder="Nome da Empresa">
+        <label for="companyName">Razão Social</label>
+        <input type="text" formControlName='companyName' class="form-control" id="companyName" placeholder="Nome da Empresa">
       </div>
       <div class="col-sm-12">
         <label for="fantasyName">Nome Fantasia</label>
@@ -80,21 +84,22 @@
       </div>
 
       <div class="col-6">
-        <label for="rootDirectory">Diretório de instalação</label>
+        <label for="rootDirectory">Diretório principal 'root'</label>
         <input type="text" formControlName='rootDirectory' class="form-control" id="rootDirectory" aria-describedby="emailHelp" placeholder="Nome">
       </div>
     </div>
     </div>
     <button type="submit" class="btn btn-primary">Gravar</button>
-    <button class="btn btn-danger" (click)="btnNew()">Cancelar</button>
-    <a class="btn btn-warning" (click)="btnListProducts(customer.customerId)"> Listar Produtos</a>
-    <a class="btn btn-success" (click)="btnAddProduct(customer.customerId)"> Novo Produto</a>
-    <div class="row">
-      <div class="col-8">
-        <app-list-products [customerId]='customer.customerId' *ngIf="isListCustomerProduct" ></app-list-products>
-      </div>
-      <div class="col-8">
-        <app-add-customer-products [customerId]='customer.customerId' *ngIf="isNewCustomerProduct" ></app-add-customer-products>
-      </div>
-    </div>
+    <button class="btn btn-danger" (click)="btnCancel()">Cancelar</button>
+    <!-- <a class="btn btn-warning" (click)="btnListProducts(customer.customerId)"> Listar Produtos</a>
+    <a class="btn btn-success" (click)="btnAddProduct(customer.customerId)"> Novo Produto</a> -->
 </form>
+
+<div class="row">
+  <div class="col-8">
+    <app-list-products [customerId]='customer.customerId' (isNewCustomerProductclick)='listenEventNewCustomerProduct($event)' *ngIf="isListCustomerProduct" ></app-list-products>
+  </div>
+  <div class="col-8">
+    <app-form-customerproducts [customerId]='customer.customerId' (isCancel)='listenEventNewCustomerProduct($event)' *ngIf="isNewCustomerProduct" ></app-form-customerproducts>
+  </div>
+</div>

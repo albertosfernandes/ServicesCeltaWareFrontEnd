@@ -20,44 +20,44 @@
           <option *ngFor="let server of servers" [value]="server.serversId">{{server.hostname}}</option>
         </select>
       </div>
-      <div class="col-12">
-      <label for="addressName">Endereço</label>
-      <input type="text" formControlName='addressName' class="form-control" id="addressName" name="addressName" placeholder="cliente.celtaware.com.br">
-      </div>
-      <div class="col-sm-6">
+      <!-- <div class="col-12">
+        <label for="addressName">Endereço</label>
+        <input type="text" formControlName='addressName' class="form-control" id="addressName" name="addressName" placeholder="cliente.celtaware.com.br">
+      </div> -->
+      <!-- <div class="col-sm-6">
         <label for="ipAddress">IP</label>
         <input type="text" formControlName='ipAddress' class="form-control" id="ipAddress" name="ipAddress" placeholder="xxx.xxx.xxx.xxx">
-      </div>
-      <div class="col-6">
+      </div> -->
+      <!-- <div class="col-6">
         <label for="port">Porta de acesso</label>
         <input type="text" formControlName='port' class="form-control" id="port" name="port" placeholder="porta">
-      </div>
+      </div> -->
     </div>
 
-    <div class="row">
-      <div class="col-6">
+    <!-- <div class="row"> -->
+      <!-- <div class="col-6">
         <label for="loginUser">Nome de Usuário</label>
         <input type="text" formControlName='loginUser' class="form-control" id="loginUser" name="loginUser" placeholder="nome de usuário">
-      </div>
-      <div class="col-6">
+      </div> -->
+      <!-- <div class="col-6">
         <label for="loginPassword">Senha</label>
         <input type="text" formControlName='loginPassword' class="form-control" id="loginPassword" name="loginPassword" placeholder="senha">
-      </div>
-      <div class="col-6">
+      </div> -->
+      <!-- <div class="col-6">
         <label for="installDirectory">Diretório</label>
         <input type="text" formControlName='installDirectory' class="form-control" id="installDirectory" name="installDirectory" placeholder="diretório para instalação">
-      </div>
-      <div class="col-6 form-check">
+      </div> -->
+      <!-- <div class="col-6 form-check">
         <input type="checkbox" class="form-check-input" name="checkIsCloud" id="checkIsCloud" [checked]="isCheckCreateCloud" (change)="clicado(isCheckCreateCloud?false: true)">
         <label for="checkIsCloud">Criar em nuvem</label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-6">
+      </div> -->
+    <!-- </div> -->
+    <!-- <div class="row"> -->
+      <!-- <div class="col-6">
         <label for="synchronizerServiceName">Nome do serviço</label>
         <input type="text" formControlName='synchronizerServiceName' class="form-control" id="synchronizerServiceName" name="synchronizerServiceName" placeholder="Synchronizer name">
-      </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
     </div>
     <button type="submit" class="btn btn-primary">Gravar</button>
     <a class="btn btn-danger" (click)="btnCancel()">Cancelar</a>

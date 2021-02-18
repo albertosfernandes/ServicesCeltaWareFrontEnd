@@ -1,7 +1,8 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild } from '@angular/core';
 import { TechService } from '../../tech.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-// import { mergeMap, switchMap, retry, map, catchError, filter, scan } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { ModelCustomer } from 'src/app/models/model-customer';
 import { CloudService } from 'src/app/cloud/cloud.service';
@@ -16,18 +17,19 @@ export class FormClienteComponent implements OnInit, OnChanges {
 
   customerFormGroup: FormGroup;
   customer: ModelCustomer;
+  customers: ModelCustomer[] = [];
   codeCeltaBs: number;
   valueSearch: string;
+  @ViewChild('searchCustomer') searchCustomer;
   isNew = false;
   isList = false;
   isLoading = false;
   isListCustomerProduct = false;
   isNewCustomerProduct = false;
   isBtnSearch = true;
-  customers: ModelCustomer[] = [];
-  produto = 'testesss';
   customerId: any;
   isExecutingScript = false;
+  debounce: Subject<string> = new Subject<string>();
 
 
   constructor(private techService: TechService, private formBuilder: FormBuilder, private cloudService: CloudService) { }
@@ -43,50 +45,51 @@ export class FormClienteComponent implements OnInit, OnChanges {
         alert('Erro: ' + err);
     },
     () => {
-      this.isExecutingScript = true;
-      this.loadCustomerCreate(this.customerId);
+      this.isExecutingScript = false;
+      this.btnCancel();
+      // this.loadCustomerCreate(this.customerId);
     }
     );
   }
 
-  loadCustomerCreate(customerId) {
-    this.techService.getCustomer(customerId)
-    .subscribe(customer => {
-      this.customer = customer;
-    },
-    error => {
-      alert('Erro: ' + error);
-    },
-    () => {
-      this.createCustomerCloud(this.customer);
-    } );
-  }
+  // loadCustomerCreate(customerId) {
+  //   this.techService.getCustomer(customerId)
+  //   .subscribe(customer => {
+  //     this.customer = customer;
+  //   },
+  //   error => {
+  //     alert('Erro: ' + error);
+  //   },
+  //   () => {
+  //     this.createCustomerCloud(this.customer);
+  //   } );
+  // }
 
-  createCustomerCloud(customer) {
-    this.techService.createCustomer(customer)
-    .subscribe(data => {
-      console.log('Criado com sucesso.');
-    },
-    error => {
-      alert('Erro:' + error);
-    },
-    () => {
-      this.isExecutingScript = false;
-    });
-  }
+  // createCustomerCloud(customer) {
+  //   this.techService.createCustomer(customer)
+  //   .subscribe(data => {
+  //     console.log('Criado com sucesso.');
+  //   },
+  //   error => {
+  //     alert('Erro:' + error);
+  //   },
+  //   () => {
+  //     this.isExecutingScript = false;
+  //   });
+  // }
 
-  createCustomerProduct(_customer) {
-    this.techService.createCustomerProduct(_customer)
-    .subscribe(data => {
-      console.log('Criado com sucesso.');
-    },
-    error => {
-      alert('Erro:' + error);
-    },
-    () => {
+  // createCustomerProduct(_customer) {
+  //   this.techService.createCustomerProduct(_customer)
+  //   .subscribe(data => {
+  //     console.log('Criado com sucesso.');
+  //   },
+  //   error => {
+  //     alert('Erro:' + error);
+  //   },
+  //   () => {
 
-    });
-  }
+  //   });
+  // }
 
   loadForm() {
     this.customerFormGroup = this.formBuilder.group({
@@ -98,6 +101,24 @@ export class FormClienteComponent implements OnInit, OnChanges {
       // customersProducts: [],
       rootDirectory: []
     });
+  }
+
+  enableInputSearch() {
+    this.debounce
+    .pipe(debounceTime(300))
+    .subscribe(filter => {
+      if (filter === null || filter === undefined) {
+        this.btnSearchCustomer('all');
+      } else {
+        this.btnSearchCustomer(filter);
+      }
+    },
+    erro => {
+      alert(erro.error);
+    },
+    () => {
+
+    } );
   }
 
   populateForm(customers: ModelCustomer) {
@@ -124,48 +145,60 @@ export class FormClienteComponent implements OnInit, OnChanges {
     });
   }
 
-  getAllCustomers() {
-    this.isLoading = true;
-    this.cloudService.getCustomersAll()
-    .subscribe(customerArray => {
-      this.customers = customerArray;
-    },
-    error => {
-      alert('error ');
-    },
-    () => {
-      this.isLoading = false;
-      this.isList = true;
-      this.isNew = !this.isNew;
-    } );
-  }
+  // getAllCustomers() {
+  //   this.isLoading = true;
+  //   this.cloudService.getCustomersAll()
+  //   .subscribe(customerArray => {
+  //     this.customers = customerArray;
+  //   },
+  //   error => {
+  //     alert('error ');
+  //   },
+  //   () => {
+  //     this.isLoading = false;
+  //     this.isList = true;
+  //     this.isNew = !this.isNew;
+  //   } );
+  // }
 
   btnSearchCustomer(codeCeltaBs) {
-    alert('PEsquisar' + codeCeltaBs);
+    if (codeCeltaBs === null || codeCeltaBs === undefined) {
+      codeCeltaBs = 'all';
+    }
     this.techService.findCustomer(codeCeltaBs)
     .subscribe(customerData => {
-      this.customer = customerData;
-      console.log(customerData);
+      this.customers = customerData;
     },
     error => {
       alert('Erro ao consultar cliente');
     },
     () => {
-      this.isNew = !this.isNew;
-      this.isBtnSearch = !this.isBtnSearch;
-      this.populateForm(this.customer);
+      this.isList = true;
+      // this.isBtnSearch = false;
+      // this.populateForm(this.customer);
     });
   }
 
+  listenEventNewCustomerProduct(value) {
+    this.isNewCustomerProduct = value;
+  }
+  //#region region Button events
   btnNew() {
-    this.isNew = !this.isNew;
-    this.isBtnSearch = !this.isBtnSearch;
+    this.isNew = true;
+    this.isBtnSearch = false;
+    this.clearForm();
+  }
+
+  btnCancel() {
+    this.isNew = false;
+    this.isBtnSearch = true;
+    this.searchCustomer.nativeElement.value = '';
     this.clearForm();
   }
 
   btnCancelList() {
-    this.isList = !this.isList;
-    this.isNew = !this.isNew;
+    this.isList = false;
+    this.isListCustomerProduct = false;
   }
 
   btnEdit(customerId) {
@@ -177,7 +210,8 @@ export class FormClienteComponent implements OnInit, OnChanges {
       alert('Erro ao buscar cliente' + err);
     },
     () => {
-      this.populateForm(this.customer);
+      // this.populateForm(this.customer);
+      this.isListCustomerProduct = true;
       console.log('finish');
     }
     );
@@ -190,9 +224,11 @@ export class FormClienteComponent implements OnInit, OnChanges {
   btnAddProduct(customerId) {
     this.isNewCustomerProduct = !this.isNewCustomerProduct;
   }
+  //#endregion
 
   ngOnInit() {
     this.loadForm();
+    this.enableInputSearch();
   }
 
   ngOnChanges() {

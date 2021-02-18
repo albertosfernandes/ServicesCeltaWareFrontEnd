@@ -15,11 +15,11 @@ import { FormClienteComponent } from './section/form-cliente/form-cliente.compon
 import { FormProdutoComponent } from './section/form-produto/form-produto.component';
 import { ListProductsComponent } from '../components/list-products/list-products.component';
 import { ListBackupScheduleComponent } from '../components/list-backup-schedule/list-backup-schedule.component';
-import { AddCustomerProductsComponent } from '../components/add-customer-products/add-customer-products.component';
 import { FormSignsatComponent } from './section/form-signsat/form-signsat.component';
 import { BackupscheduleComponent } from './section/servers/backupschedule/backupschedule.component';
 import { FormDatabaseComponent } from './section/form-database/form-database.component';
 import { FormServerComponent } from './section/form-server/form-server.component';
+import { FormCustomerproductsComponent } from '../components/forms/form-customerproducts/form-customerproducts.component';
 
 @NgModule({
   imports: [
@@ -35,13 +35,13 @@ import { FormServerComponent } from './section/form-server/form-server.component
     FormProdutoComponent,
     ListProductsComponent,
     ListBackupScheduleComponent,
-    AddCustomerProductsComponent,
     FormSignsatComponent,
     BackupscheduleComponent,
     FormDatabaseComponent,
     FormServerComponent,
     ListServersComponent,
-    ListCustomersComponent
+    ListCustomersComponent,
+    FormCustomerproductsComponent
   ]
 })
 export class TechModule { }

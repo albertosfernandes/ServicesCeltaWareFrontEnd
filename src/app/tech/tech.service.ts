@@ -8,15 +8,11 @@ import { Observable, of, throwError } from 'rxjs';
 import { map, catchError, tap  } from 'rxjs/operators';
 import { ModelUser } from '../models/model-user';
 
-// const this.base.urlapi = 'http://update.celtaware.com.br:9994';
-// const this.base.urlapi = 'http://localhost:20854';
-// const this.base.urlapi = 'http://localhost:9992';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TechService {
-  // headers: HttpHeaders | { [header: string]: string | string[]; };
 
   constructor(private base: BaseService) { }
 
@@ -69,9 +65,9 @@ createCustomer(customer: ModelCustomer) {
   .get<ModelCustomer>(this.base.urlapi + '/api/customer/Get?_customerId=' + customerId);
 }
 
-findCustomer(customerValue): Observable<ModelCustomer> {
+findCustomer(customerValue): Observable<ModelCustomer[]> {
   return this.base.httpBase
-  .get<ModelCustomer>(this.base.urlapi + '/api/customer/Find?valueSearch=' + customerValue);
+  .get<ModelCustomer[]>(this.base.urlapi + '/api/customer/Find?valueSearch=' + customerValue);
 }
 
 getUsers() {
