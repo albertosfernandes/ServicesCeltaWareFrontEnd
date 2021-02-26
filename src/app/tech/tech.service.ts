@@ -57,7 +57,13 @@ createCustomerProductDatabase(customerProduct: ModelCustomersProducts) {
 
 createCustomer(customer: ModelCustomer) {
   return this.base.httpBase
-  .post(this.base.urlapi + '/api/customer/StartCloud/',  customer);
+  .post(this.base.urlapi + '/api/customer/StartCloud/',  customer, {responseType: 'text'})
+  .pipe(
+    tap(
+      data => console.log(data),
+      err => console.log(err.error)
+    )
+  );
 }
 
  getCustomer(customerId) {

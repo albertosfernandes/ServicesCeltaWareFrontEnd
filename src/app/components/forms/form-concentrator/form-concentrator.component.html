@@ -1,7 +1,7 @@
-<form [formGroup]='concentratorFormGroup' (submit)='onSubmitFormConcentrator()'>
+<form [formGroup]='concFormGroup' (submit)='onSubmitFormConcentrator()'>
   <div class="form-group">
     <div class="row">
-      <input type="text" formControlName='concentratorsId' class="form-control invisible" id="concentratorsId" visible='false'>
+      <!-- <input type="text" formControlName='concentratorsId' class="form-control invisible" id="concentratorsId" visible='false'> -->
       <input type="text" formControlName='customersProductsId' class="form-control invisible" id="customersProductsId" visible='false'>
       <div class="col-6">
         <label for="addressName">Nome DNS</label>
@@ -18,13 +18,10 @@
     </div>
     <div class="row">
       <div class="col-6">
-        <label for="rootDirectory">Diretório de instalação</label>
-      <input type="text" formControlName='rootDirectory' class="form-control" id="rootDirectory" placeholder="diretório">
+        <label for="installDirectory">Diretório de instalação</label>
+      <input type="text" formControlName='installDirectory' class="form-control" id="installDirectory" placeholder="diretório">
       </div>
     </div>
     </div>
     <button type="submit" class="btn btn-primary">Gravar</button>
-    <button class="btn btn-danger">Cancelar</button>
-    <a class="btn btn-warning"> Alterar</a>
-
 </form>

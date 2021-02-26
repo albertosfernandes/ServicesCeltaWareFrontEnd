@@ -6,4 +6,5 @@ export class ModelCustomer {
     codeCeltaBs: number;
     // customersProducts: string;
     rootDirectory: string;
+    isCloud: boolean;
 }

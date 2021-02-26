@@ -20,6 +20,11 @@ import { BackupscheduleComponent } from './section/servers/backupschedule/backup
 import { FormDatabaseComponent } from './section/form-database/form-database.component';
 import { FormServerComponent } from './section/form-server/form-server.component';
 import { FormCustomerproductsComponent } from '../components/forms/form-customerproducts/form-customerproducts.component';
+import { FormBsfComponent } from '../components/forms/form-bsf/form-bsf.component';
+import { FormCrossComponent } from '../components/forms/form-cross/form-cross.component';
+import { FormSincservicesComponent } from '../components/forms/form-sincservices/form-sincservices.component';
+import { FormSincwebComponent } from '../components/forms/form-sincweb/form-sincweb.component';
+import { FormConcentratorComponent } from '../components/forms/form-concentrator/form-concentrator.component';
 
 @NgModule({
   imports: [
@@ -41,7 +46,12 @@ import { FormCustomerproductsComponent } from '../components/forms/form-customer
     FormServerComponent,
     ListServersComponent,
     ListCustomersComponent,
-    FormCustomerproductsComponent
+    FormCustomerproductsComponent,
+    FormBsfComponent,
+    FormCrossComponent,
+    FormSincservicesComponent,
+    FormSincwebComponent,
+    FormConcentratorComponent
   ]
 })
 export class TechModule { }

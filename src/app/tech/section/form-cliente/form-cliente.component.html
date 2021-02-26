@@ -20,20 +20,21 @@
   <div class="spinner-border" role="status" style="margin-left:50%;">
     <span class="sr-only">Carregando...</span>
    </div>
-  <p>Aguarde carregando clientes ...</p>
+    <p>Aguarde a execução ...</p>
   </div>
 
 <!-- <option *ngFor="let customer of customersMenu" [value]="customer.customerId" >{{customer.fantasyName}}</option> -->
-<table class="table" *ngIf="isList">
-  <thead>
-    <tr>
+<table class="table table-responsive table-striped mb-2" *ngIf="isList">
+  <thead class="thead-dark">
+    <tr *ngFor="let customer of customers">
       <th scope="col">Id</th>
       <th scope="col">Razão Social</th>
       <th scope="col">Nome Fantasia</th>
       <th scope="col">CNPJ</th>
       <th scope="col">Código CeltaBS</th>
       <th scope="col">Diretório Instalação</th>
-      <th scope="col"> </th>
+      <th *ngIf="!customer.isCloud" scope="col">Criar Nuvem?</th>
+      <th scope="col">Detalhes </th>
     </tr>
   </thead>
   <tbody>
@@ -47,12 +48,13 @@
       <!-- <td>
         <button class="btn btn-secondary" (click)="btnEdit(customer.customerId)">
           <i class="fa fa-plus"></i></button></td> -->
-
-      <td (click)='btnEdit(customer.customerId)'>
-          <span><i style="color: blue;" class="fa fa-plus" aria-hidden="true"></i></span></td>
+      <td *ngIf="!customer.isCloud"  (click)='btnEdit(customer.customerId)'>
+            <span><i class="fa fa-play"></i></span></td>
+      <td (click)='btnNewCloud(customer)'>
+          <span><i class="fa fa-plus"></i></span></td>
     </tr>
   </tbody>
-  <button class="btn btn-danger" (click)="btnCancelList()">Cancelar</button>
+  <button class="btn btn-danger mt-2" (click)="btnCancelList()">Cancelar</button>
 </table>
 
     <div *ngIf="isExecutingScript">

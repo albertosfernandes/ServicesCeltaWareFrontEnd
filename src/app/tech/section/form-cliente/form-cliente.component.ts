@@ -1,8 +1,8 @@
-import { Component, OnInit, OnChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild, OnDestroy } from '@angular/core';
 import { TechService } from '../../tech.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 import { ModelCustomer } from 'src/app/models/model-customer';
 import { CloudService } from 'src/app/cloud/cloud.service';
@@ -13,7 +13,7 @@ import { CloudService } from 'src/app/cloud/cloud.service';
   templateUrl: './form-cliente.component.html',
   styleUrls: ['./form-cliente.component.css']
 })
-export class FormClienteComponent implements OnInit, OnChanges {
+export class FormClienteComponent implements OnInit, OnChanges, OnDestroy {
 
   customerFormGroup: FormGroup;
   customer: ModelCustomer;
@@ -23,12 +23,14 @@ export class FormClienteComponent implements OnInit, OnChanges {
   @ViewChild('searchCustomer') searchCustomer;
   isNew = false;
   isList = false;
+  isShowNewCloud = false;
   isLoading = false;
   isListCustomerProduct = false;
   isNewCustomerProduct = false;
   isBtnSearch = true;
   customerId: any;
   isExecutingScript = false;
+  sub: Subscription[] = [];
   debounce: Subject<string> = new Subject<string>();
 
 
@@ -47,49 +49,10 @@ export class FormClienteComponent implements OnInit, OnChanges {
     () => {
       this.isExecutingScript = false;
       this.btnCancel();
-      // this.loadCustomerCreate(this.customerId);
     }
     );
   }
 
-  // loadCustomerCreate(customerId) {
-  //   this.techService.getCustomer(customerId)
-  //   .subscribe(customer => {
-  //     this.customer = customer;
-  //   },
-  //   error => {
-  //     alert('Erro: ' + error);
-  //   },
-  //   () => {
-  //     this.createCustomerCloud(this.customer);
-  //   } );
-  // }
-
-  // createCustomerCloud(customer) {
-  //   this.techService.createCustomer(customer)
-  //   .subscribe(data => {
-  //     console.log('Criado com sucesso.');
-  //   },
-  //   error => {
-  //     alert('Erro:' + error);
-  //   },
-  //   () => {
-  //     this.isExecutingScript = false;
-  //   });
-  // }
-
-  // createCustomerProduct(_customer) {
-  //   this.techService.createCustomerProduct(_customer)
-  //   .subscribe(data => {
-  //     console.log('Criado com sucesso.');
-  //   },
-  //   error => {
-  //     alert('Erro:' + error);
-  //   },
-  //   () => {
-
-  //   });
-  // }
 
   loadForm() {
     this.customerFormGroup = this.formBuilder.group({
@@ -98,7 +61,6 @@ export class FormClienteComponent implements OnInit, OnChanges {
       fantasyName: [],
       cnpj: [],
       codeCeltaBs: [],
-      // customersProducts: [],
       rootDirectory: []
     });
   }
@@ -140,26 +102,10 @@ export class FormClienteComponent implements OnInit, OnChanges {
       fantasyName: [],
       cnpj: [],
       codeCeltaBs: [],
-      // customersProducts: [],
       rootDirectory: []
     });
   }
 
-  // getAllCustomers() {
-  //   this.isLoading = true;
-  //   this.cloudService.getCustomersAll()
-  //   .subscribe(customerArray => {
-  //     this.customers = customerArray;
-  //   },
-  //   error => {
-  //     alert('error ');
-  //   },
-  //   () => {
-  //     this.isLoading = false;
-  //     this.isList = true;
-  //     this.isNew = !this.isNew;
-  //   } );
-  // }
 
   btnSearchCustomer(codeCeltaBs) {
     if (codeCeltaBs === null || codeCeltaBs === undefined) {
@@ -174,8 +120,6 @@ export class FormClienteComponent implements OnInit, OnChanges {
     },
     () => {
       this.isList = true;
-      // this.isBtnSearch = false;
-      // this.populateForm(this.customer);
     });
   }
 
@@ -187,6 +131,22 @@ export class FormClienteComponent implements OnInit, OnChanges {
     this.isNew = true;
     this.isBtnSearch = false;
     this.clearForm();
+  }
+
+  btnNewCloud(customer) {
+    this.isLoading = true;
+    this.sub.push(
+      this.techService.createCustomer(customer)
+      .subscribe(resp => {
+
+      },
+      err => {
+        alert(err.error);
+      },
+      () => {
+        this.isLoading = false;
+      })
+    );
   }
 
   btnCancel() {
@@ -233,6 +193,12 @@ export class FormClienteComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.loadForm();
+  }
+
+  ngOnDestroy(): void {
+    this.sub.forEach(s => {
+      s.unsubscribe();
+    });
   }
 
 }

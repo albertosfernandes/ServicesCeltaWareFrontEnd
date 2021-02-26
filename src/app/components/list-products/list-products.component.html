@@ -9,7 +9,8 @@
       <th scope="col">Usuário</th>
       <th scope="col">Senha</th>
       <th scope="col">Diretório</th>-->
-      <th scope="col"> </th>
+      <th scope="col">Parâmetros</th>
+      <th scope="col">Criar nuvem</th>
     </tr>
   </thead>
   <tbody>
@@ -17,16 +18,20 @@
       <th scope="row">{{ customerProduct.product.name }}</th>
       <td>{{ customerProduct.addressName }}</td>
       <td>{{ customerProduct.serversId }}</td>
-      <!-- <td>{{ customerProduct.ipAddress }}</td>
-      <td>{{ customerProduct.port }}</td>
-      <td>{{ customerProduct.loginUser }}</td>
-      <td>{{ customerProduct.loginPassword }}</td>
-      <td>{{ customerProduct.installDirectory }}</td>
-      <td>{{ customerProduct.synchronizerServiceName }}</td> -->
-      <td (click)='onclickCustomerProd(customerProduct.customersProductsId)'>
-        <span><i style="color: blue;" class="fa fa-plus" aria-hidden="true"></i></span></td>
+      <td (click)='onclickCustomerProd(customerProduct.customersProductsId, customerProduct.product.productId)'>
+        <span><i class="fa fa-ellipsis-v"></i></span></td>
+      <td (click)='onclickCreate()'>
+        <span><i class="fa fa-play"></i></span></td>
     </tr>
   </tbody>
 </table>
 <button class="btn btn-success" (click)='newCustomerProducsts()'>
   <span><i style="color: white;" class="fa fa-plus" aria-hidden="true"></i></span> Novo</button>
+
+ <div class="row mt-2 mb-4">
+   <app-form-bsf *ngIf="isAlterSettingsBSF" [customersProductsId]='customersProductsId' ></app-form-bsf>
+   <app-form-cross *ngIf="isAlterSettingsCross" [customersProductsId]='customersProductsId'></app-form-cross>
+   <app-form-sincservices *ngIf="isAlterSettingsSincServices" [customersProductsId]='customersProductsId'></app-form-sincservices>
+   <app-form-sincweb *ngIf="isAlterSettingsSincWeb" [customersProductsId]='customersProductsId'></app-form-sincweb>
+   <app-form-concentrator *ngIf="isAlterSettingsConcentrator" [customersProductsId]='customersProductsId'></app-form-concentrator>
+ </div>

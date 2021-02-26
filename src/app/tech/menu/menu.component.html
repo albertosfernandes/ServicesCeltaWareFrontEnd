@@ -31,7 +31,18 @@
 
       <li class="nav-item"><a name='servidores' (click)="bntMenu('servidores')">
         <i class="fa fa-download"></i> Servidores</a></li>
-      <li class="nav-item"><a class="nav-link py-0" (click)="bntMenu('formAssSat')">
-        <span>Assinatura SAT</span></a></li>
+
+        <li class="nav-item">
+          <a name="settingPDV" data-toggle="collapse" data-target="#submenu2">
+            <i class="fa fa-cogs"></i> Ferramentas BSPDV
+          </a>
+          <div class="collapse" id="submenu2" aria-expanded="false">
+              <ul class="flex-column pl-2 nav">
+                <li class="nav-item"><a class="nav-link py-0" (click)="bntMenu('formAssSat')">
+                  <span>Assinatura SAT</span></a>
+                </li>
+              </ul>
+          </div>
+      </li>
   </ul>
 </div>
