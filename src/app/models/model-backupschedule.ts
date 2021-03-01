@@ -10,6 +10,7 @@ export class ModelBackupSchedule {
   dateHourExecution: Date;
   dateHourLastExecution: Date;
   backupStatus: any;
+  directory: string;
   databasesId: number;
   databases: ModelDatabase;
   server: ModelServer;

@@ -170,9 +170,7 @@ export class FormClienteComponent implements OnInit, OnChanges, OnDestroy {
       alert('Erro ao buscar cliente' + err);
     },
     () => {
-      // this.populateForm(this.customer);
       this.isListCustomerProduct = true;
-      console.log('finish');
     }
     );
   }

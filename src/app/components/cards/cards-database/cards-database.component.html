@@ -19,7 +19,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let schedule of databasebackupSchedules">
-                <th scope="row">{{schedule.type == 0 ? 'FULL' : 'DIFF'}}</th>
+                <th scope="row">{{schedule.type == 0 ? 'FULL' : 'DIFF'}}{{schedule.type == 2 ? 'INCR.' : ''}}</th>
                 <td>{{ schedule.dateHourExecution | date:'HH:mm'}}</td>
                 <td>{{ schedule.customerProduct.synchronizerServiceName }}</td>
                 <td>{{ schedule.dateHourLastExecution | date : 'dd/MM/yyyy HH:mm' }}</td>

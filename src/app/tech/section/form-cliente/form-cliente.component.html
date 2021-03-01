@@ -17,9 +17,9 @@
 
 <!-- <div *ngIf="isLoading"> -->
   <div style="padding-left: 50%;" *ngIf="isLoading" >
-  <div class="spinner-border" role="status" style="margin-left:50%;">
-    <span class="sr-only">Carregando...</span>
-   </div>
+    <div class="spinner-border" role="status" style="margin-left:50%;">
+      <span class="sr-only">Carregando...</span>
+    </div>
     <p>Aguarde a execução ...</p>
   </div>
 
@@ -48,9 +48,9 @@
       <!-- <td>
         <button class="btn btn-secondary" (click)="btnEdit(customer.customerId)">
           <i class="fa fa-plus"></i></button></td> -->
-      <td *ngIf="!customer.isCloud"  (click)='btnEdit(customer.customerId)'>
+      <td *ngIf="!customer.isCloud"  (click)='btnNewCloud(customer)'>
             <span><i class="fa fa-play"></i></span></td>
-      <td (click)='btnNewCloud(customer)'>
+      <td (click)='btnEdit(customer.customerId)'>
           <span><i class="fa fa-plus"></i></span></td>
     </tr>
   </tbody>

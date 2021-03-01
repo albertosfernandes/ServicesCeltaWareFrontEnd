@@ -1,6 +1,6 @@
-import { ModelServer } from './../../models/model-server';
-import { ServersService } from './../../tech/section/servers/servers.service';
+import { ModelServer } from 'src/app/models/model-server';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ServersService } from 'src/app/tech/section/servers/servers.service';
 
 @Component({
   selector: 'app-list-servers',

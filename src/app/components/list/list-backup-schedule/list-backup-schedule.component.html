@@ -30,12 +30,17 @@
       <select class="custom-select" id="inputGroupSelectType" name="inputGroupSelect01" (change)="onChangeSelect($event.target.value)">
         <option selected [value]="0">Full</option>
         <option [value]="1">Diferencial</option>
+        <option [value]="2">Incremental</option>
       </select>
       </div>
       <div class="col-sm-12">
         <label for="dateHourExecution">Horario</label>
         <input type="time" formControlName='dateHourExecution' class="form-control" id="dateHourExecution" name="dateHourExecution">
       </div>
+    </div>
+    <div class="col-sm-12">
+      <label for="directory">Diretório de gravação do backup</label>
+      <input type="text" formControlName='directory' class="form-control" id="directory" name="directory" placeholder="/volumes-iscsi/dircliente/mssqlcliente">
     </div>
     </div>
 

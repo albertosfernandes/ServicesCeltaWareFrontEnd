@@ -1,8 +1,7 @@
-import { ModelDatabase } from './../../models/model-database';
-import { ServersService } from './../../tech/section/servers/servers.service';
-import { ModelBackupSchedule } from './../../models/model-backupschedule';
+import { ModelDatabase } from '../../../models/model-database';
+import { ServersService } from '../../../tech/section/servers/servers.service';
+import { ModelBackupSchedule } from '../../../models/model-backupschedule';
 import { ModelCustomersProducts } from 'src/app/models/model-customersproducts';
-import { ModelServer } from './../../models/model-server';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 

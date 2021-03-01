@@ -9,10 +9,6 @@ import { tap, catchError } from 'rxjs/operators';
 import { error } from 'util';
 import { ModelCertificate } from '../models/model-certificate';
 
-// const this.base.urlapi = 'http://update.celtaware.com.br:9994';
-// const this.base.urlapi = 'http://localhost:20854';
-// const this.base.urlapi = 'http://localhost:9992';
-
 @Injectable({
   providedIn: 'root'
 })

@@ -2,7 +2,7 @@ import { error } from 'protractor';
 import { ModelBsf } from './../../../models/model-bsf';
 import { Subscription } from 'rxjs';
 import { ServiceBsfService } from './../../../services/service-bsf.service';
-import { Component, OnInit, OnChanges, OnDestroy, SimpleChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy, SimpleChanges, Input, Output , EventEmitter} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -14,8 +14,12 @@ export class FormBsfComponent implements OnInit, OnChanges, OnDestroy {
 
   appBsfFormGroup: FormGroup;
   @Input() customersProductsId = 0;
+  @Input() customerId = 0;
+  @Output() _bsfValue = new EventEmitter();
   sub: Subscription[] = [];
   bsf: ModelBsf;
+  bsfId;
+  _bsfCustomerProducts: ModelBsf[] = [];
 
   constructor(private formBuilder: FormBuilder, private bsfService: ServiceBsfService) { }
 
@@ -25,13 +29,45 @@ export class FormBsfComponent implements OnInit, OnChanges, OnDestroy {
     this.sub.push(
       this.bsfService.addBsf(this.bsf)
       .subscribe(resp => {
+        this.bsfId = resp;
+        console.log('Resposta de submitFormBSF: ' + resp);
+      },
+      err => {
+        alert(err.error);
+      },
+      () => {
+        this._bsfValue.emit(this.bsfId);
+        this.initForm();
+      })
+    );
+  }
+
+  onclickCreate(_appBsf) {
+    this.sub.push(
+      this.bsfService.createBsfOncloud(_appBsf)
+      .subscribe(resp => {
         console.log(resp);
       },
       err => {
         alert(err.error);
       },
       () => {
-        this.initForm();
+        this.loadBsfCustomerProducts();
+      })
+    );
+  }
+
+  loadBsfCustomerProducts () {
+    this.sub.push(
+      this.bsfService.get(this.customerId)
+      .subscribe(resp => {
+        this._bsfCustomerProducts = resp;
+      },
+      err => {
+        alert(err.error);
+      },
+      () => {
+        // fim
       })
     );
   }

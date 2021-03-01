@@ -1,36 +1,72 @@
-<form [formGroup]='appBsfFormGroup' (submit)='onSubmitFormBSF()' class="mb-4">
-  <div class="form-group">
-    <div class="row">
-      <!-- <input type="text" formControlName='appBsfsId' class="form-control invisible" id="appBsfsId" visible='false'> -->
-      <input type="text" formControlName='customersProductsId' class="form-control invisible" id="customersProductsId" visible='false'>
-      <div class="col-6">
-        <label for="addressName">Nome DNS</label>
-        <input type="text" formControlName='addressName' class="form-control" id="addressName" placeholder="http//...">
-      </div>
-      <div class="col-sm-4">
-        <label for="ipAddress">Endereço IP</label>
-        <input type="text" formControlName='ipAddress' class="form-control" id="ipAddress" placeholder="xxx.xxx.xxx.xxx">
-      </div>
-      <div class="col-sm-2">
-        <label for="port">Porta</label>
-        <input type="text" formControlName='port' class="form-control" id="port">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-6">
-        <label for="userName">Usuário Administrador CeltaBS</label>
-        <input type="text" formControlName='userName' class="form-control" id="userName">
-      </div>
-      <div class="col-6">
-        <label for="password">Senha</label>
-        <input type="text" formControlName='password' class="form-control" id="password">
-      </div>
+<div class="row">
+  <div class="col-12">
+    <form [formGroup]='appBsfFormGroup' (submit)='onSubmitFormBSF()' class="mb-4">
+      <div class="form-group">
+        <div class="row">
+          <!-- <input type="text" formControlName='appBsfsId' class="form-control invisible" id="appBsfsId" visible='false'> -->
+          <input type="text" formControlName='customersProductsId' class="form-control invisible" id="customersProductsId" visible='false'>
+          <div class="col-6">
+            <label for="addressName">Nome DNS</label>
+            <input type="text" formControlName='addressName' class="form-control" id="addressName" placeholder="http//...">
+          </div>
+          <div class="col-sm-4">
+            <label for="ipAddress">Endereço IP</label>
+            <input type="text" formControlName='ipAddress' class="form-control" id="ipAddress" placeholder="xxx.xxx.xxx.xxx">
+          </div>
+          <div class="col-sm-2">
+            <label for="port">Porta</label>
+            <input type="text" formControlName='port' class="form-control" id="port">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <label for="userName">Usuário Administrador CeltaBS</label>
+            <input type="text" formControlName='userName' class="form-control" id="userName">
+          </div>
+          <div class="col-6">
+            <label for="password">Senha</label>
+            <input type="text" formControlName='password' class="form-control" id="password">
+          </div>
 
-      <div class="col-6">
-        <label for="installDirectory">Diretório de instalação</label>
-        <input type="text" formControlName='installDirectory' class="form-control" id="installDirectory" placeholder="diretório">
-      </div>
-    </div>
-    </div>
-    <button type="submit" class="btn btn-outline-secondary">Gravar</button>
-</form>
+          <div class="col-6">
+            <label for="installDirectory">Diretório de instalação</label>
+            <input type="text" formControlName='installDirectory' class="form-control" id="installDirectory" placeholder="diretório">
+          </div>
+        </div>
+        </div>
+        <button type="submit" class="btn btn-outline-secondary">Gravar</button>
+    </form>
+  </div>
+</div>
+<div class="row mt-2">
+  <div class="col-12">
+    <table class="table">
+      <thead>
+        <tr *ngFor="let bsf of _bsfCustomerProducts">
+          <th scope="col">Endereço</th>
+          <th scope='col'>ServerId</th>
+          <th scope="col">IP</th>
+          <th scope="col">Porta</th>
+          <th scope="col">Usuário</th>
+          <th scope="col">Senha</th>
+          <th scope="col">Diretório</th>
+          <th scope="col" *ngIf="!bsf.isCreated">Criar nuvem</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bsf of _bsfCustomerProducts">
+          <td>{{ bsf.addressName }}</td>
+          <td>{{ bsf.customerProduct.serversId }}</td>
+          <td>{{ bsf.ipAddress }}</td>
+          <td>{{ bsf.port }}</td>
+          <td>{{ bsf.userName }}</td>
+          <td>{{ bsf.password }}</td>
+          <td>{{ bsf.installDirectory }}</td>
+          <td *ngIf="!bsf.isCreated"  (click)='onclickCreate(bsf)'>
+            <span><i class="fa fa-play"></i></span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

@@ -1,5 +1,5 @@
-import { ListCustomersComponent } from './../components/list-customers/list-customers.component';
-import { ListServersComponent } from './../components/list-servers/list-servers.component';
+import { ListCustomersComponent } from '../components/list/list-customers/list-customers.component';
+import { ListServersComponent } from '../components/list/list-servers/list-servers.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormControl } from '@angular/forms';
@@ -13,8 +13,8 @@ import { CeltaVpnComponent } from './section/celta-vpn/celta-vpn.component';
 import { MenuComponent } from './menu/menu.component';
 import { FormClienteComponent } from './section/form-cliente/form-cliente.component';
 import { FormProdutoComponent } from './section/form-produto/form-produto.component';
-import { ListProductsComponent } from '../components/list-products/list-products.component';
-import { ListBackupScheduleComponent } from '../components/list-backup-schedule/list-backup-schedule.component';
+import { ListProductsComponent } from '../components/list/list-products/list-products.component';
+import { ListBackupScheduleComponent } from '../components/list/list-backup-schedule/list-backup-schedule.component';
 import { FormSignsatComponent } from './section/form-signsat/form-signsat.component';
 import { BackupscheduleComponent } from './section/servers/backupschedule/backupschedule.component';
 import { FormDatabaseComponent } from './section/form-database/form-database.component';
@@ -25,6 +25,7 @@ import { FormCrossComponent } from '../components/forms/form-cross/form-cross.co
 import { FormSincservicesComponent } from '../components/forms/form-sincservices/form-sincservices.component';
 import { FormSincwebComponent } from '../components/forms/form-sincweb/form-sincweb.component';
 import { FormConcentratorComponent } from '../components/forms/form-concentrator/form-concentrator.component';
+
 
 @NgModule({
   imports: [
