@@ -3,7 +3,7 @@
     <form [formGroup]='appBsfFormGroup' (submit)='onSubmitFormBSF()' class="mb-4">
       <div class="form-group">
         <div class="row">
-          <!-- <input type="text" formControlName='appBsfsId' class="form-control invisible" id="appBsfsId" visible='false'> -->
+          <input type="text" formControlName='appBsfsId' class="form-control invisible" id="appBsfsId" visible='false'>
           <input type="text" formControlName='customersProductsId' class="form-control invisible" id="customersProductsId" visible='false'>
           <div class="col-6">
             <label for="addressName">Nome DNS</label>
@@ -35,14 +35,16 @@
         </div>
         </div>
         <button type="submit" class="btn btn-outline-secondary">Gravar</button>
+        <button type="button" class="btn btn-outline-success ml-2" (click)='onclickCreateCloud()' *ngIf="isReadToCreate" >Criar Nuvem</button>
     </form>
   </div>
 </div>
-<div class="row mt-2">
+
+<!-- <div class="row mt-2">
   <div class="col-12">
     <table class="table">
       <thead>
-        <tr *ngFor="let bsf of _bsfCustomerProducts">
+        <tr>
           <th scope="col">Endereço</th>
           <th scope='col'>ServerId</th>
           <th scope="col">IP</th>
@@ -50,7 +52,7 @@
           <th scope="col">Usuário</th>
           <th scope="col">Senha</th>
           <th scope="col">Diretório</th>
-          <th scope="col" *ngIf="!bsf.isCreated">Criar nuvem</th>
+          <th scope="col">Criar nuvem</th>
         </tr>
       </thead>
       <tbody>
@@ -68,5 +70,5 @@
       </tbody>
     </table>
   </div>
-</div>
+</div> -->
 

@@ -15,6 +15,7 @@ export class FormSincwebComponent implements OnInit, OnChanges, OnDestroy {
   @Input() customersProductsId = 0;
   sub: Subscription[] = [];
   sincWeb: ModelSincweb;
+  idresp: string;
 
   constructor(private formBuilder: FormBuilder, private sincWebService: ServiceSincwebService) { }
 
@@ -23,19 +24,49 @@ export class FormSincwebComponent implements OnInit, OnChanges, OnDestroy {
     this.sub.push(
       this.sincWebService.addSincWeb(this.sincWeb)
       .subscribe(resp => {
-        console.log(resp);
+        this.idresp = resp;
       },
       err => {
         alert(err.error);
       },
       () => {
-        this.initForm();
+        alert('Gravado com sucesso com id:' + this.idresp);
+      })
+    );
+  }
+
+  loadSincWebCustomerProduct () {
+    this.sub.push(
+      this.sincWebService.findSincWebbyCustomersProduct(this.customersProductsId)
+      .subscribe(resp => {
+        this.sincWeb = resp;
+      },
+      err => {
+        alert(err.error);
+      },
+      () => {
+        if (this.sincWeb == null || this.sincWeb === undefined ) {
+          this.formEmpty();
+        } else {
+          this.formContent();
+        }
       })
     );
   }
   initForm() {
+    // this.sincWebFormGroup = this.formBuilder.group({
+    //   customersProductsId: [this.customersProductsId],
+    //   addressName: [],
+    //   ipaddress: [],
+    //   port: [],
+    //   installDirectory: []
+    // });
+  }
+
+  formEmpty() {
     this.sincWebFormGroup = this.formBuilder.group({
       customersProductsId: [this.customersProductsId],
+      appSincWebsId: [0],
       addressName: [],
       ipaddress: [],
       port: [],
@@ -43,15 +74,28 @@ export class FormSincwebComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  formContent() {
+    this.sincWebFormGroup = this.formBuilder.group({
+      customersProductsId: [this.customersProductsId],
+      appSincWebsId: [this.sincWeb.appSincWebsId],
+      addressName: [this.sincWeb.addressName],
+      ipaddress: [this.sincWeb.ipAddress],
+      port: [this.sincWeb.port],
+      installDirectory: [this.sincWeb.installDirectory]
+    });
+  }
+
   ngOnInit() {
-    this.initForm();
+    // this.initForm();
+    this.loadSincWebCustomerProduct();
   }
   ngOnDestroy(): void {
     this.sub.forEach(s => { s.unsubscribe();
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
-    this.initForm();
+    // this.initForm();
+    this.loadSincWebCustomerProduct();
   }
 
 }

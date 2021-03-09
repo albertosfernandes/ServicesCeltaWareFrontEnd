@@ -20,6 +20,7 @@ export class FormBsfComponent implements OnInit, OnChanges, OnDestroy {
   bsf: ModelBsf;
   bsfId;
   _bsfCustomerProducts: ModelBsf[] = [];
+  isReadToCreate = false;
 
   constructor(private formBuilder: FormBuilder, private bsfService: ServiceBsfService) { }
 
@@ -30,14 +31,13 @@ export class FormBsfComponent implements OnInit, OnChanges, OnDestroy {
       this.bsfService.addBsf(this.bsf)
       .subscribe(resp => {
         this.bsfId = resp;
-        console.log('Resposta de submitFormBSF: ' + resp);
       },
       err => {
         alert(err.error);
       },
       () => {
         this._bsfValue.emit(this.bsfId);
-        this.initForm();
+        alert('Gravado com sucesso com id:' + this.bsfId);
       })
     );
   }
@@ -67,14 +67,49 @@ export class FormBsfComponent implements OnInit, OnChanges, OnDestroy {
         alert(err.error);
       },
       () => {
-        // fim
+        // .
+      })
+    );
+  }
+
+  isShowCreateCloud(bsfValue: ModelBsf) {
+   if (!this.bsf.isCreated) {
+     this.isReadToCreate = true;
+   }
+  }
+
+  loadBsfCustomerProduct () {
+    this.sub.push(
+      this.bsfService.findBsfbyCustomersProduct(this.customersProductsId)
+      .subscribe(resp => {
+        this.bsf = resp;
+      },
+      err => {
+        alert(err.error);
+      },
+      () => {
+        if (this.bsf == null || this.bsf === undefined ) {
+          this.formEmpty();
+        } else {
+          this.formContent();
+          this.isShowCreateCloud(this.bsf);
+        }
       })
     );
   }
 
   initForm() {
+    if (this.bsf == null || this.bsf === undefined) {
+      this.formEmpty();
+    } else {
+      this.formContent();
+    }
+  }
+
+  formEmpty() {
     this.appBsfFormGroup = this.formBuilder.group({
       customersProductsId: [this.customersProductsId],
+      appBsfsId: [],
       addressName: [],
       ipAddress: [],
       port: [],
@@ -84,8 +119,26 @@ export class FormBsfComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  formContent() {
+    this.appBsfFormGroup = this.formBuilder.group({
+      customersProductsId: [this.customersProductsId],
+      appBsfsId: [this.bsf.appBsfsId],
+      addressName: [this.bsf.addressName],
+      ipAddress: [this.bsf.ipAddress],
+      port: [this.bsf.port],
+      userName: [this.bsf.userName],
+      password: [this.bsf.password],
+      installDirectory: [this.bsf.installDirectory]
+    });
+  }
+
+  onclickCreateCloud() {
+    alert('vms criar: ' + this.bsf.installDirectory + ' com id: ' + this.bsf.appBsfsId);
+  }
+
   ngOnInit() {
-    this.initForm();
+    this.loadBsfCustomerProduct();
+    // this.initForm();
   }
 
   ngOnDestroy(): void {
@@ -94,7 +147,8 @@ export class FormBsfComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.initForm();
+    this.loadBsfCustomerProduct();
+    // this.initForm();
   }
 
 }

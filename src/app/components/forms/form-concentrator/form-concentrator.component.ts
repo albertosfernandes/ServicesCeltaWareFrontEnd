@@ -15,6 +15,7 @@ export class FormConcentratorComponent implements OnInit, OnChanges, OnDestroy {
   @Input() customersProductsId = 0;
   sub: Subscription[] = [];
   conc: ModelConcentrator;
+  idresp: string;
 
   constructor(private formBuilder: FormBuilder, private serviceConcentrator: ServiceConcentratorService) { }
 
@@ -23,20 +24,50 @@ export class FormConcentratorComponent implements OnInit, OnChanges, OnDestroy {
     this.sub.push(
       this.serviceConcentrator.addConcentrator(this.conc)
       .subscribe(resp => {
-        console.log(resp);
+        this.idresp = resp;
       },
       err => {
         alert(err.error);
       },
       () => {
-        this.initForm();
+        alert('Gravado com sucesso com id:' + this.idresp);
+      })
+    );
+  }
+
+  loadConcentratorCustomerProduct () {
+    this.sub.push(
+      this.serviceConcentrator.findConcentratorbyCustomersProduct(this.customersProductsId)
+      .subscribe(resp => {
+        this.conc = resp;
+      },
+      err => {
+        alert(err.error);
+      },
+      () => {
+        if (this.conc == null || this.conc === undefined ) {
+          this.formEmpty();
+        } else {
+          this.formContent();
+        }
       })
     );
   }
 
   initForm() {
+    // this.concFormGroup = this.formBuilder.group({
+    //   customersProductsId: [this.customersProductsId],
+    //   addressName: [],
+    //   ipaddress: [],
+    //   port: [],
+    //   installDirectory: []
+    // });
+  }
+
+  formEmpty() {
     this.concFormGroup = this.formBuilder.group({
       customersProductsId: [this.customersProductsId],
+      concentratorsId: [0],
       addressName: [],
       ipaddress: [],
       port: [],
@@ -44,8 +75,19 @@ export class FormConcentratorComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  formContent() {
+    this.concFormGroup = this.formBuilder.group({
+      customersProductsId: [this.customersProductsId],
+      concentratorsId: [this.conc.concentratorsId],
+      addressName: [this.conc.addressName],
+      ipaddress: [this.conc.ipAddress],
+      port: [this.conc.port],
+      installDirectory: [this.conc.installDirectory]
+    });
+  }
+
   ngOnInit() {
-    this.initForm();
+    this.loadConcentratorCustomerProduct();
   }
 
   ngOnDestroy(): void {
@@ -54,7 +96,7 @@ export class FormConcentratorComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.initForm();
+    this.loadConcentratorCustomerProduct();
   }
 
 }

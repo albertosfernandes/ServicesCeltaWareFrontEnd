@@ -15,6 +15,7 @@ export class FormSincservicesComponent implements OnInit, OnChanges, OnDestroy {
   @Input() customersProductsId = 0;
   sub: Subscription[] = [];
   sincService: ModelSincservices;
+  idresp: string;
   constructor(private formBuilder: FormBuilder, private sincServiceService: ServiceSincServiceService) { }
 
   onSubmitFormSincServices() {
@@ -22,30 +23,73 @@ export class FormSincservicesComponent implements OnInit, OnChanges, OnDestroy {
     this.sub.push(
       this.sincServiceService.addSincService(this.sincService)
       .subscribe(resp => {
-        console.log(resp);
+        this.idresp = resp;
       },
       err => {
         alert(err.error);
       },
       () => {
-        this.initForm();
+        alert('Gravado com sucesso com id:' + this.idresp);
+      })
+    );
+  }
+
+  loadSincServiceCustomerProduct () {
+    this.sub.push(
+      this.sincServiceService.findSincServicebyCustomersProduct(this.customersProductsId)
+      .subscribe(resp => {
+        this.sincService = resp;
+      },
+      err => {
+        alert(err.error);
+      },
+      () => {
+        if (this.sincService == null || this.sincService === undefined ) {
+          this.formEmpty();
+        } else {
+          this.formContent();
+        }
       })
     );
   }
 
   initForm() {
+    // this.sincServicesFormGroup = this.formBuilder.group({
+    //   customersProductsId: [this.customersProductsId],
+    //   addressName: [],
+    //   ipaddress: [],
+    //   port: [],
+    //   synchronizerServiceName: [],
+    //   installDirectory: []
+    // });
+  }
+
+  formEmpty() {
     this.sincServicesFormGroup = this.formBuilder.group({
       customersProductsId: [this.customersProductsId],
+      appSincServicesId: [0],
       addressName: [],
-      ipaddress: [],
+      ipAddress: [],
       port: [],
       synchronizerServiceName: [],
       installDirectory: []
     });
   }
 
+  formContent() {
+    this.sincServicesFormGroup = this.formBuilder.group({
+      customersProductsId: [this.customersProductsId],
+      appSincServicesId: [this.sincService.appSincServicesId],
+      addressName: [this.sincService.addressName],
+      ipAddress: [this.sincService.ipAddress],
+      port: [this.sincService.port],
+      synchronizerServiceName: [this.sincService.synchronizerServiceName],
+      installDirectory: [this.sincService.installDirectory]
+    });
+  }
+
   ngOnInit() {
-    this.initForm();
+    this.loadSincServiceCustomerProduct();
   }
 
   ngOnDestroy(): void {
@@ -54,7 +98,7 @@ export class FormSincservicesComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.initForm();
+    this.loadSincServiceCustomerProduct();
   }
 
 }

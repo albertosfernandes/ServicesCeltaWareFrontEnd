@@ -22,6 +22,17 @@ export class ServiceBsfService {
     );
   }
 
+  findBsfbyCustomersProduct(customerProductId) {
+    return this.base.httpBase
+    .get<ModelBsf>(this.base.urlapi + '/api/AppBsf/GetByCustomersProducts?customersProductsId=' + customerProductId)
+    .pipe(
+      tap(
+        data => console.log(data),
+        err => console.log(err.error)
+      )
+    );
+  }
+
   get(_customerId) {
     return this.base.httpBase
     .get<ModelBsf[]>(this.base.urlapi + '/api/AppBsf/GetByCustomer?customerId=' + _customerId)
@@ -34,7 +45,7 @@ export class ServiceBsfService {
   }
   addBsf(_appBsf: ModelBsf) {
     return this.base.httpBase
-    .post(this.base.urlapi + '/api/AppBsf/add/', _appBsf, {responseType: 'text'})
+    .post(this.base.urlapi + '/api/AppBsf/AddUpdate/', _appBsf, {responseType: 'text'})
     .pipe(
       tap(
         data => console.log(data),

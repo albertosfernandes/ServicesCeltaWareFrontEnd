@@ -1,6 +1,10 @@
+<div class="row mt-3">
+
+
+<h5>{{ customersProducts[0].customer.fantasyName }}</h5>
 <table class="table">
   <thead>
-    <tr *ngFor="let customerProduct of customersProducts">
+    <tr>
       <th scope="col">Produto</th>
       <th scope="col">Endereço</th>
       <th scope='col'>ServerId</th>
@@ -27,6 +31,8 @@
 </table>
 <button class="btn btn-success" (click)='newCustomerProducsts()'>
   <span><i style="color: white;" class="fa fa-plus" aria-hidden="true"></i></span> Novo</button>
+<button class="btn btn-danger ml-2" (click)='cancelListCustomerProducsts()'>
+  <span><i style="color: white;" class="fa fa-times" aria-hidden="true"></i></span> Cancelar</button>
 
  <div class="row mt-2 mb-4">
    <app-form-bsf *ngIf="isAlterSettingsBSF" (_bsfValue)='_bsfreceived($event)' [customerId]='customerId' [customersProductsId]='customersProductsId' ></app-form-bsf>
@@ -35,3 +41,4 @@
    <app-form-sincweb *ngIf="isAlterSettingsSincWeb" [customersProductsId]='customersProductsId'></app-form-sincweb>
    <app-form-concentrator *ngIf="isAlterSettingsConcentrator" [customersProductsId]='customersProductsId'></app-form-concentrator>
  </div>
+</div>

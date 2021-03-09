@@ -16,6 +16,7 @@ export class FormCustomerproductsComponent implements OnInit, OnChanges {
 
   @Input() customerId = 0;
   @Output() isCancel = new EventEmitter();
+  @Output() isLoading = new EventEmitter();
   customersProducts: ModelCustomersProducts;
   customersProductsForCloud: ModelCustomersProducts;
   customerProductFormGroup: FormGroup;
@@ -33,8 +34,8 @@ export class FormCustomerproductsComponent implements OnInit, OnChanges {
               private formBuilder: FormBuilder,
               private serverService: ServersService) { }
 
-              onSubmitCustomerProduct() {
-                this.isExecutingScript = true;
+    onSubmitCustomerProduct() {
+              this.isExecutingScript = true;
                 this.customersProducts = this.customerProductFormGroup.getRawValue();
                 this.customersProducts.customerId = this.customerId;
                 this.customersProducts.productId = this.productId;
@@ -49,6 +50,7 @@ export class FormCustomerproductsComponent implements OnInit, OnChanges {
                 () => {
                   this.loadCreateCustomersProducts(this.customersProductId);
                   this.isExecutingScript = false;
+                  this.isLoading.emit(true);
                 }
                 );
               }

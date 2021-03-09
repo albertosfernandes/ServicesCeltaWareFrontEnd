@@ -19,6 +19,7 @@ export class ListProductsComponent implements OnInit, OnChanges, OnDestroy {
   customersProducts: ModelCustomersProducts[];
   @Input() customerId = 0;
   @Output() isNewCustomerProductclick = new EventEmitter();
+  @Output() cancelListCustomerProduct = new EventEmitter();
   sub: Subscription[] = [];
   isAlterSettingsBSF = false;
   // isAlterSettingsCCS = false;
@@ -105,6 +106,10 @@ export class ListProductsComponent implements OnInit, OnChanges, OnDestroy {
 
   }
 
+  cancelListCustomerProducsts() {
+    this.cancelListCustomerProduct.emit(true);
+  }
+
   loadCustomersProducts() {
     this.sub.push(
       this.cloudService.getCustomersProducts(this.customerId)
@@ -119,33 +124,6 @@ export class ListProductsComponent implements OnInit, OnChanges, OnDestroy {
       })
     );
   }
-
-  // loadProducstsFull (_customersProducstsValue: ModelCustomersProducts[]) {
-  //   _customersProducstsValue.forEach(cp => {
-  //     switch (cp.productId) {
-  //       case 1: {
-  //         this.loadBsfCustomerProducts();
-  //         break;
-  //       }
-  //       case 2: {
-  //         this.isAlterSettingsCross = true;
-  //         break;
-  //       }
-  //       case 3: {
-  //         this.isAlterSettingsSincWeb = true;
-  //         break;
-  //       }
-  //       case 4: {
-  //         this.isAlterSettingsConcentrator = true;
-  //         break;
-  //       }
-  //       case 5 : {
-  //         this.isAlterSettingsSincServices = true;
-  //         break;
-  //       }
-  //     }
-  //   });
-  // }
 
   newCustomerProducsts() {
     this.isNewCustomerProductclick.emit(true);

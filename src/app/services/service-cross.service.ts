@@ -1,7 +1,7 @@
-import { ModelCross } from './../models/model-cross';
 import { BaseService } from './base.service';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
+import { ModelCross } from '../models/model-cross';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class ServiceCrossService {
 
   addCross(_appCross: ModelCross) {
     return this.base.httpBase
-    .post(this.base.urlapi + '/api/AppCross/add/', _appCross, {responseType: 'text'})
+    .post(this.base.urlapi + '/api/AppCross/AddUpdate/', _appCross, {responseType: 'text'})
     .pipe(
       tap(
         data => console.log(data),
@@ -20,4 +20,16 @@ export class ServiceCrossService {
       )
     );
   }
+
+  findCrossbyCustomersProduct(customerProductId) {
+    return this.base.httpBase
+    .get<ModelCross>(this.base.urlapi + '/api/AppCross/GetByCustomersProducts?customersProductsId=' + customerProductId)
+    .pipe(
+      tap(
+        data => console.log(data),
+        err => console.log(err.error)
+      )
+    );
+  }
+
 }

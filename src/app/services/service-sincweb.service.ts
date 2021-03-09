@@ -12,11 +12,22 @@ export class ServiceSincwebService {
 
   addSincWeb(_appSincWeb: ModelSincweb) {
     return this.base.httpBase
-    .post(this.base.urlapi + '/api/AppSincWeb/add/', _appSincWeb, {responseType: 'text'})
+    .post(this.base.urlapi + '/api/AppSincWeb/addUpdate/', _appSincWeb, {responseType: 'text'})
     .pipe(
       tap(
         data => console.log(data),
         erro => console.log(erro)
+      )
+    );
+  }
+
+  findSincWebbyCustomersProduct(customerProductId) {
+    return this.base.httpBase
+    .get<ModelSincweb>(this.base.urlapi + '/api/AppSincWeb/GetByCustomersProducts?customersProductsId=' + customerProductId)
+    .pipe(
+      tap(
+        data => console.log(data),
+        err => console.log(err.error)
       )
     );
   }

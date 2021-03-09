@@ -21,6 +21,7 @@ export class FormClienteComponent implements OnInit, OnChanges, OnDestroy {
   codeCeltaBs: number;
   valueSearch: string;
   @ViewChild('searchCustomer') searchCustomer;
+  @ViewChild('listProducts') listProducts;
   isNew = false;
   isList = false;
   isShowNewCloud = false;
@@ -126,6 +127,12 @@ export class FormClienteComponent implements OnInit, OnChanges, OnDestroy {
   listenEventNewCustomerProduct(value) {
     this.isNewCustomerProduct = value;
   }
+
+  listenVerifyCancel (value) {
+    if (value) {
+      this.isListCustomerProduct = false;
+    }
+  }
   //#region region Button events
   btnNew() {
     this.isNew = true;
@@ -171,6 +178,8 @@ export class FormClienteComponent implements OnInit, OnChanges, OnDestroy {
     },
     () => {
       this.isListCustomerProduct = true;
+      this.listProducts.nativeElement.scrollIntoView();
+      this.isList = false;
     }
     );
   }

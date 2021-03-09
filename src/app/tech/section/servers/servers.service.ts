@@ -135,6 +135,19 @@ export class ServersService {
     );
   }
 
+  execShrink(urlAPI, _databaseSchedule: ModelBackupSchedule) {
+    return this.http
+    .post('http://' + urlAPI + '/api/DatabaseService/Shrink', _databaseSchedule, {responseType: 'text'} )
+    .pipe(
+      timeout(4000000),
+      tap(
+        data => console.log(data),
+        // tslint:disable-next-line: no-shadowed-variable
+        error => console.log(error.error)
+      )
+    );
+  }
+
   execUpdateStatusBackup(urlAPI, backupSchedule: ModelBackupSchedule) {
     return this.http
     .put('http://' + urlAPI + '/api/DatabaseSchedule/UpdateStatus', backupSchedule, {responseType: 'text'} )

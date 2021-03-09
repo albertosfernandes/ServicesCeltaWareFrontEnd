@@ -29,7 +29,8 @@ export class ListBackupScheduleComponent implements OnInit, OnChanges {
       customersProductsId: [this.customerProduct.customersProductsId],
       type: [],
       dateHourExecution: [],
-      backupStatus: []
+      backupStatus: [],
+      directory: []
     });
   }
 

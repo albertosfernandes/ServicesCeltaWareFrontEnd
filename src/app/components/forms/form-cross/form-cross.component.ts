@@ -16,6 +16,7 @@ export class FormCrossComponent implements OnInit, OnChanges, OnDestroy {
   @Input() customersProductsId = 0;
   sub: Subscription[] = [];
   cross: ModelCross;
+  idresp: string;
 
   constructor(private formBuilder: FormBuilder, private crossService: ServiceCrossService) { }
 
@@ -24,20 +25,49 @@ export class FormCrossComponent implements OnInit, OnChanges, OnDestroy {
     this.sub.push(
       this.crossService.addCross(this.cross)
       .subscribe(resp => {
-        console.log(resp);
+        this.idresp = resp;
       },
       err => {
         alert(err.error);
       },
       () => {
-        this.initForm();
+        alert('Gravado com sucesso com id:' + this.idresp);
+      })
+    );
+  }
+
+  loadCrossCustomerProduct () {
+    this.sub.push(
+      this.crossService.findCrossbyCustomersProduct(this.customersProductsId)
+      .subscribe(resp => {
+        this.cross = resp;
+      },
+      err => {
+        alert(err.error);
+      },
+      () => {
+        if (this.cross == null || this.cross === undefined ) {
+          this.formEmpty();
+        } else {
+          this.formContent();
+        }
       })
     );
   }
 
   initForm() {
+    // this.appCrossFormGroup = this.formBuilder.group({
+    //   customersProductsId: [this.customersProductsId],
+    //   addressName: [],
+    //   ipAddress: [],
+    //   port: [],
+    //   installDirectory: []
+    // });
+  }
+  formEmpty() {
     this.appCrossFormGroup = this.formBuilder.group({
       customersProductsId: [this.customersProductsId],
+      appCrossId: [0],
       addressName: [],
       ipAddress: [],
       port: [],
@@ -45,9 +75,20 @@ export class FormCrossComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  formContent() {
+    this.appCrossFormGroup = this.formBuilder.group({
+      customersProductsId: [this.customersProductsId],
+      appCrossId: [this.cross.appCrossId],
+      addressName: [this.cross.addressName],
+      ipAddress: [this.cross.ipAddress],
+      port: [this.cross.port],
+      installDirectory: [this.cross.installDirectory]
+    });
+  }
 
   ngOnInit() {
-    this.initForm();
+    this.loadCrossCustomerProduct();
+    // this.initForm();
   }
 
   ngOnDestroy(): void {
@@ -55,7 +96,8 @@ export class FormCrossComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
-    this.initForm();
+    this.loadCrossCustomerProduct();
+    // this.initForm();
   }
 
 }

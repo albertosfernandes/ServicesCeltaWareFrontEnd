@@ -12,11 +12,22 @@ export class ServiceConcentratorService {
 
   addConcentrator(_appConc: ModelConcentrator) {
     return this.base.httpBase
-    .post(this.base.urlapi + '/api/Concentrator/add/', _appConc, {responseType: 'text'})
+    .post(this.base.urlapi + '/api/Concentrator/addUpdate/', _appConc, {responseType: 'text'})
     .pipe(
       tap(
         data => console.log(data),
         erro => console.log(erro)
+      )
+    );
+  }
+
+  findConcentratorbyCustomersProduct(customerProductId) {
+    return this.base.httpBase
+    .get<ModelConcentrator>(this.base.urlapi + '/api/Concentrator/GetByCustomersProducts?customersProductsId=' + customerProductId)
+    .pipe(
+      tap(
+        data => console.log(data),
+        err => console.log(err.error)
       )
     );
   }

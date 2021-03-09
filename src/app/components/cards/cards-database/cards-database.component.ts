@@ -133,9 +133,26 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
       },
       () => {
         console.log(this.responseBackupExec);
+        // this.isRunning = false;
+        // this.isSucces = true;
+        this.execUpdateShrink(backupEscheduleValue);
+      })
+    );
+  }
+
+  execUpdateShrink(backupEscheduleValue: ModelBackupSchedule) {
+    this.message = 'Executando Shrink em banco: ' + backupEscheduleValue.databases.databaseName;
+    this.sub.push(
+      this.serversServices.execShrink(this.urlServerApi, backupEscheduleValue)
+      .subscribe(result => {
+        console.log(result);
+      },
+      err => {
+        alert(err.error);
+      },
+      () => {
         this.isRunning = false;
         this.isSucces = true;
-        // this.execUpdateStatusBackup(backupEscheduleValue, this.responseBackupExec);
       })
     );
   }
