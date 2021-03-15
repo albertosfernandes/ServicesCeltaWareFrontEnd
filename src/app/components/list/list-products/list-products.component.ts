@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { CloudService } from 'src/app/cloud/cloud.service';
-import { Component, OnInit, Input, OnChanges, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ModelCustomersProducts } from 'src/app/models/model-customersproducts';
 import { ModelBsf } from 'src/app/models/model-bsf';
 import { ModelSincservices } from 'src/app/models/model-sincservices';
@@ -27,6 +27,11 @@ export class ListProductsComponent implements OnInit, OnChanges, OnDestroy {
   isAlterSettingsSincServices = false;
   isAlterSettingsSincWeb = false;
   isAlterSettingsConcentrator = false;
+  @ViewChild('forms') forms;
+  @ViewChild('formCross') formCross;
+  @ViewChild('formSincServices') formSincServices;
+  @ViewChild('formSincWeb') formSincWeb;
+  @ViewChild('formConc') formConc;
   productsId: number[] = [
     1, 2, 3, 4, 5
   ];
@@ -96,7 +101,7 @@ export class ListProductsComponent implements OnInit, OnChanges, OnDestroy {
         break;
       }
     }
-
+    this.forms.nativeElement.scrollIntoView();
   }
 
   _bsfreceived(bsfValue) {

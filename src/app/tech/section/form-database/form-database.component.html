@@ -33,6 +33,20 @@
             <input type="text" formControlName='directory'class="form-control" id="directory" placeholder="/volumes-iscsi ...">
           </div>
       </div>
+      <div class="row">
+        <div class="col-lg-4">
+          <label for="databasePasswordSa">Senha Usuário SA</label>
+          <input type="text" formControlName='databasePasswordSa'class="form-control" id="databasePasswordSa" >
+        </div>
+        <div class="col-lg-4">
+          <label for="databasePasswordCeltaBS">Senha Usuário CeltaBSUser</label>
+          <input type="text" formControlName='databasePasswordCeltaBS'class="form-control" id="databasePasswordCeltaBS" >
+        </div>
+        <div class="col-lg-8">
+          <input type="text" formControlName='databasesUserSa'class="form-control invisible" id="databasesUserSa" visible='false'>
+          <input type="text" formControlName='databasesUserCeltaBS'class="form-control invisible" id="databasesUserCeltaBS" visible='false'>
+        </div>
+      </div>
     </div>
     <button type="submit" class="btn btn-primary">Gravar</button>
     <input type="text" formControlName='databasesId'class="form-control invisible" id="databasesId" placeholder="id" visible='false'>

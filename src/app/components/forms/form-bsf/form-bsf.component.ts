@@ -21,6 +21,7 @@ export class FormBsfComponent implements OnInit, OnChanges, OnDestroy {
   bsfId;
   _bsfCustomerProducts: ModelBsf[] = [];
   isReadToCreate = false;
+  responseCreate: string;
 
   constructor(private formBuilder: FormBuilder, private bsfService: ServiceBsfService) { }
 
@@ -133,6 +134,20 @@ export class FormBsfComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onclickCreateCloud() {
+    this.sub.push(
+      this.bsfService.createBsfOncloud(this.bsf)
+      .subscribe(resp => {
+        console.log('criado nuvem BSF: ' + resp);
+        this.responseCreate = resp;
+      },
+      err => {
+        alert(err.error);
+      },
+      () => {
+        alert('Criado com sucesso. ' + this.responseCreate);
+      }
+      )
+    );
     alert('vms criar: ' + this.bsf.installDirectory + ' com id: ' + this.bsf.appBsfsId);
   }
 

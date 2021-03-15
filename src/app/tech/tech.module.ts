@@ -25,6 +25,8 @@ import { FormCrossComponent } from '../components/forms/form-cross/form-cross.co
 import { FormSincservicesComponent } from '../components/forms/form-sincservices/form-sincservices.component';
 import { FormSincwebComponent } from '../components/forms/form-sincweb/form-sincweb.component';
 import { FormConcentratorComponent } from '../components/forms/form-concentrator/form-concentrator.component';
+import { FormStorageComponent } from './section/form-storage/form-storage.component';
+import { ListStoragesComponent } from '../components/list/list-storages/list-storages.component';
 
 
 @NgModule({
@@ -52,7 +54,9 @@ import { FormConcentratorComponent } from '../components/forms/form-concentrator
     FormCrossComponent,
     FormSincservicesComponent,
     FormSincwebComponent,
-    FormConcentratorComponent
+    FormConcentratorComponent,
+    FormStorageComponent,
+    ListStoragesComponent
   ]
 })
 export class TechModule { }

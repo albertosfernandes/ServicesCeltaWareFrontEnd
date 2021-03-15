@@ -1,0 +1,5 @@
+<label for="inputGroupSelectServer">Storage</label>
+      <select class="custom-select" id="inputGroupSelect01" (change)="onChange($event.target.value)" [disabled]='isLoading'>
+        <option selected>Selecione o Storage</option>
+        <option *ngFor="let storage of storages" [value]="storage.StorageServerId" >{{storage.TargetName}}</option>
+      </select>

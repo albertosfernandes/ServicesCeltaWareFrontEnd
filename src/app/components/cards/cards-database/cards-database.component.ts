@@ -132,7 +132,7 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
         this.isRunning = false;
       },
       () => {
-        console.log(this.responseBackupExec);
+        console.log('fim execUploadBackup' + this.responseBackupExec);
         // this.isRunning = false;
         // this.isSucces = true;
         this.execUpdateShrink(backupEscheduleValue);

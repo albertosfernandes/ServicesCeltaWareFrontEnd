@@ -1,0 +1,35 @@
+<div class="form-group">
+  <div class="row">
+    <div class="col-sm-12">
+      <app-list-servers (eventServerId)='receiveServerId($event)'></app-list-servers>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <form [formGroup]='storageForm' (submit)='onSubmitStorage()'>
+    <div class="form-group">
+      <div class="row">
+         <div class="col-lg-4">
+          <label for="targetName">Target Name</label>
+          <input type="text" formControlName='targetName' class="form-control" id="targetName" placeholder="exemplo: 10g-cli">
+          </div>
+          <div class="col-lg-8">
+            <label for="portal">Portal</label>
+            <input type="text" formControlName='portal' class="form-control" id="portal">
+          </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Gravar</button>
+    <input type="text" formControlName='storageServerId' class="form-control invisible" id="storageServerId" placeholder="Nome do conteiner" visible='false'>
+  </form>
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-sm-12">
+        <app-list-storages [serverId]='serverId'></app-list-storages>
+      </div>
+    </div>
+  </div>

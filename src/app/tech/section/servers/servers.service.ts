@@ -84,16 +84,13 @@ export class ServersService {
     .get<ModelDatabase>('http://' + urlAPI + '/api/DatabaseService/GetByCustomerId?id=' + customerProductId);
   }
 
-  addDatabase(urlAPI, database: ModelDatabase) {
+  addDatabase(urlAPI, _database: ModelDatabase) {
     return this.http
-    .post('http://' + urlAPI + '/api/DatabaseService/Add', database)
+    .post('http://' + urlAPI + '/api/DatabaseService/AddUpdate', _database, {responseType: 'text'})
     .pipe(
       tap(
         data => console.log(data),
-        catchError(err => {
-          console.error(err.error);
-          return err;
-        })
+        erro => console.log(erro)
       )
     );
   }
