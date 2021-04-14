@@ -1,0 +1,20 @@
+<div class="row">
+  <form [formGroup]='databasePasswordForm' (submit)='onSubmitDatabasePassword()'>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-lg-6">
+          <label for="databasePasswordSa">Senha Usuário SA</label>
+          <input type="text" formControlName='databasePasswordSa' class="form-control" id="databasePasswordSa" >
+        </div>
+        <div class="col-lg-6">
+          <label for="databasePasswordCeltaBS">Senha Usuário CeltaBSUser</label>
+          <input type="text" formControlName='databasePasswordCeltaBS' class="form-control" id="databasePasswordCeltaBS" >
+        </div>
+      </div>
+      <input type="text" formControlName='databasesUserSa' class="form-control invisible" id="databasesUserSa" visible='false'>
+      <input type="text" formControlName='databasesUserCeltaBS' class="form-control invisible" id="databasesUserCeltaBS" visible='false'>
+      <input type="text" formControlName='databasesUsersId' class="form-control invisible" id="databasesUsersId" placeholder="id" visible='false'>
+    </div>
+    <button type="button" class="btn btn-primary" (click)='onSubmitDatabasePassword()'>Gravar</button>
+  </form>
+</div>

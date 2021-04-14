@@ -25,38 +25,45 @@
   </div>
 
 <!-- <option *ngFor="let customer of customersMenu" [value]="customer.customerId" >{{customer.fantasyName}}</option> -->
-<table class="table table-responsive table-striped mb-2" *ngIf="isList">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Razão Social</th>
-      <th scope="col">Nome Fantasia</th>
-      <th scope="col">CNPJ</th>
-      <th scope="col">Código CeltaBS</th>
-      <th scope="col">Diretório Instalação</th>
-      <th scope="col">Criar Nuvem?</th>
-      <th scope="col">Detalhes </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let customer of customers">
-      <th scope="row">{{ customer.customerId }}</th>
-      <td>{{ customer.companyName }}</td>
-      <td>{{ customer.fantasyName }}</td>
-      <td>{{ customer.cnpj }}</td>
-      <td>{{ customer.codeCeltaBs }}</td>
-      <td>{{ customer.rootDirectory }}</td>
-      <!-- <td>
-        <button class="btn btn-secondary" (click)="btnEdit(customer.customerId)">
-          <i class="fa fa-plus"></i></button></td> -->
-      <td *ngIf="!customer.isCloud"  (click)='btnNewCloud(customer)'>
-            <span><i class="fa fa-play"></i></span></td>
-      <td (click)='btnEdit(customer.customerId)'>
-          <span><i class="fa fa-plus"></i></span></td>
-    </tr>
-  </tbody>
-  <button class="btn btn-danger mt-2" (click)="btnCancelList()">Cancelar</button>
-</table>
+<div *ngIf="isList">
+  <div class="row">
+    <div class="col-lg-12">
+      <app-list-servers (eventServerId)='receiveServerId($event)'></app-list-servers>
+    </div>
+  </div>
+  <table class="table table-responsive table-striped mb-2" >
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Razão Social</th>
+        <th scope="col">Nome Fantasia</th>
+        <th scope="col">CNPJ</th>
+        <th scope="col">Código CeltaBS</th>
+        <th scope="col">Diretório Instalação</th>
+        <th scope="col" *ngIf="isCustomerCloud" >Criar Nuvem?</th>
+        <th scope="col">Detalhes </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customers">
+        <th scope="row">{{ customer.customerId }}</th>
+        <td>{{ customer.companyName }}</td>
+        <td>{{ customer.fantasyName }}</td>
+        <td>{{ customer.cnpj }}</td>
+        <td>{{ customer.codeCeltaBs }}</td>
+        <td>{{ customer.rootDirectory }}</td>
+        <!-- <td>
+          <button class="btn btn-secondary" (click)="btnEdit(customer.customerId)">
+            <i class="fa fa-plus"></i></button></td> -->
+        <td *ngIf="!customer.isCloud"  (click)='btnNewCloud(customer)'>
+              <span><i class="fa fa-play"></i></span></td>
+        <td (click)='btnEdit(customer.customerId)'>
+            <span><i class="fa fa-plus"></i></span></td>
+      </tr>
+    </tbody>
+    <button class="btn btn-danger mt-2" (click)="btnCancelList()">Cancelar</button>
+  </table>
+</div>
 
     <div *ngIf="isExecutingScript">
         <div class="spinner-border" role="status" style="margin-left: 50%;">

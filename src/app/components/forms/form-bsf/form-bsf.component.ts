@@ -110,7 +110,7 @@ export class FormBsfComponent implements OnInit, OnChanges, OnDestroy {
   formEmpty() {
     this.appBsfFormGroup = this.formBuilder.group({
       customersProductsId: [this.customersProductsId],
-      appBsfsId: [],
+      appBsfsId: 0,
       addressName: [],
       ipAddress: [],
       port: [],

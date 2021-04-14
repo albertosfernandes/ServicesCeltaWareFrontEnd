@@ -1,3 +1,4 @@
+import { ServiceDatabaseService } from './../../../services/service-database.service';
 import { ModelDatabase } from '../../../models/model-database';
 import { ServersService } from '../../../tech/section/servers/servers.service';
 import { ModelBackupSchedule } from '../../../models/model-backupschedule';
@@ -22,7 +23,8 @@ export class ListBackupScheduleComponent implements OnInit, OnChanges {
   backupType: number;
 
 
-  constructor(private formBuilder: FormBuilder, private serversService: ServersService) { }
+  constructor(private formBuilder: FormBuilder, private serversService: ServersService,
+              private databaseService: ServiceDatabaseService) { }
 
   initForm() {
     this.backupScheduleFormGroup = this.formBuilder.group({
@@ -81,7 +83,7 @@ export class ListBackupScheduleComponent implements OnInit, OnChanges {
   }
 
   loadDatabase() {
-    this.serversService.getDatabase(this.urlFull, this.customerProduct.customersProductsId)
+    this.databaseService.getDatabase(this.urlFull, this.customerProduct.customersProductsId)
     .subscribe(datavalue => {
         this.database = datavalue;
       },

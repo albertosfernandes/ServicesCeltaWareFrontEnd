@@ -1,3 +1,4 @@
+import { ServiceDatabaseService } from './../../../services/service-database.service';
 import { CloudService } from './../../../cloud/cloud.service';
 import { error } from 'protractor';
 import { ModelCustomersProducts } from './../../../models/model-customersproducts';
@@ -30,7 +31,8 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
   debounce: Subject<string> = new Subject<string>();
   sub: Subscription[] = [];
 
-  constructor(private serversServices: ServersService, private cloudService: CloudService) { }
+  constructor(private serversServices: ServersService, private cloudService: CloudService,
+              private databaseService: ServiceDatabaseService) { }
 
   loadBackupSchedules(_urlServerId, _customerProductId) {
     this.sub.push(this.serversServices.getSchedulesBackupFromApiByCustomerProducts(_urlServerId, _customerProductId)
@@ -83,7 +85,7 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
     this.isRunning = true;
     this.message = 'Executando Backup.';
     this.sub.push(
-      this.serversServices.execBackup(this.urlServerApi, backupEscheduleValue)
+      this.databaseService.execBackup(this.urlServerApi, backupEscheduleValue)
       .subscribe(result => {
         this.responseBackupExec = result;
         console.log('Backup: ' + result);
@@ -103,7 +105,7 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
     this.isRunning = true;
     this.message = 'Validando Backup.';
     this.sub.push(
-      this.serversServices.execValidateBackup(this.urlServerApi, backupEscheduleValue)
+      this.databaseService.execValidateBackup(this.urlServerApi, backupEscheduleValue)
       .subscribe(result => {
         this.responseBackupExec = result;
         console.log('Validando..');
@@ -123,7 +125,7 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
     this.isRunning = true;
     this.message = 'Subindo para Google Drive.';
     this.sub.push(
-      this.serversServices.execUploadBackup(this.urlServerApi, backupEscheduleValue)
+      this.databaseService.execUploadBackup(this.urlServerApi, backupEscheduleValue)
       .subscribe(result => {
         this.responseBackupExec = result;
       },
@@ -135,7 +137,8 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
         console.log('fim execUploadBackup' + this.responseBackupExec);
         // this.isRunning = false;
         // this.isSucces = true;
-        this.execUpdateShrink(backupEscheduleValue);
+        // this.execUpdateShrink(backupEscheduleValue);
+        this.execUpdateStatusBackup(backupEscheduleValue, this.responseBackupExec);
       })
     );
   }
@@ -143,7 +146,7 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
   execUpdateShrink(backupEscheduleValue: ModelBackupSchedule) {
     this.message = 'Executando Shrink em banco: ' + backupEscheduleValue.databases.databaseName;
     this.sub.push(
-      this.serversServices.execShrink(this.urlServerApi, backupEscheduleValue)
+      this.databaseService.execShrink(this.urlServerApi, backupEscheduleValue)
       .subscribe(result => {
         console.log(result);
       },
@@ -164,7 +167,7 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
     backupEscheduleValue.googleDriveFileId = googleDriveFileId;
     console.log('Antes de enviar Update: ' + backupEscheduleValue);
     this.sub.push(
-      this.serversServices.execUpdateStatusBackup(this.urlServerApi, backupEscheduleValue)
+      this.databaseService.execUpdateStatusBackup(this.urlServerApi, backupEscheduleValue)
       .subscribe(result => {
         this.responseBackupExec = result;
       },

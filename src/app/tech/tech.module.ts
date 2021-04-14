@@ -27,6 +27,7 @@ import { FormSincwebComponent } from '../components/forms/form-sincweb/form-sinc
 import { FormConcentratorComponent } from '../components/forms/form-concentrator/form-concentrator.component';
 import { FormStorageComponent } from './section/form-storage/form-storage.component';
 import { ListStoragesComponent } from '../components/list/list-storages/list-storages.component';
+import { FormDatabaseuserComponent } from '../components/forms/form-databaseuser/form-databaseuser.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { ListStoragesComponent } from '../components/list/list-storages/list-sto
     FormSincwebComponent,
     FormConcentratorComponent,
     FormStorageComponent,
-    ListStoragesComponent
+    ListStoragesComponent,
+    FormDatabaseuserComponent
   ]
 })
 export class TechModule { }

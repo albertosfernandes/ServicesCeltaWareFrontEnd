@@ -1,7 +1,7 @@
 export class ModelStorageServer {
-  StorageServerId: number;
-  TargetName: string;
-  Portal: string;
-  ServersId: number;
+  storageServerId: number;
+  targetName: string;
+  portal: string;
+  serversId: number;
 
 }

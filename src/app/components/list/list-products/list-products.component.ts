@@ -16,7 +16,7 @@ import { ModelConcentrator } from 'src/app/models/model-concentrator';
 })
 export class ListProductsComponent implements OnInit, OnChanges, OnDestroy {
 
-  customersProducts: ModelCustomersProducts[];
+  customersProducts: ModelCustomersProducts[] = [];
   @Input() customerId = 0;
   @Output() isNewCustomerProductclick = new EventEmitter();
   @Output() cancelListCustomerProduct = new EventEmitter();
@@ -125,7 +125,6 @@ export class ListProductsComponent implements OnInit, OnChanges, OnDestroy {
         alert('Erro ao carregar produtos por empresa');
       },
       () => {
-
       })
     );
   }

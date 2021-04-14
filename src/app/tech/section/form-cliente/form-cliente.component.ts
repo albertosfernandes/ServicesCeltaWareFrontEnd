@@ -1,3 +1,6 @@
+import { ModelServer } from 'src/app/models/model-server';
+import { ModelCustomersProducts } from './../../../models/model-customersproducts';
+import { ServiceCustomerProductService } from './../../../services/service-customer-product.service';
 import { Component, OnInit, OnChanges, ViewChild, OnDestroy } from '@angular/core';
 import { TechService } from '../../tech.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -6,6 +9,7 @@ import { Subject, Subscription } from 'rxjs';
 
 import { ModelCustomer } from 'src/app/models/model-customer';
 import { CloudService } from 'src/app/cloud/cloud.service';
+import { ServersService } from '../servers/servers.service';
 
 
 @Component({
@@ -17,7 +21,9 @@ export class FormClienteComponent implements OnInit, OnChanges, OnDestroy {
 
   customerFormGroup: FormGroup;
   customer: ModelCustomer;
+  server: ModelServer;
   customers: ModelCustomer[] = [];
+  customerProductRoot: ModelCustomersProducts = new ModelCustomersProducts();
   codeCeltaBs: number;
   valueSearch: string;
   @ViewChild('searchCustomer') searchCustomer;
@@ -29,13 +35,16 @@ export class FormClienteComponent implements OnInit, OnChanges, OnDestroy {
   isListCustomerProduct = false;
   isNewCustomerProduct = false;
   isBtnSearch = true;
+  isCustomerCloud = false;
   customerId: any;
   isExecutingScript = false;
   sub: Subscription[] = [];
   debounce: Subject<string> = new Subject<string>();
+  serverid: number;
 
 
-  constructor(private techService: TechService, private formBuilder: FormBuilder, private cloudService: CloudService) { }
+  constructor(private techService: TechService, private formBuilder: FormBuilder, private cloudService: CloudService,
+              private customerProductsService: ServiceCustomerProductService, private serverService: ServersService) { }
 
   onSubmitCustomer() {
     this.customer = this.customerFormGroup.getRawValue();
@@ -121,8 +130,35 @@ export class FormClienteComponent implements OnInit, OnChanges, OnDestroy {
     },
     () => {
       this.isList = true;
+      this.customers.forEach(c => {
+        if (!c.isCloud) {
+          this.isCustomerCloud = true;
+        }
+      });
     });
   }
+
+  receiveServerId(_serverdIdValue) {
+    this.serverid = _serverdIdValue;
+    if (this.serverid == null || this.serverid === undefined) {
+      alert('Servidor inválido');
+    } else {
+      this.sub.push(
+        this.serverService.getServer(this.serverid)
+        .subscribe(resp => {
+          this.server = resp;
+        },
+        err => {
+          alert(err.error);
+        },
+        () => {
+          // fim.
+        })
+      );
+    }
+  }
+
+
 
   listenEventNewCustomerProduct(value) {
     this.isNewCustomerProduct = value;
@@ -142,20 +178,32 @@ export class FormClienteComponent implements OnInit, OnChanges, OnDestroy {
 
   btnNewCloud(customer) {
     this.isLoading = true;
-    this.sub.push(
-      this.techService.createCustomer(customer)
-      .subscribe(resp => {
+    if (this.server == null || this.server === undefined) {
+      alert('Selecione um servidor.');
+      this.isLoading = false;
+    } else {
+      this.sub.push(
+        this.techService.createCustomer(customer, this.server)
+        .subscribe(resp => {
 
-      },
-      err => {
-        alert(err.error);
-      },
-      () => {
-        this.isLoading = false;
-      })
-    );
+        },
+        err => {
+          alert(err.error);
+        },
+        () => {
+          this.isLoading = false;
+        })
+      );
+
+    }
   }
 
+   addCustomerProductRoot() {
+    // this.customerProductRoot.server =
+    //  this.sub.push(
+    //    this.customerProductsService.addCustomerProduct()
+    //  );
+   }
   btnCancel() {
     this.isNew = false;
     this.isBtnSearch = true;
@@ -177,6 +225,7 @@ export class FormClienteComponent implements OnInit, OnChanges, OnDestroy {
       alert('Erro ao buscar cliente' + err);
     },
     () => {
+      console.warn('valor customerId para listProducts' + this.customer.customerId);
       this.isListCustomerProduct = true;
       this.listProducts.nativeElement.scrollIntoView();
       this.isList = false;

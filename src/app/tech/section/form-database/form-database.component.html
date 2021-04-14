@@ -14,41 +14,48 @@
       <div class="row">
         <div class="col-lg-4">
         <label for="conteinerName">Conteiner</label>
-        <input type="text" formControlName='conteinerName'class="form-control" id="conteinerName" placeholder="Nome do conteiner">
+        <input type="text" formControlName='conteinerName' class="form-control" id="conteinerName" placeholder="Nome do conteiner">
         </div>
          <div class="col-lg-4">
           <label for="databaseName">Nome do Banco de dados</label>
-          <input type="text" formControlName='databaseName'class="form-control" id="databaseName" placeholder="Nome do banco de dados">
+          <input type="text" formControlName='databaseName' class="form-control" id="databaseName" placeholder="Nome do banco de dados">
           </div>
           <div class="col-lg-4">
             <label for="memoryRam">Memória Ram</label>
-            <input type="number" formControlName='memoryRam'class="form-control" id="memoryRam">
+            <input type="number" formControlName='memoryRam' class="form-control" id="memoryRam">
           </div>
           <div class="col-lg-4">
             <label for="storage">Storage </label>
-            <input type="number" formControlName='storage'class="form-control" id="storage">
+            <input type="number" formControlName='storage' class="form-control" id="storage">
           </div>
           <div class="col-lg-4">
             <label for="directory">Diretório</label>
-            <input type="text" formControlName='directory'class="form-control" id="directory" placeholder="/volumes-iscsi ...">
+            <input type="text" formControlName='directory' class="form-control" id="directory" placeholder="/volumes-iscsi ...">
           </div>
       </div>
-      <div class="row">
-        <div class="col-lg-4">
-          <label for="databasePasswordSa">Senha Usuário SA</label>
-          <input type="text" formControlName='databasePasswordSa'class="form-control" id="databasePasswordSa" >
-        </div>
-        <div class="col-lg-4">
-          <label for="databasePasswordCeltaBS">Senha Usuário CeltaBSUser</label>
-          <input type="text" formControlName='databasePasswordCeltaBS'class="form-control" id="databasePasswordCeltaBS" >
-        </div>
-        <div class="col-lg-8">
-          <input type="text" formControlName='databasesUserSa'class="form-control invisible" id="databasesUserSa" visible='false'>
-          <input type="text" formControlName='databasesUserCeltaBS'class="form-control invisible" id="databasesUserCeltaBS" visible='false'>
-        </div>
-      </div>
     </div>
-    <button type="submit" class="btn btn-primary">Gravar</button>
-    <input type="text" formControlName='databasesId'class="form-control invisible" id="databasesId" placeholder="id" visible='false'>
+    <button type="submit" class="btn btn-primary" *ngIf="!isShowPassword" [disabled]="isReadToSend" >Gravar</button>
+    <input type="text" formControlName='databasesId' class="form-control invisible" id="databasesId" placeholder="id" visible='false'>
   </form>
   </div>
+  <div class="row" ng *ngIf="isShowStorages" >
+    <div class="col-lg-12">
+      <app-list-storages (eventStorageId)='receivedStorageServerId($event)' [serverId]='serverIdSelected'></app-list-storages>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="custom-control custom-checkbox custom-control-inline" *ngFor="let serverstorage of serversStorage" >
+        <input type="checkbox" class="custom-control-input" id="checkOpen" name="checkOpen" (change)='selectIsOpen(serverstorage.serversId)'>
+        <label class="custom-control-label" for="checkOpen">{{serverstorage.hostname}}</label>
+      </div>
+    </div>
+  </div>
+<div class="row" *ngIf="isShowPassword">
+  <div class="col-lg-12">
+    <app-form-databaseuser [database]='database' [server]='server'></app-form-databaseuser>
+  </div>
+</div>
+
+
+

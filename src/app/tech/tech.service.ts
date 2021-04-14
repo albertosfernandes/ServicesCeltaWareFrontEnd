@@ -1,3 +1,4 @@
+import { ModelServer } from 'src/app/models/model-server';
 import { BaseService } from './../services/base.service';
 import { ModelCustomer } from './../models/model-customer';
 import { Injectable } from '@angular/core';
@@ -55,9 +56,9 @@ createCustomerProductDatabase(customerProduct: ModelCustomersProducts) {
   .get(this.base.urlapi + '/api/DatabaseCreate/CreateConfigs?id=' + customerProduct.customersProductsId);
 }
 
-createCustomer(customer: ModelCustomer) {
+createCustomer(customer: ModelCustomer, _server: ModelServer) {
   return this.base.httpBase
-  .post(this.base.urlapi + '/api/customer/StartCloud/',  customer, {responseType: 'text'})
+  .post('http://' + _server.ipAddress + ':' + _server.port + '/api/customer/StartCloud/',  customer, {responseType: 'text'})
   .pipe(
     tap(
       data => console.log(data),

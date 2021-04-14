@@ -15,17 +15,28 @@ export class FormStorageComponent implements OnInit, OnChanges, OnDestroy {
   serverId: number;
   storageServer: ModelStorageServer;
   sub: Subscription[] = [];
+  isStorages = false;
 
   constructor(private formBuilder: FormBuilder, private storageService: ServiceStorageService) { }
 
   receiveServerId(serverIdValue) {
     this.serverId = serverIdValue;
     console.log('receiveServerId' + serverIdValue);
+    if (this.serverId > 0) {
+      this.isStorages = true;
+    }
+  }
+  receivedStorageServerId (storageServerIdValue) {
+    if (storageServerIdValue > 0) {
+      this.getStorageServerId(storageServerIdValue);
+    } else {
+      console.error('storageServerValue é nulo!');
+    }
   }
 
   onSubmitStorage() {
     this.storageServer = this.storageForm.getRawValue();
-    this.storageServer.ServersId = this.serverId;
+    this.storageServer.serversId = this.serverId;
     this.sub.push(
       this.storageService.addUpdate(this.storageServer)
       .subscribe(resp => {
@@ -40,14 +51,37 @@ export class FormStorageComponent implements OnInit, OnChanges, OnDestroy {
     );
   }
 
+  getStorageServerId(storageServerIdValue) {
+    this.sub.push(
+      this.storageService.get(storageServerIdValue)
+      .subscribe(resp => {
+        this.storageServer = resp;
+      },
+      err => {
+        alert(err.error);
+      },
+      () => {
+        this.loadForm();
+      })
+    );
+  }
+
   clearForm() {
-    // limprar!!
+    this.initForm();
   }
   initForm() {
     this.storageForm = this.formBuilder.group({
       storageServerId: [0],
       targetName: [],
       portal: []
+    });
+  }
+
+  loadForm() {
+    this.storageForm = this.formBuilder.group({
+      storageServerId: [this.storageServer.storageServerId],
+      targetName: [this.storageServer.targetName],
+      portal: [this.storageServer.portal]
     });
   }
 

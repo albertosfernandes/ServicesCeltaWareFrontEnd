@@ -36,7 +36,7 @@ export class ListStoragesComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onChange(changeStorageServerId) {
-
+    this.eventStorageId.emit(changeStorageServerId);
   }
 
   ngOnDestroy(): void {

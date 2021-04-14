@@ -15,5 +15,6 @@ export class ModelDatabase {
   backupScheduleId: number;
   backupSchedule: ModelBackupSchedule;
   storageServer: ModelStorageServer;
+  storageServerId: number;
   databaseUsers: ModelDatabaseUser[] = [];
 }

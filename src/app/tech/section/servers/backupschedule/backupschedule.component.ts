@@ -1,3 +1,4 @@
+import { ServiceDatabaseService } from './../../../../services/service-database.service';
 import { ModelBackupSchedule } from 'src/app/models/model-backupschedule';
 import { ModelDatabase } from './../../../../models/model-database';
 import { TechService } from './../../../tech.service';
@@ -23,10 +24,11 @@ export class BackupscheduleComponent implements OnInit {
   isLoading = true;
   isShowSchedules = false;
 
-  constructor(private serversService: ServersService, private cloudService: CloudService) { }
+  constructor(private serversService: ServersService, private cloudService: CloudService,
+              private databaseService: ServiceDatabaseService) { }
 
   loadCustomerProductForServerId() {
-    this.serversService.getDatabasesFromApiServer(this._server.ipAddress + ':' + this._server.port, this._server.serversId)
+    this.databaseService.getDatabases(this._server.ipAddress + ':' + this._server.port, this._server.serversId)
     .subscribe(backupScheduleArray => {
       this.databasesSchedules = backupScheduleArray;
       console.log(this.customerProducts);

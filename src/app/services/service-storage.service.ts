@@ -21,6 +21,22 @@ export class ServiceStorageService {
     );
   }
 
+  get (storageServerId) {
+   return this.base.httpBase
+   .get<ModelStorageServer>(this.base.urlapi + '/api/StorageServer/Get?storageServerId=' +  storageServerId)
+   .pipe(
+     tap(
+       data => console.warn(data),
+       err => console.error(err)
+     )
+   );
+  }
+
+  getAllServers () {
+    return this.base.httpBase
+    .get<any[]>(this.base.urlapi + '/api/StorageServer/GetallServers');
+  }
+
   addUpdate (_storageServer: ModelStorageServer) {
     return this.base.httpBase
     .post(this.base.urlapi + '/api/StorageServer/AddUpdate', _storageServer, {responseType: 'text'})
