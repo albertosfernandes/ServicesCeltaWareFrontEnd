@@ -19,6 +19,7 @@ export class BackupscheduleComponent implements OnInit {
 
   customerProducts: ModelCustomersProducts[] = [];
   databasesSchedules: ModelBackupSchedule[] = [];
+  databases: ModelDatabase[] = [];
   customerProduct: ModelCustomersProducts;
   @Output() changeDatabase = new EventEmitter();
   isLoading = true;
@@ -27,11 +28,10 @@ export class BackupscheduleComponent implements OnInit {
   constructor(private serversService: ServersService, private cloudService: CloudService,
               private databaseService: ServiceDatabaseService) { }
 
-  loadCustomerProductForServerId() {
+  loadDatabasesForServerId() {
     this.databaseService.getDatabases(this._server.ipAddress + ':' + this._server.port, this._server.serversId)
-    .subscribe(backupScheduleArray => {
-      this.databasesSchedules = backupScheduleArray;
-      console.log(this.customerProducts);
+    .subscribe(databasesArray => {
+      this.databases = databasesArray;
     },
     error => {
       alert('Erro ao carregar produtos deste servidor: ' + this._server.hostname);
@@ -56,7 +56,7 @@ export class BackupscheduleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadCustomerProductForServerId();
+    this.loadDatabasesForServerId();
   }
 
 }

@@ -15,4 +15,5 @@ export class ModelBackupSchedule {
   databases: ModelDatabase;
   server: ModelServer;
   googleDriveFileId: string;
+  googleDriveFolderId: string;
 }

@@ -1,3 +1,4 @@
+import { error } from 'protractor';
 import { ModelServer } from 'src/app/models/model-server';
 import { ModelCustomersProducts } from './../../../models/model-customersproducts';
 import { ServiceCustomerProductService } from './../../../services/service-customer-product.service';
@@ -125,8 +126,8 @@ export class FormClienteComponent implements OnInit, OnChanges, OnDestroy {
     .subscribe(customerData => {
       this.customers = customerData;
     },
-    error => {
-      alert('Erro ao consultar cliente');
+    err => {
+      alert('Erro ao consultar cliente' + err.error);
     },
     () => {
       this.isList = true;
@@ -191,19 +192,33 @@ export class FormClienteComponent implements OnInit, OnChanges, OnDestroy {
           alert(err.error);
         },
         () => {
-          this.isLoading = false;
+          this.addCustomerProductCertificateA1();
         })
       );
-
     }
   }
 
-   addCustomerProductRoot() {
-    // this.customerProductRoot.server =
-    //  this.sub.push(
-    //    this.customerProductsService.addCustomerProduct()
-    //  );
+   addCustomerProductCertificateA1() {
+    this.customerProductRoot.customersProductsId = 0;
+    this.customerProductRoot = this.customerId;
+    this.customerProductRoot.productId = 7;
+    this.customerProductRoot.serversId = this.server.serversId;
+    this.customerProductRoot.installDirectory = 'bsf\\Certificados';
+    this.sub.push(
+      this.techService.addCustomerProduct(this.customerProductRoot)
+      .subscribe(resp => {
+
+      },
+      err => {
+        alert(err.error);
+      },
+      () => {
+        this.isLoading = false;
+      })
+
+    );
    }
+
   btnCancel() {
     this.isNew = false;
     this.isBtnSearch = true;

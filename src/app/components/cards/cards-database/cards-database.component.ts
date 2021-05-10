@@ -46,7 +46,7 @@ export class CardsDatabaseComponent implements OnInit, OnChanges, OnDestroy {
       // fim
       // console.log(this.backupSchedules[0]);
       this.memoryRamValueTotal = this.databasebackupSchedules[0].databases.memoryRam;
-      this.storageValueTotal = this.databasebackupSchedules[0].databases.storage;
+      this.storageValueTotal = this.databasebackupSchedules[0].databases.storageLenght;
       this.databasebackupSchedules.forEach(status => {
         for (let i = 0; i < this.databasebackupSchedules.length; i++) {
           switch (this.databasebackupSchedules[i].backupStatus) {

@@ -18,6 +18,10 @@
                 <strong>Última execução: </strong>
                 {{ lastExecution | date: "medium" }}
               </p>
+              <p *ngIf="customerProducts.product.productId != 6 && customerProducts.product.productId != 7">
+                <strong>Servidor: </strong>
+                {{ customerProducts.server.hostname }}
+              </p>
               <button class="btn btn-success" *ngIf="customerProducts.product.productId && customerProducts.product.productId != 7" (click)="update(customerProducts)" [disabled]="isUpdating">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isUpdating"></span>
                 <i class="fa fa-play mr-2" *ngIf="!isUpdating"></i>{{ updateBtnText }}
@@ -50,7 +54,7 @@
             </div>
             <div class="card-body">
               <p><strong>Data versão:</strong> {{ dateObj | date: "medium" }} </p>
-              <th><span (click)="downloadDeploy(customerProducts.customer.customerId,customerProducts.productId)" [style.color] = "isDownloading ? 'green' : 'black'"> <i class="fa fa-download" style="font-size:24px"></i></span></th>
+              <th><span (click)="downloadDeploy(customerProducts.server, customerProducts.customer.customerId, customerProducts.productId)" [style.color] = "isDownloading ? 'green' : 'black'"> <i class="fa fa-download" style="font-size:24px"></i></span></th>
               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isDownloading"></span>
               <span>{{ downloadBtnText }}</span>
             </div>
@@ -99,7 +103,7 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <app-cards-database *ngIf="customerProducts.productId === 6"
+    <app-cards-database *ngIf="customerProducts.productId === 6 || customerProducts.productId === 8"
       [customerProductIdInput]="customerProducts.customersProductsId"
       [serverInput]="customerProducts.server"
       [customerProducts]="customerProducts"></app-cards-database>

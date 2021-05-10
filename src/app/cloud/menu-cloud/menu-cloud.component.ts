@@ -38,6 +38,7 @@ export class MenuCloudComponent implements OnInit, OnChanges {
   selectionProduct(value) {
     this.changeCustomerProduct.emit(value);
     this.isActive = value.customersProductsId;
+    console.warn(value);
   }
 
   onChange(deviceValue) {

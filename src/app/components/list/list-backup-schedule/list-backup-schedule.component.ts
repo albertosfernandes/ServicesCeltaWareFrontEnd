@@ -68,7 +68,6 @@ export class ListBackupScheduleComponent implements OnInit, OnChanges {
   }
 
   loadListSchedulesBackup(customerProductId) {
-    console.log('lsit' + this.urlFull + ' - ' + customerProductId);
     this.serversService.getSchedulesBackupFromApi(this.urlFull, customerProductId)
     .subscribe(schedule => {
       this.backupsSchedules = schedule;

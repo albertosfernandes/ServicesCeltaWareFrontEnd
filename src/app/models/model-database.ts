@@ -11,7 +11,7 @@ export class ModelDatabase {
   customerProduct: ModelCustomersProducts;
   memoryRam: number;
   directory: string;
-  storage: number;
+  storageLenght: number;
   backupScheduleId: number;
   backupSchedule: ModelBackupSchedule;
   storageServer: ModelStorageServer;

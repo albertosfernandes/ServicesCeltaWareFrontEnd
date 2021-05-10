@@ -13,7 +13,7 @@
     <tr *ngFor="let schedule of backupsSchedules">
       <th scope="row">{{schedule.backupScheduleId}}</th>
       <td>{{ schedule.customerProduct.server.hostname }}</td>
-      <td>{{ schedule.customerProduct.synchronizerServiceName }}</td>
+      <td>{{ schedule.databases.databaseName }}</td>
       <td>{{ schedule.type }}</td>
       <td>{{ schedule.dateHourExecution }}</td>
       <td>{{ schedule.backupStatus }}</td>
@@ -31,6 +31,7 @@
         <option selected [value]="0">Full</option>
         <option [value]="1">Diferencial</option>
         <option [value]="2">Incremental</option>
+        <option [value]="3">MysqlFull</option>
       </select>
       </div>
       <div class="col-sm-12">
@@ -45,6 +46,6 @@
     </div>
 
 
-    <button type="submit" class="btn btn-primary">Gravar</button>
+    <button type="submit" class="btn btn-outline-secondary">Gravar</button>
     <a class="btn btn-danger" >Cancelar</a>
 </form>

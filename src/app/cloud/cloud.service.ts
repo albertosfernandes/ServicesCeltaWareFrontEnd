@@ -1,3 +1,4 @@
+import { ModelServer } from 'src/app/models/model-server';
 import { BaseService } from './../services/base.service';
 import { ModelCustomersProducts } from 'src/app/models/model-customersproducts';
 import { Injectable } from '@angular/core';
@@ -6,7 +7,6 @@ import { ModelProduct } from '../models/model-product';
 import { ModelCustomer } from '../models/model-customer';
 import { Observable, empty } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-import { error } from 'util';
 import { ModelCertificate } from '../models/model-certificate';
 
 @Injectable({
@@ -38,22 +38,31 @@ export class CloudService {
 
   getCustomerProduct(id) {
     return this.base.httpBase
-    .get<ModelCustomersProducts>(this.base.urlapi + '/api/CustomersProducts/get?id=' + id);
+    .get<ModelCustomersProducts>(this.base.urlapi + '/api/CustomersProducts/get?id=' + id)
+    .pipe(
+      tap(
+        data => console.warn(data),
+        err => console.log(err.error)
+      )
+    );
   }
 
-  getDateTimeDeploy(id, productid) {
+  getDateTimeDeploy(server: ModelServer, id, productid) {
     return this.base.httpBase
-    .get(this.base.urlapi + '/api/SystemUpdate/GetDateTimeFileDeploy?customersettingsId=' + id + '&productId=' + productid);
+    .get( 'http://' + server.ipAddress + ':' + server.port
+      + '/api/SystemUpdate/GetDateTimeFileDeploy?customersettingsId=' + id + '&productId=' + productid);
   }
 
-  getVersionFile(id) {
+  getVersionFile(server: ModelServer, id) {
     return this.base.httpBase
-    .get(this.base.urlapi + '/api/SystemUpdate/GetVersionFile?customersettingsId=' + id);
+    .get('http://' + server.ipAddress + ':' + server.port
+      + '/api/SystemUpdate/GetVersionFile?customersettingsId=' + id);
   }
 
-  getLastExecution(id) {
+  getLastExecution(server: ModelServer, id) {
     return this.base.httpBase
-    .get(this.base.urlapi + '/api/SystemUpdate/GetLastExecution?customersettingsId=' + id);
+    .get('http://' + server.ipAddress + ':' + server.port
+      + '/api/SystemUpdate/GetLastExecution?customersettingsId=' + id);
   }
 
   getStatusService(_serviceName) {
@@ -66,9 +75,17 @@ export class CloudService {
     .get(this.base.urlapi + '/api/SystemUpdate/StarStopService?isStart=' + isStart + '&servicename=' + _serviceName);
   }
 
-  getDownloadDeploy(id, productid) {
+  getDownloadDeploy(server: ModelServer, id, productid) {
     return this.base.httpBase
-    .get(this.base.urlapi + '/api/SystemUpdate/DownloadDeploy?id=' + id + '&productId=' + productid);
+    .get('http://' + server.ipAddress + ':' + server.port
+      + '/api/SystemUpdate/DownloadDeploy?id=' + id + '&productId=' + productid)
+      .pipe(
+        tap(
+          data => console.warn(data),
+          err => console.log(err.error)
+
+        )
+      );
   }
 
   getUpdateSystem(customerProduct: ModelCustomersProducts) {

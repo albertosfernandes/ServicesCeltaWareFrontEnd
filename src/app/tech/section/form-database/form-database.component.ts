@@ -157,7 +157,7 @@ export class FormDatabaseComponent implements OnInit, OnChanges, OnDestroy {
     this.database.conteinerName = this.databaseForm.get('conteinerName').value;
     this.database.databaseName = this.databaseForm.get('databaseName').value;
     this.database.memoryRam = this.databaseForm.get('memoryRam').value;
-    this.database.storage = this.databaseForm.get('storage').value;
+    this.database.storageLenght = this.databaseForm.get('storageLenght').value;
     this.database.directory = this.databaseForm.get('directory').value;
 
 

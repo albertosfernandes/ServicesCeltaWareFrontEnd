@@ -18,6 +18,7 @@ export class FormDatabaseuserComponent implements OnInit, OnChanges, OnDestroy {
   databasePasswordForm: FormGroup;
   databaseUsers: ModelDatabaseUser[] = [];
   databaseUser: ModelDatabaseUser = new ModelDatabaseUser();
+  databaseUserCeltaBS: ModelDatabaseUser = new ModelDatabaseUser();
   sub: Subscription[] = [];
 
   constructor(private formBuilder: FormBuilder, private databaseService: ServiceDatabaseService) { }
@@ -34,12 +35,12 @@ export class FormDatabaseuserComponent implements OnInit, OnChanges, OnDestroy {
 
   onSubmitDatabasePassword() {
     // this.database = this.databaseForm.getRawValue();
-    this.databaseUser.Name = this.databasePasswordForm.get('databasesUserCeltaBS').value,
-    this.databaseUser.Password = this.databasePasswordForm.get('databasePasswordCeltaBS').value;
-    this.databaseUser.DatabasesId = this.database.databasesId;
-    this.databaseUser.DatabasesUsersId = 0;
+    this.databaseUserCeltaBS.Name = this.databasePasswordForm.get('databasesUserCeltaBS').value,
+    this.databaseUserCeltaBS.Password = this.databasePasswordForm.get('databasePasswordCeltaBS').value;
+    this.databaseUserCeltaBS.DatabasesId = this.database.databasesId;
+    this.databaseUserCeltaBS.DatabasesUsersId = 0;
 
-    this.databaseUsers.push(this.databaseUser);
+    this.databaseUsers.push(this.databaseUserCeltaBS);
 
 
     this.databaseUser.Name = this.databasePasswordForm.get('databasesUserSa').value,

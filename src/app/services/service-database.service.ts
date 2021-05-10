@@ -1,7 +1,7 @@
+import { ModelDatabase } from './../models/model-database';
 import { ModelDatabaseUser } from './../models/ModelDatabaseUser';
 import { BaseService } from 'src/app/services/base.service';
 import { Injectable } from '@angular/core';
-import { ModelDatabase } from '../models/model-database';
 import { tap } from 'rxjs/operators';
 import { ModelBackupSchedule } from '../models/model-backupschedule';
 
@@ -19,7 +19,7 @@ export class ServiceDatabaseService {
 
   getDatabases(urlApi, serverid) {
     return this.base.httpBase
-      .get<ModelBackupSchedule[]>('http://' + urlApi + '/api/Databaseservice/GetAllByServer?serverId=' + serverid)
+      .get<ModelDatabase[]>('http://' + urlApi + '/api/DatabaseService/GetAllByServer?serverId=' + serverid)
       .pipe(
         tap(
          data => console.warn(data),

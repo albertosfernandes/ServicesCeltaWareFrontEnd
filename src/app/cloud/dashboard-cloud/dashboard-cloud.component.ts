@@ -1,3 +1,4 @@
+import { ModelServer } from 'src/app/models/model-server';
 import { error } from 'protractor';
 import { CloudService } from './../cloud.service';
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
@@ -33,22 +34,22 @@ export class DashboardCloudComponent implements OnInit, OnChanges, OnDestroy {
   // debounce: Subject<string> = new Subject<string>();
   constructor(private cloudService: CloudService) { }
 
-  loadDateDeploy(idvalue, productId) {
-    this.cloudService.getDateTimeDeploy(idvalue, productId)
+  loadDateDeploy(server: ModelServer, idvalue, productId) {
+    this.cloudService.getDateTimeDeploy(server, idvalue, productId)
     .subscribe(dateDeploy => {
       this.dateObj = dateDeploy;
     });
   }
 
-  loadLastExecution(idvalue) {
-    this.cloudService.getLastExecution(idvalue)
+  loadLastExecution(server: ModelServer, idvalue) {
+    this.cloudService.getLastExecution(this.customerProducts.server, idvalue)
     .subscribe(dateExecution => {
       this.lastExecution = dateExecution;
     });
   }
 
-  loadVersionProduct(idvalue) {
-    this.cloudService.getVersionFile(idvalue)
+  loadVersionProduct(server: ModelServer, idvalue) {
+    this.cloudService.getVersionFile(this.customerProducts.server, idvalue)
     .subscribe(dateVersion => {
       this.versionProduct = dateVersion;
     });
@@ -70,8 +71,8 @@ export class DashboardCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.updateBtnText = 'Atualizar';
       },
       () => {
-        this.loadVersionProduct(this.customerProducts.customersProductsId);
-        this.loadLastExecution(this.customerProducts.customersProductsId);
+        this.loadVersionProduct(this.customerProducts.server, this.customerProducts.customersProductsId);
+        this.loadLastExecution(this.customerProducts.server, this.customerProducts.customersProductsId);
         this.isUpdating = false;
         this.updateBtnText = 'Atualizar';
         this.isUpdateDatabase = false;
@@ -143,19 +144,25 @@ export class DashboardCloudComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  // updateConnectionString(valueCustomerProduct) {
-  //   this.cloudService.updateConnectionString(valueCustomerProduct.customersProductsId, this._celtabsuserPassword)
-  //   .subscribe(response => {
-  //     alert('Atualizado');
-  //   });
-  // }
+  updateCustomerProducts(customerproductId: ModelCustomersProducts) {
+    this.cloudService.getCustomerProduct(customerproductId.customersProductsId)
+    .subscribe(resp => {
+      // .
+    },
+    err => {
+      alert(err.error);
+    },
+    () => {
+      // .
+    });
+  }
 
   downloadDeploy(valueCustomerId, productId) {
     this.isDownloading = true;
-    this.cloudService.getDownloadDeploy(valueCustomerId, productId)
+    this.cloudService.getDownloadDeploy(this.customerProducts.server, valueCustomerId, productId)
     .subscribe(response => {
       this._response = response;
-      this.loadDateDeploy(this.customerProducts.customersProductsId, this.customerProducts.productId);
+      this.loadDateDeploy(this.customerProducts.server, this.customerProducts.customersProductsId, this.customerProducts.productId);
       this.downloadBtnText = 'Concluído com sucesso.';
     },
     err => {
@@ -173,9 +180,9 @@ export class DashboardCloudComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges() {
-     this.loadDateDeploy(this.customerProducts.customersProductsId, this.customerProducts.productId);
-     this.loadVersionProduct(this.customerProducts.customersProductsId);
-     this.loadLastExecution(this.customerProducts.customersProductsId);
+     this.loadDateDeploy(this.customerProducts.server, this.customerProducts.customersProductsId, this.customerProducts.productId);
+     this.loadVersionProduct(this.customerProducts.server, this.customerProducts.customersProductsId);
+     this.loadLastExecution(this.customerProducts.server, this.customerProducts.customersProductsId);
      this.isUpdateDatabase = false;
      this.downloadBtnText = ' ';
   }
