@@ -49,19 +49,19 @@ export class CloudService {
 
   getDateTimeDeploy(server: ModelServer, id, productid) {
     return this.base.httpBase
-    .get( 'http://' + server.ipAddress + ':' + server.port
+    .get( 'http://' + server.hostname + ':' + server.port
       + '/api/SystemUpdate/GetDateTimeFileDeploy?customersettingsId=' + id + '&productId=' + productid);
   }
 
   getVersionFile(server: ModelServer, id) {
     return this.base.httpBase
-    .get('http://' + server.ipAddress + ':' + server.port
+    .get('http://' + server.hostname + ':' + server.port
       + '/api/SystemUpdate/GetVersionFile?customersettingsId=' + id);
   }
 
   getLastExecution(server: ModelServer, id) {
     return this.base.httpBase
-    .get('http://' + server.ipAddress + ':' + server.port
+    .get('http://' + server.hostname + ':' + server.port
       + '/api/SystemUpdate/GetLastExecution?customersettingsId=' + id);
   }
 
@@ -70,14 +70,15 @@ export class CloudService {
     .get(this.base.urlapi + '/api/SystemUpdate/StatusService?servicename=' + _serviceName, { responseType: 'text' });
   }
 
-  getStartStopService(isStart, _serviceName) {
+  getStartStopService(server: ModelServer, isStart, _serviceName) {
     return this.base.httpBase
-    .get(this.base.urlapi + '/api/SystemUpdate/StarStopService?isStart=' + isStart + '&servicename=' + _serviceName);
+    .get('http://' + server.hostname + ':' + server.port
+      + '/api/SystemUpdate/StarStopService?isStart=' + isStart + '&servicename=' + _serviceName);
   }
 
   getDownloadDeploy(server: ModelServer, id, productid) {
     return this.base.httpBase
-    .get('http://' + server.ipAddress + ':' + server.port
+    .get('http://' + server.hostname + ':' + server.port
       + '/api/SystemUpdate/DownloadDeploy?id=' + id + '&productId=' + productid)
       .pipe(
         tap(
@@ -88,10 +89,10 @@ export class CloudService {
       );
   }
 
-  getUpdateSystem(customerProduct: ModelCustomersProducts) {
-    console.log('Chamando Post atualizar ' + customerProduct.product.name);
+  getUpdateSystem(server: ModelServer, customerProduct: ModelCustomersProducts) {
     return this.base.httpBase
-    .post(this.base.urlapi + '/api/SystemUpdate/UpdateCeltaBS',  customerProduct , {responseType: 'text'})
+    .post('http://' + server.hostname + ':' + server.port
+      + '/api/SystemUpdate/UpdateCeltaBS',  customerProduct , {responseType: 'text'})
     .pipe(
       tap(
          data => console.log(data),

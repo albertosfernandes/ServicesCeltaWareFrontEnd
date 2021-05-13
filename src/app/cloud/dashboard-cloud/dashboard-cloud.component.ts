@@ -61,7 +61,7 @@ export class DashboardCloudComponent implements OnInit, OnChanges, OnDestroy {
       this.isUpdateDatabase = true;
       this.isUpdating = false;
     } else {
-      this.cloudService.getUpdateSystem(valueModelCustomerProduct)
+      this.cloudService.getUpdateSystem(this.customerProducts.server, valueModelCustomerProduct)
       .subscribe(data => {
         this.updateBtnText = 'Atualizar';
       },

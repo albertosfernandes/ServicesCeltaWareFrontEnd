@@ -19,7 +19,7 @@ export class SynchServiceComponent implements OnInit, OnChanges {
 
   changeStatus(isStart) {
     this.isUpdating = true;
-    this.cloudService.getStartStopService(isStart, this.customerProducts.synchronizerServiceName)
+    this.cloudService.getStartStopService(this.customerProducts.server, isStart, this.customerProducts.synchronizerServiceName)
     .subscribe(data => {
       // this.getStatusService(this.customerProducts.synchronizerServiceName);
     },
@@ -35,8 +35,8 @@ export class SynchServiceComponent implements OnInit, OnChanges {
     this.cloudService.getStatusService(servicename)
     .subscribe(message => {
       this.statusMessage = message;
-      let s = this.statusMessage;
-       if (s.indexOf('Running') != -1) {
+      const s = this.statusMessage;
+       if (s.indexOf('Running') !== -1) {
            this.isUP = true;
            this.serviceBtnText = 'Parar';
          } else {

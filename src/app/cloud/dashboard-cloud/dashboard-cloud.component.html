@@ -54,7 +54,7 @@
             </div>
             <div class="card-body">
               <p><strong>Data versão:</strong> {{ dateObj | date: "medium" }} </p>
-              <th><span (click)="downloadDeploy(customerProducts.server, customerProducts.customer.customerId, customerProducts.productId)" [style.color] = "isDownloading ? 'green' : 'black'"> <i class="fa fa-download" style="font-size:24px"></i></span></th>
+              <th><span (click)="downloadDeploy(customerProducts.customer.customerId, customerProducts.productId)" [style.color] = "isDownloading ? 'green' : 'black'"> <i class="fa fa-download" style="font-size:24px"></i></span></th>
               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isDownloading"></span>
               <span>{{ downloadBtnText }}</span>
             </div>
